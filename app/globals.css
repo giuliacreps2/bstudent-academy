@@ -1,26 +1,66 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f4f8fd;
+  --foreground: #172033;
+
+  --brand-primary: #3155d9;
+  --brand-primary-dark: #243fa8;
+  --brand-secondary: #e96a9a;
+  --brand-accent: #f6b73c;
+  --brand-success: #3ba272;
+  --brand-muted: #667085;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+
+  --color-brand-primary: var(--brand-primary);
+  --color-brand-primary-dark: var(--brand-primary-dark);
+  --color-brand-secondary: var(--brand-secondary);
+  --color-brand-accent: var(--brand-accent);
+  --color-brand-success: var(--brand-success);
+  --color-brand-muted: var(--brand-muted);
+
+  --font-brand: var(--font-jakarta, system-ui, sans-serif);
 }
 
-@media (prefers-color-scheme: dark) {
+/*@media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
   }
-}
+}*/
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-brand);
+}
+.btn-border {
+  @apply flex items-center gap-2 px-6 py-3 rounded-4xl text-sm font-medium text-brand-primary transition-all duration-500;
+  border: 2px solid transparent;
+  background-image:
+    linear-gradient(var(--background), var(--background)),
+    linear-gradient(
+      90deg,
+      var(--brand-primary),
+      var(--brand-secondary),
+      var(--brand-primary)
+    );
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  background-size:
+    100% 100%,
+    200% 100%;
+  background-position:
+    0 0,
+    0% 0;
+}
+
+.btn-border:hover {
+  background-position:
+    0 0,
+    100% 0;
 }
