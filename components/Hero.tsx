@@ -9,10 +9,10 @@ export function Hero() {
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
         {/* Colonna Sinistra: Testo e Call to Action */}
         <div className="flex flex-col items-start gap-6">
-          <span className="inline-block px-3 py-1 text-sm font-bold tracking-widest text-brand-primary">
+          <span className="inline-block  py-1 text-sm font-bold tracking-widest text-brand-primary">
             IMPARA. GIOCA. CRESCI.
           </span>
-          <h1 className="text-5xl sm:text-4xl md:text-6xl font-extrabold tracking-tight leading-14 sm:leading-18">
+          <h1 className="text-5xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-14 sm:leading-18">
             Studiare latino e greco può essere molto{" "}
             <span className="text-brand-secondary">più semplice.</span>
           </h1>

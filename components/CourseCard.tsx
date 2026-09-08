@@ -7,18 +7,15 @@ import { StarIcon } from "@heroicons/react/24/solid";
 
 export type CourseColor = "blue" | "pink" | "green";
 
-const colorStyles: Record<CourseColor, { badge: string; button: string }> = {
+const colorStyles: Record<CourseColor, { badge: string }> = {
   blue: {
     badge: "bg-blue-50 text-blue-700 border-blue-200",
-    button: "bg-blue-600 hover:bg-blue-500",
   },
   pink: {
     badge: "bg-pink-50 text-pink-700 border-pink-200",
-    button: "bg-pink-600 hover:bg-pink-500",
   },
   green: {
     badge: "bg-emerald-50 text-emerald-700 border-emerald-200",
-    button: "bg-emerald-600 hover:bg-emerald-500",
   },
 };
 
@@ -94,7 +91,7 @@ export function CourseCard({ course }: { course: Course }) {
             </div>
             <button
               aria-label={`Vai al corso ${course.title}`}
-              className={`flex items-center justify-center text-white w-10 h-10 rounded-full font-medium transition-colors ${styles.button}`}
+              className="flex items-center justify-center text-white w-10 h-10 rounded-full font-medium transition-colors bg-brand-primary hover:bg-blue-500"
             >
               <ArrowRightIcon width={15} height={15} />
             </button>

@@ -48,24 +48,32 @@ export function CourseGrid() {
   return (
     <section className="bg-background text-foreground py-16 px-6 md:py-24 md:px-12">
       <div className="container-section">
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10">
-          <div className="flex flex-col items-start gap-4 max-w-2xl">
-            <span className="inline-block px-3 py-1 text-sm font-bold tracking-widest text-brand-primary">
-              I CORSI PIÙ AMATI
-            </span>
-            <h2 className="text-4xl sm:text-3xl md:text-5xl font-extrabold tracking-tight leading-tight">
+        <div className="mb-10">
+          <span className="inline-block  py-1 text-sm font-bold tracking-widest text-brand-primary">
+            I CORSI PIÙ AMATI
+          </span>
+
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mt-2">
+            <h2 className="text-4xl sm:text-3xl md:text-5xl font-extrabold tracking-tight leading-tight max-w-2xl">
               I corsi più amati dagli studenti.
             </h2>
-            <p className="text-foreground text-lg md:text-xl">
-              Dai fondamentali alle materie più complesse, scegli il corso che
-              fa per te.
-            </p>
+            <button className="hidden md:flex items-center gap-2 text-brand-primary font-medium shrink-0 hover:underline">
+              Scopri tutti i corsi
+              <ArrowRightIcon width={15} height={15} />
+            </button>
           </div>
-          <button className="hidden md:flex items-center gap-2 text-brand-primary font-medium shrink-0 hover:underline">
-            Scopri tutti i corsi
-            <ArrowRightIcon width={15} height={15} />
-          </button>
+
+          <p className="text-foreground text-lg md:text-xl mt-4 max-w-2xl">
+            Dai fondamentali alle materie più complesse, scegli il corso che fa
+            per te.
+          </p>
         </div>
+
+        {/* CTA mobile: sopra le card */}
+        <button className="flex md:hidden items-center gap-2 text-brand-primary font-medium mb-6">
+          Scopri tutti i corsi
+          <ArrowRightIcon width={15} height={15} />
+        </button>
 
         {/* Griglia su desktop, carosello con scroll-snap su mobile */}
         <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 -mx-6 px-6 md:mx-0 md:px-0 md:pb-0 md:grid md:grid-cols-3">
@@ -78,11 +86,6 @@ export function CourseGrid() {
             </div>
           ))}
         </div>
-
-        <button className="flex md:hidden items-center gap-2 text-brand-primary font-medium mt-6">
-          Scopri tutti i corsi
-          <ArrowRightIcon width={15} height={15} />
-        </button>
       </div>
     </section>
   );
