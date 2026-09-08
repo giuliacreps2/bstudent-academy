@@ -22,7 +22,7 @@ export function Hero() {
             migliorare un passo alla volta.
           </p>
           <div className="flex flex-wrap gap-4 pt-2">
-            <button className="flex items-center gap-2 bg-brand-primary hover:bg-blue-500 text-white px-6 py-3 rounded-4xl font-medium transition-colors">
+            <button className="flex items-center gap-2 bg-brand-primary hover:bg-blue-500 text-white px-10 py-3 rounded-4xl font-medium transition-colors">
               Scopri i corsi
               <ArrowRightIcon width={15} height={15} />
             </button>

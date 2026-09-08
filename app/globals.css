@@ -38,8 +38,15 @@ body {
   color: var(--foreground);
   font-family: var(--font-brand);
 }
+
+@layer components {
+  .container-section {
+    @apply max-w-7xl mx-auto;
+  }
+}
+
 .btn-border {
-  @apply flex items-center gap-2 px-6 py-3 rounded-4xl text-sm font-medium text-brand-primary transition-all duration-500;
+  @apply flex items-center gap-2 px-6 py-3 rounded-4xl font-medium text-brand-primary transition-all duration-500;
   border: 2px solid transparent;
   background-image:
     linear-gradient(var(--background), var(--background)),
