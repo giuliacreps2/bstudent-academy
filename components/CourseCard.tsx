@@ -37,67 +37,138 @@ export function CourseCard({ course }: { course: Course }) {
   const styles = colorStyles[course.color];
 
   return (
-    <div className="relative h-full">
+    <article className="relative h-full">
+      {/* CATEGORY */}
       <span
-        className={`absolute top-3 left-4 z-10 inline-flex items-center border text-xs font-medium px-3 py-1 rounded-full shadow-sm ${styles.badge}`}
+        className={`
+          absolute top-4 left-4 z-10
+          inline-flex items-center
+          px-3 py-1
+          rounded-full
+          border
+          text-xs font-semibold
+          ${styles.badge}
+        `}
       >
         {course.category}
       </span>
 
-      <div className="bg-neutral-primary-soft rounded-3xl shadow-xl overflow-hidden h-full flex flex-col">
+      <div
+        className="
+          h-full
+          flex flex-col
+          overflow-hidden
+          rounded-[20px]
+          bg-surface
+          border border-border
+          shadow-[0_8px_24px_rgba(23,32,51,0.06)]
+          transition-all duration-200
+          hover:-translate-y-1
+          hover:shadow-[0_14px_32px_rgba(23,32,51,0.10)]
+        "
+      >
+        {/* IMAGE */}
         <a href={course.href}>
           <img
-            className="w-full h-40 object-cover"
             src={course.image}
             alt={`Copertina corso di ${course.title}`}
+            className="
+              w-full
+              h-40
+              object-cover
+            "
           />
         </a>
 
-        <div className="p-6 flex flex-col flex-1">
+        {/* CONTENT */}
+        <div className="flex flex-col flex-1 p-5">
           <a href={course.href}>
-            <h5 className="text-left mb-1.5 text-2xl font-semibold tracking-tight text-heading">
+            <h3
+              className="
+              text-xl
+              font-bold
+              tracking-tight
+              text-foreground
+              hover:text-brand-primary
+              transition-colors
+            "
+            >
               {course.title}
-            </h5>
+            </h3>
           </a>
-          <p className="text-left text-fg-secondary mb-4">{course.subtitle}</p>
 
-          <div className="flex items-center gap-4 text-sm text-fg-secondary mb-4">
+          <p
+            className="
+            mt-1
+            text-sm
+            leading-relaxed
+            text-brand-muted
+          "
+          >
+            {course.subtitle}
+          </p>
+
+          {/* META */}
+          <div
+            className="
+            flex items-center
+            gap-3
+            mt-4
+            text-xs
+            text-brand-muted
+          "
+          >
             <div className="flex items-center gap-1.5">
-              <BookOpenIcon width={15} height={15} />
-              <span>
-                <span className="font-medium text-heading">
-                  {course.lessonsCount}
-                </span>{" "}
-                lezioni
-              </span>
+              <BookOpenIcon className="w-4 h-4" />
+              <span>{course.lessonsCount} lezioni</span>
             </div>
-            <span className="text-fg-secondary">|</span>
+
+            <span className="text-border">•</span>
+
             <div className="flex items-center gap-1.5">
-              <ChartBarIcon width={15} height={15} />
-              <span>
-                Livello:{" "}
-                <span className="font-medium text-heading">{course.level}</span>
-              </span>
+              <ChartBarIcon className="w-4 h-4" />
+              <span>{course.level}</span>
             </div>
           </div>
 
-          <div className="flex items-center justify-between mt-auto">
+          {/* BOTTOM */}
+          <div
+            className="
+            flex items-center
+            justify-between
+            mt-auto
+            pt-5
+          "
+          >
             <div className="flex items-center gap-1.5 text-sm">
-              <StarIcon className="text-amber-400" width={16} height={16} />
-              <span className="font-medium text-heading">{course.rating}</span>
-              <span className="text-fg-secondary">
-                ({course.studentsCount} studenti)
+              <StarIcon className="w-4 h-4 text-brand-accent" />
+
+              <span className="font-semibold">{course.rating}</span>
+
+              <span className="text-brand-muted text-xs">
+                ({course.studentsCount})
               </span>
             </div>
-            <button
+
+            <a
+              href={course.href}
               aria-label={`Vai al corso ${course.title}`}
-              className="flex items-center justify-center text-white w-10 h-10 rounded-full font-medium transition-colors bg-brand-primary hover:bg-blue-500"
+              className="
+                flex items-center justify-center
+                w-9 h-9
+                rounded-full
+                bg-brand-primary
+                text-white
+                transition-all duration-200
+                hover:bg-brand-primary-hover
+                hover:translate-x-0.5
+              "
             >
-              <ArrowRightIcon width={15} height={15} />
-            </button>
+              <ArrowRightIcon className="w-4 h-4" />
+            </a>
           </div>
         </div>
       </div>
-    </div>
+    </article>
   );
 }

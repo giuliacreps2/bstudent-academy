@@ -20,9 +20,9 @@ export function Navbar() {
   return (
     <Disclosure
       as="nav"
-      className="relative bg-[#d3e9ff] after:pointer-events-none after:absolute after:inset-x-0 after:bottom-0 after:h-px after:bg-white/10"
+      className="relative bg-[#E4F0FE] after:pointer-events-none after:absolute after:inset-x-0 after:bottom-0 after:h-px after:bg-white/10"
     >
-      <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl py-1 px-2 sm:px-6 lg:px-8">
         <div className="relative flex h-16 items-center justify-between">
           <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
             {/* Mobile menu button*/}
@@ -43,8 +43,8 @@ export function Navbar() {
             <div className="flex shrink-0 items-center">
               <img
                 alt="Your Company"
-                src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
-                className="h-8 w-auto"
+                src="/Logo-BStudent-Home-1.webp"
+                className="h-12 w-auto"
               />
             </div>
             <div className="hidden sm:ml-6 sm:block">
@@ -64,7 +64,7 @@ export function Navbar() {
           </div>
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
             <button className="flex items-center gap-2 bg-brand-primary hover:bg-blue-500 text-white px-6 py-3 rounded-4xl font-medium transition-colors">
-              Accedi
+              Inizia a studiare
               <ArrowRightIcon width={15} height={15} />
             </button>
           </div>

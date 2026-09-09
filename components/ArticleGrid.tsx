@@ -1,5 +1,4 @@
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
-import { CourseCard, type Course } from "./CourseCard";
 import { ArticleCard, type Article } from "./ArticleCard";
 
 // TODO Placeholder — verranno sostituiti dai dati del backend
@@ -41,45 +40,142 @@ const articles: Article[] = [
 
 export function ArticleGrid() {
   return (
-    <section className="bg-background text-foreground py-16 px-6 md:py-24 md:px-12">
+    <section className="bg-background py-12 text-foreground md:py-16">
       <div className="container-section">
-        <div className="mb-10">
-          <span className="inline-block  py-1 text-sm font-bold tracking-widest text-brand-primary">
+        {/* HEADER */}
+        <div className="mb-9 md:mb-10">
+          {/* DECORAZIONE */}
+          <span aria-hidden="true" className="relative mb-1 block h-7 w-8">
+            <span className="absolute left-2 top-0 h-3 w-1.5 rotate-[-25deg] rounded-full bg-brand-accent" />
+            <span className="absolute left-0 top-3.5 h-3 w-1.5 rotate-[55deg] rounded-full bg-brand-accent" />
+            <span className="absolute left-5 top-4 h-2.5 w-1.5 rotate-[80deg] rounded-full bg-brand-accent" />
+          </span>
+
+          {/* EYEBROW */}
+          <span
+            className="
+              text-xs
+              font-extrabold
+              tracking-[0.18em]
+              text-brand-primary
+              md:text-sm
+            "
+          >
             ULTIMI ARTICOLI
           </span>
 
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mt-2">
-            <h2 className="text-4xl sm:text-3xl md:text-5xl font-extrabold tracking-tight leading-tight max-w-2xl">
+          <div
+            className="
+              mt-3
+              flex flex-col
+              gap-4
+              md:flex-row
+              md:items-end
+              md:justify-between
+            "
+          >
+            <h2
+              className="
+                max-w-2xl
+                text-3xl
+                font-extrabold
+                leading-[1.05]
+                tracking-tight
+                sm:text-4xl
+                md:text-5xl
+              "
+            >
               Notizie, consigli e spunti per il tuo percorso.
             </h2>
-            <button className="hidden md:flex items-center gap-2 text-brand-primary font-medium shrink-0 hover:underline">
+
+            {/* CTA DESKTOP */}
+            <button
+              className="
+                hidden
+                shrink-0
+                items-center
+                gap-2
+                font-medium
+                text-brand-primary
+                hover:underline
+                md:flex
+              "
+            >
               Vai al blog
               <ArrowRightIcon width={15} height={15} />
             </button>
           </div>
 
-          <p className="text-foreground text-lg md:text-xl mt-4 max-w-2xl">
+          <p
+            className="
+              mt-4
+              max-w-2xl
+              text-base
+              leading-relaxed
+              text-brand-muted
+              md:text-lg
+            "
+          >
             Scopri i nostri articoli su metodi di studio, strategie,
             approfondimenti e molto altro.
           </p>
         </div>
 
-        {/* CTA mobile: sopra le card */}
-        <button className="flex md:hidden items-center gap-2 text-brand-primary font-medium mb-6">
-          Scopri tutti i corsi
+        {/* CTA MOBILE */}
+        <button
+          className="
+            mb-5
+            flex
+            items-center
+            gap-2
+            font-medium
+            text-brand-primary
+            md:hidden
+          "
+        >
+          Vai al blog
           <ArrowRightIcon width={15} height={15} />
         </button>
 
-        {/* Griglia su desktop, carosello con scroll-snap su mobile */}
-        <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 -mx-6 px-6 md:mx-0 md:px-0 md:pb-0 md:grid md:grid-cols-3">
-          {articles.map((article) => (
-            <div
-              key={article.id}
-              className="w-[85%] shrink-0 snap-start md:w-auto md:shrink"
-            >
-              <ArticleCard article={article} />
-            </div>
-          ))}
+        {/* ARTICLES */}
+        <div className="overflow-visible pb-8">
+          <div
+            className="
+              flex
+              gap-4
+              overflow-x-auto
+              snap-x
+              snap-mandatory
+              px-2
+              pb-5
+              [-ms-overflow-style:none]
+              [scrollbar-width:none]
+              [&::-webkit-scrollbar]:hidden
+
+              md:grid
+              md:grid-cols-3
+              md:gap-6
+              md:overflow-visible
+              md:px-0
+              md:pb-2
+            "
+          >
+            {articles.map((article) => (
+              <div
+                key={article.id}
+                className="
+                  w-[85%]
+                  shrink-0
+                  snap-start
+
+                  md:w-auto
+                  md:shrink
+                "
+              >
+                <ArticleCard article={article} />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

@@ -1,10 +1,4 @@
-import {
-  ArrowRightIcon,
-  BookOpenIcon,
-  CalendarDateRangeIcon,
-  ChartBarIcon,
-  ClockIcon,
-} from "@heroicons/react/24/outline";
+import { CalendarDateRangeIcon, ClockIcon } from "@heroicons/react/24/outline";
 import { StarIcon } from "@heroicons/react/24/solid";
 
 export type ArticleColor = "blue" | "pink" | "green";

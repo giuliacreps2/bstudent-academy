@@ -1,37 +1,59 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f4f8fd;
+  --background: #f7f9fc;
   --foreground: #172033;
 
+  --surface: #ffffff;
+  --surface-blue: #e8f2ff;
+
   --brand-primary: #3155d9;
+  --brand-primary-hover: #5472df;
   --brand-primary-dark: #243fa8;
+
   --brand-secondary: #e96a9a;
   --brand-accent: #f6b73c;
   --brand-success: #3ba272;
   --brand-muted: #667085;
+
+  --brand-purple: #7c5cfc;
+  --brand-green: #35c98a;
+  --brand-yellow: #ffc857;
+  --brand-coral: #ff7a59;
+
+  --border: #e5eaf2;
+
+  --radius-sm: 12px;
+  --radius-md: 20px;
+  --radius-lg: 24px;
+  --radius-pill: 999px;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
 
+  --color-surface: var(--surface);
+  --color-surface-blue: var(--surface-blue);
+
   --color-brand-primary: var(--brand-primary);
+  --color-brand-primary-hover: var(--brand-primary-hover);
   --color-brand-primary-dark: var(--brand-primary-dark);
+
   --color-brand-secondary: var(--brand-secondary);
   --color-brand-accent: var(--brand-accent);
   --color-brand-success: var(--brand-success);
   --color-brand-muted: var(--brand-muted);
 
+  --color-brand-purple: var(--brand-purple);
+  --color-brand-green: var(--brand-green);
+  --color-brand-yellow: var(--brand-yellow);
+  --color-brand-coral: var(--brand-coral);
+
+  --color-border: var(--border);
+
   --font-brand: var(--font-jakarta, system-ui, sans-serif);
 }
-
-/*@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}*/
 
 body {
   background: var(--background);
@@ -41,33 +63,78 @@ body {
 
 @layer components {
   .container-section {
-    @apply max-w-7xl mx-auto;
+    @apply max-w-7xl mx-auto px-6 md:px-8;
+  }
+
+  .section {
+    @apply py-20 md:py-24;
+  }
+
+  .section-lg {
+    @apply py-24 md:py-30;
+  }
+
+  /* PRIMARY */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2
+      px-6 py-3
+      rounded-full
+      bg-brand-primary
+      text-white
+      font-medium
+      transition-all duration-200;
+
+    &:hover {
+      background-color: var(--brand-primary-hover);
+    }
+  }
+
+  /* SECONDARY */
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2
+      px-6 py-3
+      rounded-full
+    bg-white
+      text-brand-primary
+      font-medium
+      transition-all duration-200;
+
+    border: 1.5px solid var(--brand-primary);
+
+    &:hover {
+      background-color: var(--brand-primary-hover);
+      border-color: var(--brand-primary-hover);
+      color: white;
+    }
+  }
+
+  /* LINK */
+  .btn-tertiary {
+    @apply inline-flex items-center gap-2
+      text-brand-primary
+      font-medium
+      transition-all duration-200;
+
+    &:hover {
+      color: var(--brand-primary-hover);
+    }
   }
 }
 
-.btn-border {
-  @apply flex items-center gap-2 px-6 py-3 rounded-4xl font-medium text-brand-primary transition-all duration-500;
-  border: 2px solid transparent;
-  background-image:
-    linear-gradient(var(--background), var(--background)),
-    linear-gradient(
-      90deg,
-      var(--brand-primary),
-      var(--brand-secondary),
-      var(--brand-primary)
-    );
-  background-origin: border-box;
-  background-clip: padding-box, border-box;
-  background-size:
-    100% 100%,
-    200% 100%;
-  background-position:
-    0 0,
-    0% 0;
-}
+@layer utilities {
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
 
-.btn-border:hover {
-  background-position:
-    0 0,
-    100% 0;
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade-in-up {
+    animation: fade-in-up 0.5s ease-out forwards;
+  }
 }
