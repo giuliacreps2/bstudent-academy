@@ -67,7 +67,7 @@ export function Hero() {
           {/* CTA */}
           <div className="mt-8 flex flex-wrap gap-3">
             <button className="btn-primary">
-              Scopri i corsi
+              Inizia a studiare
               <ArrowRightIcon className="h-4 w-4" />
             </button>
 

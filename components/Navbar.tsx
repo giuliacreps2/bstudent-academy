@@ -64,7 +64,7 @@ export function Navbar() {
           </div>
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
             <button className="flex items-center gap-2 bg-brand-primary hover:bg-blue-500 text-white px-6 py-3 rounded-4xl font-medium transition-colors">
-              Inizia a studiare
+              Inizia gratis
               <ArrowRightIcon width={15} height={15} />
             </button>
           </div>

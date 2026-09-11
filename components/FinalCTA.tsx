@@ -21,7 +21,7 @@ export function FinalCTA() {
           {/* CONTENUTO */}
           <div className="relative z-10 mx-auto max-w-3xl">
             <span className="text-xs font-extrabold tracking-[0.18em] text-foregound md:text-sm">
-              INIZIA IL TUO PERCORSO
+              SCALA LE CLASSIFICHE
             </span>
 
             <h2
@@ -35,9 +35,9 @@ export function FinalCTA() {
                 md:text-5xl
               "
             >
-              Sei pronto a studiare
-              <br className="hidden sm:block" />
-              in un modo nuovo?
+              Inizia il tuo percorso
+              {/* <br className="hidden sm:block" />
+              in un modo nuovo?*/}
             </h2>
 
             <p
@@ -69,7 +69,7 @@ export function FinalCTA() {
                   shadow-[0_10px_25px_rgba(23,32,51,0.12)]
                 "
               >
-                Inizia a studiare
+                Inizia gratis
                 <ArrowRightIcon className="h-4 w-4" />
               </a>
             </div>
