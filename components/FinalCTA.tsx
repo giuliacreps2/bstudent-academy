@@ -1,7 +1,12 @@
+"use client";
+
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
-import { PlayCircleIcon } from "@heroicons/react/24/solid";
+import { useState } from "react";
+import { RegisterModal } from "./auth/RegisterModal";
 
 export function FinalCTA() {
+  const [isRegisterOpen, setIsRegisterOpen] = useState(false);
+
   return (
     <section className="bg-[url('/land.png')] bg-cover bg-center py-12 md:py-16">
       <div className="container-section">
@@ -56,8 +61,9 @@ export function FinalCTA() {
             </p>
 
             <div className="mt-8 flex justify-center">
-              <a
-                href="#"
+              <button
+                type="button"
+                onClick={() => setIsRegisterOpen(true)}
                 className="
                 btn-secondary
                   inline-flex
@@ -71,11 +77,16 @@ export function FinalCTA() {
               >
                 Inizia gratis
                 <ArrowRightIcon className="h-4 w-4" />
-              </a>
+              </button>
             </div>
           </div>
         </div>
       </div>
+      {/* REGISTER MODAL */}
+      <RegisterModal
+        open={isRegisterOpen}
+        onClose={() => setIsRegisterOpen(false)}
+      />
     </section>
   );
 }

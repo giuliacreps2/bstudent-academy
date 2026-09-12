@@ -6,6 +6,7 @@
 
   --surface: #ffffff;
   --surface-blue: #e8f2ff;
+  --surface-light-blue: #e4f0fe;
 
   --brand-primary: #3155d9;
   --brand-primary-hover: #5472df;
@@ -35,6 +36,7 @@
 
   --color-surface: var(--surface);
   --color-surface-blue: var(--surface-blue);
+  --color-surface-light-blue: var(--surface-light-blue);
 
   --color-brand-primary: var(--brand-primary);
   --color-brand-primary-hover: var(--brand-primary-hover);

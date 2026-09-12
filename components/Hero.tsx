@@ -1,5 +1,6 @@
 "use client";
-
+import { useState } from "react";
+import { RegisterModal } from "./auth/RegisterModal";
 import {
   ArrowRightIcon,
   CheckIcon,
@@ -10,6 +11,8 @@ import {
 import Image from "next/image";
 
 export function Hero() {
+  const [isRegisterOpen, setIsRegisterOpen] = useState(false);
+
   return (
     <section className="relative overflow-hidden bg-background text-foreground">
       {/* Decorative background */}
@@ -66,7 +69,11 @@ export function Hero() {
 
           {/* CTA */}
           <div className="mt-8 flex flex-wrap gap-3">
-            <button className="btn-primary">
+            <button
+              type="button"
+              onClick={() => setIsRegisterOpen(true)}
+              className="btn-primary"
+            >
               Inizia a studiare
               <ArrowRightIcon className="h-4 w-4" />
             </button>
@@ -176,6 +183,12 @@ export function Hero() {
       <div
         aria-hidden="true"
         className="absolute -bottom-px left-0 h-12 w-full rounded-t-[50%] bg-background"
+      />
+
+      {/* REGISTER MODAL */}
+      <RegisterModal
+        open={isRegisterOpen}
+        onClose={() => setIsRegisterOpen(false)}
       />
     </section>
   );

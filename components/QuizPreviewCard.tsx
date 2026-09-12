@@ -45,7 +45,7 @@ export function QuizPreviewCard() {
         ))}
       </div>
 
-      <button className="w-full bg-brand-primary hover:bg-blue-500 text-white text-sm font-medium py-2.5 rounded-full transition-colors">
+      <button className="w-full bg-brand-primary text-white text-sm font-medium py-2.5 rounded-full transition-colors">
         Controlla
       </button>
     </div>

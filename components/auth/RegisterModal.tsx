@@ -10,7 +10,7 @@ import {
 import { StepAccount } from "@/components/auth/StepAccount";
 import { StepBirthDate } from "./StepBirthDate";
 import { StepGuardian } from "./StepGuardian";
-import { StepEducation } from "./StepEducation";
+//import { StepEducation } from "./StepEducation";
 import { StepSubjects } from "./StepSubjects";
 import { StepGoals } from "./StepGoals";
 import { StepSummary } from "./StepSummary";
@@ -21,11 +21,6 @@ export type AccountData = {
   password: string;
 };
 
-export type EducationData = {
-  municipalityId: string;
-  schoolId: string;
-};
-
 export type GuardianData = {
   email: string;
 };
@@ -33,7 +28,7 @@ export type GuardianData = {
 export type RegistrationData = {
   account: AccountData;
   birthDate: string;
-  education: EducationData;
+  //education: EducationData;
   subjects: string[];
   goals: string[];
   guardian: GuardianData;
@@ -53,7 +48,7 @@ type RegisterModalProps = {
 const initialData: RegistrationData = {
   account: { name: "", email: "", password: "" },
   birthDate: "",
-  education: { municipalityId: "", schoolId: "" },
+  //education: { municipalityId: "", schoolId: "" },
   subjects: [],
   goals: [],
   guardian: { email: "" },
@@ -93,7 +88,7 @@ export function RegisterModal({
   }, [data.birthDate]);
 
   const isUnder14 = age !== null && age < 14;
-  const totalSteps = 6;
+  const totalSteps = 5;
 
   if (!open) return null;
 
@@ -103,10 +98,6 @@ export function RegisterModal({
 
   function updateBirthDate(birthDate: string) {
     setData((current) => ({ ...current, birthDate }));
-  }
-
-  function updateEducation(education: EducationData) {
-    setData((current) => ({ ...current, education }));
   }
 
   function updateGuardian(guardian: GuardianData) {
@@ -215,7 +206,7 @@ export function RegisterModal({
   }
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-100 flex items-center justify-center p-4">
       {/* OVERLAY */}
       <div
         className="absolute inset-0 bg-[#172033]/70 backdrop-blur-sm"
@@ -223,7 +214,7 @@ export function RegisterModal({
       />
 
       {/* MODAL */}
-      <div className="relative z-10 flex max-h-[calc(100vh-2rem)] w-full max-w-[520px] flex-col overflow-hidden rounded-[24px] bg-white shadow-2xl">
+      <div className="relative z-10 flex max-h-[calc(100vh-2rem)] w-full max-w-130 flex-col overflow-hidden rounded-3xl bg-white shadow-2xl">
         {/* HEADER */}
         <div className="flex items-center justify-between border-b border-[#e5eaf2] px-5 py-4 sm:px-7">
           <div>
@@ -286,35 +277,27 @@ export function RegisterModal({
           )}
 
           {step === 3 && !isUnder14 && (
-            <StepEducation value={data.education} onChange={updateEducation} />
+            <StepSubjects
+              selected={data.subjects}
+              toggle={(value) => toggleArrayValue("subjects", value)}
+            />
           )}
 
           {step === 4 && isUnder14 && (
-            <StepEducation value={data.education} onChange={updateEducation} />
+            <StepSubjects
+              selected={data.subjects}
+              toggle={(value) => toggleArrayValue("subjects", value)}
+            />
           )}
 
           {step === 4 && !isUnder14 && (
-            <StepSubjects
-              selected={data.subjects}
-              toggle={(value) => toggleArrayValue("subjects", value)}
-            />
-          )}
-
-          {step === 5 && isUnder14 && (
-            <StepSubjects
-              selected={data.subjects}
-              toggle={(value) => toggleArrayValue("subjects", value)}
-            />
-          )}
-
-          {step === 5 && !isUnder14 && (
             <StepGoals
               selected={data.goals}
               toggle={(value) => toggleArrayValue("goals", value)}
             />
           )}
 
-          {step === 6 && (
+          {step === 5 && (
             <StepSummary
               data={data}
               isUnder14={isUnder14}

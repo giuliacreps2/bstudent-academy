@@ -1,4 +1,4 @@
-export const subjects = ["Latino", "Greco", "Italiano", "Storia", "Filosofia"];
+export const subjects = ["Latino", "Greco", "Italiano"];
 
 export const goals = [
   "Migliorare i voti",
