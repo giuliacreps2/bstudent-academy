@@ -20,13 +20,13 @@ export function RightColumn({
         <StatsCard stats={stats} />
       </div>
 
-      {/* Mobile: immagine skin + livello affiancati, stats sotto */}
+      {/* Mobile: solo immagine + livello affiancati, poi XP/streak */}
       <div className="lg:hidden space-y-4">
         <div className="flex items-center gap-4 rounded-lg bg-surface border border-border p-4">
           <SkinImage
             src={skin.imageUrl}
             alt={skin.name}
-            className="w-16 h-16 rounded-full shrink-0"
+            className="w-16 h-16 rounded-full object-cover shrink-0"
           />
           <LevelProgress
             level={stats.level}

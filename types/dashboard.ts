@@ -21,6 +21,13 @@ export interface SkinData {
   skin: string;
   imageUrl: string;
   name: string;
+  bonuses: SkinBonus[];
+}
+
+export interface SkinBonus {
+  label: string;
+  value: string;
+  bonuses: SkinBonus[];
 }
 
 export interface StatsData {
