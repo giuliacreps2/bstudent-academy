@@ -1,19 +1,25 @@
 "use client";
 
-import { useState } from "react";
-import { ChevronDownIcon } from "@heroicons/react/24/outline";
+import { useState, useTransition } from "react";
 import { GoalModal } from "./GoalModal";
-import type { GoalSelection } from "@/types/skills";
 import { RecommendedExercises } from "./RecommendedExercises";
+import { getRecommendedExercises } from "@/lib/exercise-recommendations";
+import type { GoalSelection } from "@/types/skills";
 import type { ExerciseSuggestion } from "@/types/exercises";
 
-export function TodayGoalSection({
-  exercisePool,
-}: {
-  exercisePool: ExerciseSuggestion[];
-}) {
+export function TodayGoalSection() {
   const [modalOpen, setModalOpen] = useState(false);
   const [goal, setGoal] = useState<GoalSelection | null>(null);
+  const [exercises, setExercises] = useState<ExerciseSuggestion[]>([]);
+  const [isPending, startTransition] = useTransition();
+
+  function handleConfirm(selection: GoalSelection) {
+    setGoal(selection);
+    startTransition(async () => {
+      const result = await getRecommendedExercises(selection);
+      setExercises(result);
+    });
+  }
 
   return (
     <div className="space-y-4">
@@ -37,13 +43,12 @@ export function TodayGoalSection({
         >
           Inizia il quiz
         </button>
-        <ChevronDownIcon className="w-4 h-4 text-brand-muted shrink-0 hidden sm:block" />
       </div>
 
       {goal && (
         <RecommendedExercises
-          goal={goal}
-          pool={exercisePool}
+          exercises={exercises}
+          isLoading={isPending}
           onChangeGoal={() => setModalOpen(true)}
         />
       )}
@@ -51,7 +56,7 @@ export function TodayGoalSection({
       <GoalModal
         open={modalOpen}
         onClose={() => setModalOpen(false)}
-        onConfirm={setGoal}
+        onConfirm={handleConfirm}
       />
     </div>
   );

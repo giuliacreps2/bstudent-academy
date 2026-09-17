@@ -23,7 +23,7 @@ type NavItem = {
 };
 
 const mainNav: NavItem[] = [
-  { label: "Dashboard", href: "/dashboard", icon: HomeIcon },
+  { label: "Dashboard", href: "/my/dashboard", icon: HomeIcon },
   { label: "Corsi", href: "/corsi", icon: BookOpenIcon },
   { label: "Esercizi", href: "/my/exercises", icon: PuzzlePieceIcon },
   { label: "Progressi", href: "/progressi", icon: ChartBarIcon },

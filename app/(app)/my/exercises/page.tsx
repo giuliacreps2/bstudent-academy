@@ -1,4 +1,6 @@
+// app/(app)/esercizi/page.tsx
 import { getExercisesData } from "@/lib/exercises";
+import { ExercisesHero } from "@/components/exercises/ExercisesHero";
 import { TodayGoalSection } from "@/components/exercises/TodayGoalSection";
 import { SkillPicker } from "@/components/exercises/SkillCard";
 import { ResumeTraining } from "@/components/exercises/ResumeTraining";
@@ -7,8 +9,8 @@ import { ExercisesRightColumn } from "@/components/exercises/rightColumn/Exercis
 
 export default async function ExercisesPage() {
   const {
+    hero,
     skills,
-    exercisePool,
     resumeActivities,
     dailyChallenge,
     character,
@@ -17,20 +19,24 @@ export default async function ExercisesPage() {
   } = await getExercisesData();
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-      <div className="lg:col-span-2 space-y-6">
-        <TodayGoalSection exercisePool={exercisePool} />
-        <SkillPicker skills={skills} />
-        <ResumeTraining activities={resumeActivities} />
-        <DailyChallenge {...dailyChallenge} />
-      </div>
+    <div className="space-y-6">
+      <ExercisesHero {...hero} />
 
-      <div>
-        <ExercisesRightColumn
-          character={character}
-          streak={streak}
-          bonuses={bonuses}
-        />
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="lg:col-span-2 space-y-6">
+          <TodayGoalSection />
+          <SkillPicker skills={skills} />
+          <ResumeTraining activities={resumeActivities} />
+          <DailyChallenge {...dailyChallenge} />
+        </div>
+
+        <div>
+          <ExercisesRightColumn
+            character={character}
+            streak={streak}
+            bonuses={bonuses}
+          />
+        </div>
       </div>
     </div>
   );

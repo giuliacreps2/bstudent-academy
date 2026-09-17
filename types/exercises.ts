@@ -49,11 +49,17 @@ export interface CharacterData {
 }
 
 export interface ExercisesPageData {
+  hero: HeroData;
   skills: SkillOption[];
-  exercisePool: ExerciseSuggestion[];
   resumeActivities: ActivityData[];
   dailyChallenge: DailyChallengeData;
   character: CharacterData;
   streak: number;
   bonuses: SkinBonus[];
+}
+
+export interface HeroData {
+  imageUrl: string;
+  quote: string;
+  quoteAuthor: string;
 }
