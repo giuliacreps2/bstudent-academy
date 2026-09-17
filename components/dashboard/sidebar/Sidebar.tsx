@@ -25,7 +25,7 @@ type NavItem = {
 const mainNav: NavItem[] = [
   { label: "Dashboard", href: "/dashboard", icon: HomeIcon },
   { label: "Corsi", href: "/corsi", icon: BookOpenIcon },
-  { label: "Esercizi", href: "/esercizi", icon: PuzzlePieceIcon },
+  { label: "Esercizi", href: "/my/exercises", icon: PuzzlePieceIcon },
   { label: "Progressi", href: "/progressi", icon: ChartBarIcon },
   {
     label: "Classifica",
