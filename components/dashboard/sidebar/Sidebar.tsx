@@ -14,6 +14,7 @@ import {
   Cog6ToothIcon,
 } from "@heroicons/react/24/outline";
 import { useSidebar } from "./SidebarContext";
+import { ArchiveBoxArrowDownIcon } from "@heroicons/react/24/solid";
 
 type NavItem = {
   label: string;
@@ -25,6 +26,11 @@ type NavItem = {
 const mainNav: NavItem[] = [
   { label: "Dashboard", href: "/my/dashboard", icon: HomeIcon },
   { label: "Corsi", href: "/corsi", icon: BookOpenIcon },
+  {
+    label: "Missioni",
+    href: "/my/missions/draft",
+    icon: TrophyIcon,
+  },
   { label: "Esercizi", href: "/my/exercises", icon: PuzzlePieceIcon },
   { label: "Progressi", href: "/progressi", icon: ChartBarIcon },
   {
