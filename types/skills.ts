@@ -3,6 +3,7 @@ import type { ComponentType, SVGProps } from "react";
 export type SkillKey = "grammatica" | "lessico" | "analisi" | "traduzione";
 export type SkillColor = "pink" | "green" | "purple" | "orange";
 export type ActivityStatus = "completed" | "in_progress" | "retry";
+export type GoalSelection = SkillKey | "mix";
 
 export interface SkillMeta {
   key: SkillKey;

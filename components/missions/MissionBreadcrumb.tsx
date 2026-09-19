@@ -1,31 +1,40 @@
 import Link from "next/link";
 import { ChevronRightIcon } from "@heroicons/react/24/outline";
 
+export interface MissionBreadcrumbItem {
+  label: string;
+  href?: string;
+}
+
 export function MissionBreadcrumb({
   items,
 }: {
-  items: { label: string; href?: string }[];
+  items: MissionBreadcrumbItem[];
 }) {
   return (
-    <nav className="flex items-center gap-1.5 min-w-0 overflow-x-auto text-sm text-white/70 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+    <nav
+      aria-label="Breadcrumb"
+      className="flex flex-wrap items-center gap-1.5 text-xs font-semibold"
+    >
       {items.map((item, index) => {
         const isLast = index === items.length - 1;
+
         return (
-          <span key={item.label} className="flex items-center gap-1.5 shrink-0">
+          <span key={item.label} className="flex items-center gap-1.5">
             {item.href && !isLast ? (
               <Link
                 href={item.href}
-                className="hover:text-white transition-colors"
+                className="text-brand-muted transition hover:text-brand-primary"
               >
                 {item.label}
               </Link>
             ) : (
-              <span className={isLast ? "font-semibold text-white" : ""}>
+              <span className={isLast ? "text-foreground" : "text-brand-muted"}>
                 {item.label}
               </span>
             )}
             {!isLast && (
-              <ChevronRightIcon className="h-3.5 w-3.5 text-white/40" />
+              <ChevronRightIcon className="h-3.5 w-3.5 text-brand-muted" />
             )}
           </span>
         );
