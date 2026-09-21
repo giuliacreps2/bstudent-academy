@@ -13,7 +13,7 @@ export function MissionWorld({
       {/* Lo scenario è lo sfondo dell'intera area: non esistono due sezioni */}
       <Image
         src={world.backgroundDesktop}
-        alt="/land.png"
+        alt=""
         fill
         priority
         className="hidden object-cover sm:block"
