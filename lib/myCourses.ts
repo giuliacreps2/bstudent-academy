@@ -3,6 +3,7 @@ import type {
   SubjectData,
   CourseListItem,
   LevelTestSubmission,
+  CourseDetailData,
 } from "@/types/myCourses";
 
 // TODO: sostituire con la fetch reale quando il BE è pronto
@@ -58,7 +59,7 @@ const coursesBySubject: Record<string, CourseListItem[]> = {
       skillsCount: 4,
       progress: 65,
       isPopular: true,
-      href: "/corsi/basi-traduzione",
+      href: "/my/courses/basi-traduzione",
     },
     {
       slug: "periodo-latino",
@@ -70,7 +71,7 @@ const coursesBySubject: Record<string, CourseListItem[]> = {
       stepsCount: 10,
       level: "Intermedio",
       skillsCount: 5,
-      href: "/corsi/periodo-latino",
+      href: "/my/courses/periodo-latino",
     },
     {
       slug: "grammatica-essenziale",
@@ -82,7 +83,7 @@ const coursesBySubject: Record<string, CourseListItem[]> = {
       stepsCount: 6,
       level: "Principiante",
       skillsCount: 4,
-      href: "/corsi/grammatica-essenziale",
+      href: "/my/courses/grammatica-essenziale",
     },
     {
       slug: "autori-e-testi",
@@ -94,7 +95,7 @@ const coursesBySubject: Record<string, CourseListItem[]> = {
       stepsCount: 8,
       level: "Avanzato",
       skillsCount: 5,
-      href: "/corsi/autori-e-testi",
+      href: "/my/courses/autori-e-testi",
     },
   ],
   greco: [
@@ -108,7 +109,7 @@ const coursesBySubject: Record<string, CourseListItem[]> = {
       level: "Intermedio",
       skillsCount: 5,
       progress: 15,
-      href: "/corsi/grammatica-greca",
+      href: "/my/courses/grammatica-greca",
     },
   ],
 };
@@ -150,4 +151,87 @@ export async function saveLevelTestResult(
    */
 
   console.log("LEVEL TEST RESULT", submission);
+}
+
+export async function getCourseDetailData(
+  courseSlug: string,
+): Promise<CourseDetailData> {
+  const course = Object.values(coursesBySubject)
+    .flat()
+    .find((item) => item.slug === courseSlug);
+
+  if (!course) {
+    throw new Error(`Corso non trovato: ${courseSlug}`);
+  }
+
+  const subject =
+    subjects.find((item) => item.slug === course.subjectSlug) ?? subjects[0];
+
+  return {
+    course,
+    subject,
+
+    tagline: "Dalle prime frasi ai testi autentici.",
+
+    description:
+      "Un percorso pratico e coinvolgente per imparare a riconoscere le strutture fondamentali, ampliare il tuo vocabolario e tradurre con sicurezza.",
+
+    skillsInvolved: ["traduzione", "grammatica", "lessico", "analisi"],
+
+    studentLevel: {
+      level: 12,
+      currentXp: 850,
+      maxXp: 1200,
+    },
+
+    notebook: {
+      totalTopics: 6,
+      lastDiscovery: {
+        topic: "Complemento di causa",
+        missionLabel: "Missione 2 · Le prime traduzioni",
+      },
+      href: `/my/courses/${courseSlug}/taccuino`,
+    },
+
+    rewards: [
+      {
+        id: "skin",
+        kind: "skin",
+        label: "Skin",
+        name: "Studente di Roma",
+        imageUrl: "/studente.png",
+        locked: false,
+      },
+      {
+        id: "badge",
+        kind: "badge",
+        label: "Badge",
+        name: "Traduttore Novizio",
+        imageUrl: "/placeholder-skin.png",
+        locked: false,
+      },
+      {
+        id: "background",
+        kind: "background",
+        label: "Sfondo",
+        name: "Foro Romano",
+        imageUrl: "/land.png",
+        locked: false,
+      },
+      {
+        id: "title",
+        kind: "title",
+        label: "Titolo",
+        name: "Custode delle parole",
+        imageUrl: "/placeholder-skin.png",
+        locked: false,
+      },
+      {
+        id: "mystery",
+        kind: "mystery",
+        label: "Qualcosa di speciale ti aspetta...",
+        locked: true,
+      },
+    ],
+  };
 }

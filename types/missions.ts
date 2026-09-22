@@ -84,6 +84,8 @@ export interface MissionMapNode {
   maxErrors: number;
   prepReadingHref?: string;
   prepVideoHref?: string;
+  /** Breve checklist "Cosa imparerai" mostrata nel pannello di dettaglio */
+  objectives?: string[];
   coverImageUrl: string;
   href: string;
 }

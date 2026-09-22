@@ -1,3 +1,5 @@
+import type { SkillKey } from "./skills";
+
 export type CourseLevel = "Principiante" | "Intermedio" | "Avanzato";
 
 export interface SubjectData {
@@ -51,4 +53,48 @@ export interface LevelTestSubmission {
   subjectSlug: string;
   answers: Record<string, string>; // questionId -> optionId
   recommendedLevel: CourseLevel;
+}
+
+// ===== Pagina dettaglio corso =====
+
+export interface CourseNotebookSummary {
+  totalTopics: number;
+  lastDiscovery?: {
+    topic: string;
+    missionLabel: string; // es. "Missione 2 · Le prime traduzioni"
+  };
+  href: string;
+}
+
+export type CourseRewardKind =
+  | "skin"
+  | "badge"
+  | "background"
+  | "title"
+  | "mystery";
+
+export interface CourseRewardItem {
+  id: string;
+  kind: CourseRewardKind;
+  label: string; // es. "Skin", "Badge"...
+  name?: string; // assente per le ricompense ancora misteriose
+  imageUrl?: string;
+  locked: boolean;
+}
+
+export interface CourseStudentLevel {
+  level: number;
+  currentXp: number;
+  maxXp: number;
+}
+
+export interface CourseDetailData {
+  course: CourseListItem;
+  subject: SubjectData;
+  tagline: string; // sottotitolo hero, es. "Dalle prime frasi ai testi autentici."
+  description: string;
+  skillsInvolved: SkillKey[];
+  studentLevel: CourseStudentLevel;
+  notebook: CourseNotebookSummary;
+  rewards: CourseRewardItem[];
 }
