@@ -33,6 +33,13 @@
 
   --texture-stone: #dfe1e6;
   --texture-stone-dark: #b8bcc4;
+
+  /* QUADERNO — placeholder in attesa della grafica definitiva */
+  --texture-notebook-cover: #2b3a67;
+  --texture-notebook-cover-dark: #1e2a4d;
+  --texture-notebook-gold: #d8b46a;
+  --texture-notebook-paper: #fdfbf4;
+  --texture-notebook-paper-line: #e6dfc8;
 }
 @theme inline {
   --color-background: var(--background);
@@ -90,6 +97,37 @@ body {
       color: var(--brand-primary-hover);
     }
   }
+  /* QUADERNO — copertina personale con dorso e dettagli oro */
+  .card-notebook-cover {
+    @apply relative overflow-hidden rounded-[28px] border;
+    background-color: var(--texture-notebook-cover);
+    border-color: var(--texture-notebook-gold);
+    background-image: linear-gradient(
+      160deg,
+      var(--texture-notebook-cover) 0%,
+      var(--texture-notebook-cover-dark) 100%
+    );
+  }
+
+  /* QUADERNO — pagina interna aperta, carta chiara con righe sottili */
+  .card-notebook-page {
+    @apply relative overflow-hidden rounded-2xl border;
+    background-color: var(--texture-notebook-paper);
+    border-color: var(--texture-notebook-paper-line);
+    background-image: repeating-linear-gradient(
+      to bottom,
+      transparent,
+      transparent 27px,
+      var(--texture-notebook-paper-line) 28px
+    );
+  }
+
+  /* QUADERNO — singola voce, stile post-it attaccato alla pagina */
+  .card-notebook-postit {
+    @apply relative overflow-hidden rounded-lg border shadow-sm;
+    background-color: #fff8dc;
+    border-color: #f0e2a3;
+  }
 }
 @layer utilities {
   @keyframes fade-in-up {
@@ -104,6 +142,18 @@ body {
   }
   .animate-fade-in-up {
     animation: fade-in-up 0.5s ease-out forwards;
+  }
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  .animate-marquee {
+    animation: marquee 45s linear infinite;
   }
 }
 @layer components {

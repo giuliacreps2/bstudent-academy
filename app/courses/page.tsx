@@ -1,31 +1,52 @@
-import { getCoursesData } from "@/lib/myCourses";
-import { SubjectSelector } from "@/components/myCourses/SubjectSelector";
-import { CoursesHero } from "@/components/myCourses/CoursesHero";
-import { CoursesList } from "@/components/myCourses/CoursesList";
-import { LevelTestBanner } from "@/components/myCourses/LevelTestBanner";
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { Navbar } from "@/components/Navbar";
+import { Footer } from "@/components/Footer";
+import { CourseLandingHero } from "@/components/courseLanding/CourseLandingHero";
+import { getCourseLandingData, landingSlugs } from "@/lib/courseLanding";
 
-interface CoursesPageProps {
-  searchParams: Promise<{ materia?: string }>;
+type CourseLandingPageProps = {
+  params: Promise<{ slug: string }>;
+};
+
+export function generateStaticParams() {
+  return landingSlugs.map((slug) => ({ slug }));
 }
 
-export default async function CoursesPage({ searchParams }: CoursesPageProps) {
-  const { materia } = await searchParams;
-  const { subjects, activeSubject, courses, levelTestHref } =
-    await getCoursesData(materia);
+export async function generateMetadata({
+  params,
+}: CourseLandingPageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const data = await getCourseLandingData(slug);
+
+  if (!data) return {};
+
+  return {
+    title: `Corso di ${data.subjectName} | BStudent`,
+    description: data.hero.description,
+  };
+}
+
+export default async function CourseLandingPage({
+  params,
+}: CourseLandingPageProps) {
+  const { slug } = await params;
+  const data = await getCourseLandingData(slug);
+
+  if (!data) notFound();
 
   return (
-    <div className="lg:grid lg:grid-cols-[280px_1fr] lg:gap-6 lg:items-start space-y-6 lg:space-y-0">
-      {/* SINISTRA: carosello su mobile, colonna sticky su desktop */}
-      <div className="lg:sticky lg:top-20">
-        <SubjectSelector subjects={subjects} activeSlug={activeSubject.slug} />
-      </div>
+    <div>
+      <Navbar />
 
-      {/* DESTRA: contenuto del corso, scorre verticalmente col resto della pagina */}
-      <div className="space-y-6">
-        <CoursesHero subject={activeSubject} />
-        <CoursesList courses={courses} />
-        <LevelTestBanner href={levelTestHref} />
-      </div>
+      <main>
+        <CourseLandingHero courseSlug={data.slug} hero={data.hero} />
+
+        {/* Prossimi step: video anteprima, carosello corsi, missioni,
+            character, video, recensioni, FAQ, CTA finale */}
+      </main>
+
+      <Footer />
     </div>
   );
 }
