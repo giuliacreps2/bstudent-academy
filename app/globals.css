@@ -1,4 +1,72 @@
 @import "tailwindcss";
+
+/* =====================================================================
+   PREFERENZE DI LETTURA (Area Account → Accessibilità)
+   Gli attributi data-reading-* sono impostati su <html> da
+   lib/readingPreferences.ts (e prima dell'hydration dallo script in layout).
+   Le regole valgono solo dentro `.reading-area`: NON annidare due .reading-area.
+   ===================================================================== */
+
+@font-face {
+  font-family: "OpenDyslexic";
+  src: url("/fonts/OpenDyslexic-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "OpenDyslexic";
+  src: url("/fonts/OpenDyslexic-Italic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "OpenDyslexic";
+  src: url("/fonts/OpenDyslexic-Bold.woff2") format("woff2");
+  font-weight: 700 800;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "OpenDyslexic";
+  src: url("/fonts/OpenDyslexic-BoldItalic.woff2") format("woff2");
+  font-weight: 700 800;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* FONT */
+html[data-reading-font="high-readability"] .reading-area {
+  font-family: var(--font-atkinson), system-ui, sans-serif;
+}
+html[data-reading-font="dyslexia"] .reading-area {
+  font-family: "OpenDyslexic", var(--font-brand), sans-serif;
+}
+
+/* DIMENSIONE TESTO — `zoom` scala anche le classi Tailwind in rem */
+html[data-reading-size="sm"] .reading-area {
+  zoom: 0.9;
+}
+html[data-reading-size="lg"] .reading-area {
+  zoom: 1.2;
+}
+
+/* SPAZIATURA — valori in linea con i criteri WCAG 1.4.12 */
+html[data-reading-spacing="wide"] .reading-area {
+  letter-spacing: 0.05em;
+  word-spacing: 0.16em;
+}
+/* Selettore con tag: batte le utility Tailwind `leading-*` (specificità 0,1,0) */
+html[data-reading-spacing="wide"]
+  .reading-area
+  :is(p, li, h1, h2, h3, h4, blockquote, figcaption, label, span, div) {
+  line-height: 1.8;
+}
+html[data-reading-spacing="wide"] .reading-area :is(p, li, blockquote) {
+  margin-block-end: 0.4em;
+}
+
 :root {
   --background: #f7f9fc;
   --foreground: #172033;

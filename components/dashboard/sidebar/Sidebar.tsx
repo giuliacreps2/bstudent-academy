@@ -48,8 +48,7 @@ const mainNav: NavItem[] = [
 ];
 
 const secondaryNav: NavItem[] = [
-  { label: "Profilo", href: "/profilo", icon: UserIcon },
-  { label: "Impostazioni", href: "/impostazioni", icon: Cog6ToothIcon },
+  { label: "Profilo", href: "/my/account", icon: UserIcon },
 ];
 
 export default function SideBar() {

@@ -27,7 +27,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
       <Navbar />
 
       <main className="bg-background">
-        <article className="container-section max-w-3xl py-8 md:py-12">
+        <article className="reading-area container-section max-w-3xl py-8 md:py-12">
           <ArticleHeader article={article} isLoggedIn={isLoggedIn} />
           <div className="mt-10">
             <ArticleContent blocks={article.content} />
