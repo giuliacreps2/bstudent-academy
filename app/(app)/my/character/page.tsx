@@ -1,11 +1,10 @@
+// app/(app)/my/character/page.tsx
 import { getCharacterPageData } from "@/lib/character";
 import { CharacterProvider } from "@/components/character/CharacterContext";
-
-// Prossimi step (per gradi):
-// import { CharacterControls } from "@/components/character/CharacterControls";
-// import { CharacterSelection } from "@/components/character/CharacterSelection";
-// import { CharacterHero } from "@/components/character/CharacterHero";
-// import { CharacterEvolutionStrip } from "@/components/character/CharacterEvolutionStrip";
+import { CharacterControls } from "@/components/character/CharacterControls";
+import { CharacterSelection } from "@/components/character/CharacterSelection";
+import { CharacterHero } from "@/components/character/CharacterHero";
+import { CharacterEvolutionStrip } from "@/components/character/CharacterEvolutionStrip";
 
 export default async function CharacterPage() {
   const data = await getCharacterPageData();
@@ -22,24 +21,20 @@ export default async function CharacterPage() {
           lg:[grid-template-areas:'controls_selection_hero'_'evolution_evolution_evolution']
         "
       >
-        {/* Destra — protagonista: primo su mobile */}
         <div className="order-1 lg:order-none lg:[grid-area:hero]">
-          {/* <CharacterHero /> */}
+          <CharacterHero />
         </div>
 
-        {/* In basso — evoluzione: secondo su mobile */}
         <div className="order-2 lg:order-none lg:[grid-area:evolution]">
-          {/* <CharacterEvolutionStrip /> */}
+          <CharacterEvolutionStrip />
         </div>
 
-        {/* Sinistra — controlli: terzo su mobile */}
         <div className="order-3 lg:order-none lg:[grid-area:controls]">
-          {/* <CharacterControls /> */}
+          <CharacterControls />
         </div>
 
-        {/* Centro — selezione/equipaggiamento: quarto su mobile */}
         <div className="order-4 lg:order-none lg:[grid-area:selection]">
-          {/* <CharacterSelection /> */}
+          <CharacterSelection />
         </div>
       </div>
     </CharacterProvider>
