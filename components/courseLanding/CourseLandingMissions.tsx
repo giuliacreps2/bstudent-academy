@@ -24,7 +24,7 @@ function MissionMarker({
       type="button"
       onClick={onSelect}
       aria-label={`Missione ${mission.order}: ${mission.title}`}
-      className="group absolute z-10 flex -translate-x-1/2 -translate-y-[1.375rem] flex-col items-center gap-2"
+      className="group absolute z-10 flex -translate-x-1/2 -translate-y-5.5 flex-col items-center gap-2"
       style={{ left: `${mission.position.x}%`, top: `${mission.position.y}%` }}
     >
       <span
@@ -74,8 +74,8 @@ export function CourseLandingMissions({
             <div className="mb-4 flex items-center gap-3">
               <span className="relative block h-7 w-8" aria-hidden="true">
                 <span className="absolute left-2 top-0 h-3 w-1.5 rotate-[-25deg] rounded-full bg-brand-accent" />
-                <span className="absolute left-0 top-3.5 h-3 w-1.5 rotate-[55deg] rounded-full bg-brand-accent" />
-                <span className="absolute left-5 top-4 h-2.5 w-1.5 rotate-[80deg] rounded-full bg-brand-accent" />
+                <span className="absolute left-0 top-3.5 h-3 w-1.5 rotate-55 rounded-full bg-brand-accent" />
+                <span className="absolute left-5 top-4 h-2.5 w-1.5 rotate-80 rounded-full bg-brand-accent" />
               </span>
               <span className="text-xs font-extrabold tracking-[0.18em] text-brand-primary md:text-sm">
                 {missions.eyebrow}

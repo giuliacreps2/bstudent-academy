@@ -21,7 +21,7 @@ export function CharacterEvolutionStrip() {
         </p>
       </div>
 
-      <div className="flex items-center gap-1 overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:justify-center sm:gap-2">
+      <div className="flex items-center gap-1 overflow-x-auto pb-2 [-ms-overflow-style:none] scrollbar-none [&::-webkit-scrollbar]:hidden sm:justify-center sm:gap-2">
         {stages.map((stage, index) => {
           const isSelected = stage.id === previewedStageId;
           const isLocked = !stage.reached;

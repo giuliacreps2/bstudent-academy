@@ -1,4 +1,4 @@
-import Image from "next/image";
+/**import Image from "next/image";
 import { MissionRibbon } from "./MissionRibbon";
 import { MissionStartButton } from "./MissionStartButton";
 import type { MissionHeroData } from "@/types/missions";
@@ -48,10 +48,13 @@ export function MissionHero({ hero, startHref, courseTree }: MissionHeroProps) {
             />
           </div>
         </div>
-      </div>
+      </div>*/
 
-      {/* Su mobile la CTA diventa sticky in fondo allo schermo */}
-      <MissionStartButton href={startHref} variant="sticky" />
+{
+  /* Su mobile la CTA diventa sticky in fondo allo schermo */
+}
+/** <MissionStartButton href={startHref} variant="sticky" />
     </div>
   );
 }
+ */

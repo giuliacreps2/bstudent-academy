@@ -66,7 +66,7 @@ export function PopularResources({
         {/* Mobile: scroll orizzontale (sono shortcut). Desktop: griglia. */}
         <div
           key={subject}
-          className="-mx-1 flex snap-x snap-mandatory gap-4 overflow-x-auto px-1 pb-3 [-ms-overflow-style:none] [scrollbar-width:none] md:mx-0 md:grid md:grid-cols-3 md:overflow-visible md:px-0 md:pb-0 lg:grid-cols-5 [&::-webkit-scrollbar]:hidden"
+          className="-mx-1 flex snap-x snap-mandatory gap-4 overflow-x-auto px-1 pb-3 [-ms-overflow-style:none] scrollbar-none md:mx-0 md:grid md:grid-cols-3 md:overflow-visible md:px-0 md:pb-0 lg:grid-cols-5 [&::-webkit-scrollbar]:hidden"
         >
           {resources.map((resource) => (
             <div

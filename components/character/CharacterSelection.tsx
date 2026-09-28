@@ -125,7 +125,7 @@ function AppearancePanel() {
 
   return (
     <div>
-      <div className="flex items-center gap-2 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+      <div className="flex items-center gap-2 overflow-x-auto pb-1 [-ms-overflow-style:none] scrollbar-none [&::-webkit-scrollbar]:hidden">
         {character.appearance.map((category) => {
           const active = category.key === activeAppearanceTab;
           return (
@@ -263,7 +263,7 @@ export function CharacterSelection() {
         <p className="mb-3 text-sm font-bold text-foreground">
           I tuoi personaggi
         </p>
-        <div className="flex gap-3 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <div className="flex gap-3 overflow-x-auto pb-1 [-ms-overflow-style:none] scrollbar-none [&::-webkit-scrollbar]:hidden">
           {data.roster.map((item) => (
             <RosterAvatar key={item.id} item={item} />
           ))}

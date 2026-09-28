@@ -15,7 +15,7 @@ export function CourseRewardsSection({
         Completa le tappe per sbloccare ricompense esclusive.
       </p>
 
-      <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-1 -mx-1 px-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:grid sm:grid-cols-3 lg:grid-cols-5 sm:gap-4 sm:overflow-visible sm:px-0 sm:mx-0 sm:pb-0">
+      <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-1 -mx-1 px-1 [-ms-overflow-style:none] scrollbar-none [&::-webkit-scrollbar]:hidden sm:grid sm:grid-cols-3 lg:grid-cols-5 sm:gap-4 sm:overflow-visible sm:px-0 sm:mx-0 sm:pb-0">
         {rewards.map((reward) => (
           <div
             key={reward.id}

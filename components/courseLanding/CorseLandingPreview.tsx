@@ -14,7 +14,7 @@ export function CourseLandingPreview({
     >
       <div className="container-section grid items-center gap-10 lg:grid-cols-[1.3fr_0.7fr] lg:gap-16">
         {/* Video a sinistra */}
-        <div className="overflow-hidden rounded-[24px] border border-border bg-surface-blue p-2 shadow-[0_20px_50px_rgba(23,32,51,0.09)] sm:p-3">
+        <div className="overflow-hidden rounded-3xl border border-border bg-surface-blue p-2 shadow-[0_20px_50px_rgba(23,32,51,0.09)] sm:p-3">
           <div className="mb-2 flex items-center justify-between px-2 text-xs font-semibold tracking-wide text-brand-primary sm:mb-3">
             <span>ANTEPRIMA DEL CORSO</span>
             <span

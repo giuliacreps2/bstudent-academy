@@ -9,7 +9,7 @@ export function MissionRewardsCard({
   rewards: MissionRewardsData;
 }) {
   return (
-    <div className="rounded-2xl border border-white/10 bg-white/[0.06] p-4">
+    <div className="rounded-2xl border border-white/10 bg-white/6 p-4">
       <div className="flex items-center gap-2 mb-3">
         <GiftIcon className="h-4 w-4 text-brand-accent" />
         <p className="text-sm font-bold text-white">Ricompense</p>

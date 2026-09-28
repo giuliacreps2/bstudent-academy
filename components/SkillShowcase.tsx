@@ -154,7 +154,7 @@ export function SkillShowcase() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 overflow-hidden"
       >
-        <div className="absolute inset-0 bg-gradient-to-br from-[#171c4b] via-[#0a0e2e] to-[#251542]" />
+        <div className="absolute inset-0 bg-linear-to-br from-[#171c4b] via-[#0a0e2e] to-[#251542]" />
 
         <div className="absolute left-[35%] top-1/2 h-125 w-125 -translate-y-1/2 rounded-full bg-brand-primary/20 blur-3xl" />
 
@@ -234,7 +234,7 @@ export function SkillShowcase() {
 
                 {/* Skin bonus */}
                 {!isLocked && selectedSkin.modifiers && (
-                  <div className="absolute right-0 top-[12%] rounded-2xl border border-white/10 bg-white/[0.08] px-4 py-3 shadow-xl backdrop-blur-md">
+                  <div className="absolute right-0 top-[12%] rounded-2xl border border-white/10 bg-white/8 px-4 py-3 shadow-xl backdrop-blur-md">
                     <div className="flex items-center gap-2">
                       <StarIcon className="h-4 w-4 text-brand-accent" />
 
@@ -254,12 +254,12 @@ export function SkillShowcase() {
                   SKIN SELECTOR
               ================================================== */}
 
-              <div className="relative z-20 mt-[-12px] flex items-center justify-center gap-3">
+              <div className="relative z-20 -mt-3 flex items-center justify-center gap-3">
                 <button
                   type="button"
                   onClick={goPrev}
                   aria-label="Skin precedente"
-                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/[0.08] transition hover:bg-white/[0.15]"
+                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/8 transition hover:bg-white/15"
                 >
                   <ChevronLeftIcon className="h-4 w-4" />
                 </button>
@@ -304,7 +304,7 @@ export function SkillShowcase() {
                   type="button"
                   onClick={goNext}
                   aria-label="Skin successiva"
-                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/[0.08] transition hover:bg-white/[0.15]"
+                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/8 transition hover:bg-white/15"
                 >
                   <ChevronRightIcon className="h-4 w-4" />
                 </button>

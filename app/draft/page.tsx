@@ -142,7 +142,7 @@ export default function DraftPage() {
 
             {/* SECOND PAGE */}
 
-            <article className="stone-card flex min-h-[280px] flex-col justify-between">
+            <article className="stone-card flex min-h-70 flex-col justify-between">
               <span className="game-grass bottom-1 right-3 rotate-[8deg]" />
               <span className="game-flower bottom-8 right-12" />
 

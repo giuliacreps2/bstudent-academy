@@ -52,8 +52,8 @@ export function CourseGrid() {
           {/* DECORAZIONE */}
           <span aria-hidden="true" className="relative mb-1 block h-7 w-8">
             <span className="absolute left-2 top-0 h-3 w-1.5 rotate-[-25deg] rounded-full bg-brand-accent" />
-            <span className="absolute left-0 top-3.5 h-3 w-1.5 rotate-[55deg] rounded-full bg-brand-accent" />
-            <span className="absolute left-5 top-4 h-2.5 w-1.5 rotate-[80deg] rounded-full bg-brand-accent" />
+            <span className="absolute left-0 top-3.5 h-3 w-1.5 rotate-55 rounded-full bg-brand-accent" />
+            <span className="absolute left-5 top-4 h-2.5 w-1.5 rotate-80 rounded-full bg-brand-accent" />
           </span>
 
           {/* EYEBROW */}
@@ -74,9 +74,9 @@ export function CourseGrid() {
                 absolute
                 -bottom-1
                 left-0
-                h-[3px]
+                h-0.75
                 w-full
-                -rotate-[1deg]
+                -rotate-1
                 rounded-full
                 bg-brand-secondary
               "
@@ -140,7 +140,7 @@ export function CourseGrid() {
               px-2
               pb-5
               [-ms-overflow-style:none]
-              [scrollbar-width:none]
+              scrollbar-none
               [&::-webkit-scrollbar]:hidden
 
               md:grid

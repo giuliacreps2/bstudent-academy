@@ -10,7 +10,7 @@ export function BlogHero() {
         priority
         className="object-cover"
       />
-      <div className="absolute inset-0 bg-gradient-to-r from-[#172033]/75 via-[#172033]/35 to-transparent" />
+      <div className="absolute inset-0 bg-linear-to-r from-[#172033]/75 via-[#172033]/35 to-transparent" />
 
       <div className="relative z-10 flex flex-col justify-center h-full max-w-xl px-6 py-10 sm:px-10 sm:py-14">
         <span className="inline-flex items-center self-start text-[10px] font-bold uppercase tracking-widest text-white bg-white/15 backdrop-blur-sm px-3 py-1 rounded-pill mb-4">
@@ -25,7 +25,7 @@ export function BlogHero() {
             percorso.
             <span
               aria-hidden="true"
-              className="absolute -bottom-1 left-0 h-[3px] w-full -rotate-1 rounded-full bg-brand-secondary"
+              className="absolute -bottom-1 left-0 h-0.75 w-full -rotate-1 rounded-full bg-brand-secondary"
             />
           </span>
         </h1>

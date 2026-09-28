@@ -108,8 +108,8 @@ export function HowItWorks() {
             <div className="mb-4 flex items-center gap-3">
               <span className="relative block h-7 w-8" aria-hidden="true">
                 <span className="absolute left-2 top-0 h-3 w-1.5 rotate-[-25deg] rounded-full bg-brand-accent" />
-                <span className="absolute left-0 top-3.5 h-3 w-1.5 rotate-[55deg] rounded-full bg-brand-accent" />
-                <span className="absolute left-5 top-4 h-2.5 w-1.5 rotate-[80deg] rounded-full bg-brand-accent" />
+                <span className="absolute left-0 top-3.5 h-3 w-1.5 rotate-55 rounded-full bg-brand-accent" />
+                <span className="absolute left-5 top-4 h-2.5 w-1.5 rotate-80 rounded-full bg-brand-accent" />
               </span>
 
               <span className="text-xs font-extrabold tracking-[0.18em] text-brand-primary md:text-sm">
@@ -123,7 +123,7 @@ export function HowItWorks() {
                 max-w-xl
                 text-4xl
                 font-extrabold
-                leading-[1]
+                leading-none
                 tracking-[-0.035em]
                 sm:text-5xl
                 lg:text-[58px]

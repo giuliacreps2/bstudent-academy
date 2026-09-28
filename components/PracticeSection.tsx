@@ -14,8 +14,8 @@ export function PracticeSection() {
         <div className="absolute right-[10%] bottom-[10%] h-40 w-40 rounded-full bg-[#dcecff] opacity-50 blur-sm" />
 
         <div className="absolute left-[38%] top-[12%] h-3 w-1.5 rotate-[-25deg] rounded-full bg-brand-accent" />
-        <div className="absolute left-[40%] top-[18%] h-3 w-1.5 rotate-[55deg] rounded-full bg-brand-accent" />
-        <div className="absolute right-[6%] top-[30%] h-2.5 w-1.5 rotate-[80deg] rounded-full bg-brand-secondary" />
+        <div className="absolute left-[40%] top-[18%] h-3 w-1.5 rotate-55 rounded-full bg-brand-accent" />
+        <div className="absolute right-[6%] top-[30%] h-2.5 w-1.5 rotate-80 rounded-full bg-brand-secondary" />
       </div>
 
       <div className="container-section relative z-10 grid grid-cols-1 items-center gap-12 md:grid-cols-2 md:gap-14">
@@ -44,7 +44,7 @@ export function PracticeSection() {
 
         {/* DEMO */}
         <div className="relative flex items-center justify-center md:justify-end">
-          <div className="rotate-[-3deg]">
+          <div className="-rotate-3">
             <QuizPreviewCard />
           </div>
 
@@ -54,7 +54,7 @@ export function PracticeSection() {
             height={28}
           />
 
-          <div className="rotate-[3deg] -ml-4 md:ml-0 mt-16 md:mt-0">
+          <div className="-rotate-3 -ml-4 md:ml-0 mt-16 md:mt-0">
             <ResultCard />
           </div>
         </div>

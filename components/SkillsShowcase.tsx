@@ -66,7 +66,7 @@ export function SkillsShowcase() {
   return (
     <section className="bg-background text-foreground py-16 md:py-20">
       <div className="container-section">
-        <div className="relative overflow-hidden rounded-[24px] bg-surface-blue px-6 py-8 md:px-10 md:py-10 grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-6 items-center">
+        <div className="relative overflow-hidden rounded-3xl bg-surface-blue px-6 py-8 md:px-10 md:py-10 grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-6 items-center">
           {/* TESTO */}
           <div className="md:col-span-3 flex flex-col items-start relative z-10">
             <div className="flex items-center gap-2 mb-3">

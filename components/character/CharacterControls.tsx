@@ -33,7 +33,7 @@ export function CharacterControls() {
       </div>
 
       {/* MOBILE: pillole scorrevoli */}
-      <div className="flex gap-2 overflow-x-auto px-1 pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:hidden">
+      <div className="flex gap-2 overflow-x-auto px-1 pb-1 [-ms-overflow-style:none] scrollbar-none [&::-webkit-scrollbar]:hidden lg:hidden">
         {sections.map(({ key, label, icon: Icon }) => {
           const active = activeSection === key;
           return (

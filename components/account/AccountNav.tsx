@@ -10,7 +10,7 @@ export function AccountNav({ active }: { active: AccountSectionKey }) {
   return (
     <nav aria-label="Sezioni dell'account">
       {/* MOBILE: pillole scorrevoli */}
-      <ul className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1 [-ms-overflow-style:none] [scrollbar-width:none] xl:hidden [&::-webkit-scrollbar]:hidden">
+      <ul className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1 [-ms-overflow-style:none] scrollbar-none xl:hidden [&::-webkit-scrollbar]:hidden">
         {accountSections.map(({ key, label, icon: Icon }) => {
           const isActive = key === active;
           return (

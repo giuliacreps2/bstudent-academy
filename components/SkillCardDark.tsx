@@ -122,14 +122,14 @@ export function SkillCardDark({ skill, basePercentage }: SkillCardDarkProps) {
         rounded-2xl
         border
         border-white/10
-        bg-white/[0.06]
+        bg-white/6
         px-4
         py-4
         backdrop-blur-sm
         transition-all
         duration-300
         hover:-translate-y-0.5
-        hover:bg-white/[0.09]
+        hover:bg-white/9
         ${hasBonus ? `shadow-lg ${styles.glow}` : ""}
       `}
     >

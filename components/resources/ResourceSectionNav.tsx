@@ -22,7 +22,7 @@ export function ResourceSectionNav({
       aria-label="Sezioni della risorsa"
       className="sticky top-0 z-30 -mx-6 mt-8 border-b border-border bg-background/95 px-6 backdrop-blur-sm md:-mx-8 md:px-8"
     >
-      <ul className="flex gap-1 overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+      <ul className="flex gap-1 overflow-x-auto [-ms-overflow-style:none] scrollbar-none [&::-webkit-scrollbar]:hidden">
         {sections.map((key) => {
           const isActive = key === active;
 

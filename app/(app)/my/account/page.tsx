@@ -22,8 +22,8 @@ export default async function AccountPage({ searchParams }: AccountPageProps) {
         {/* Decorazione della Home */}
         <span aria-hidden="true" className="relative mb-1 block h-7 w-8">
           <span className="absolute left-2 top-0 h-3 w-1.5 rotate-[-25deg] rounded-full bg-brand-accent" />
-          <span className="absolute left-0 top-3.5 h-3 w-1.5 rotate-[55deg] rounded-full bg-brand-accent" />
-          <span className="absolute left-5 top-4 h-2.5 w-1.5 rotate-[80deg] rounded-full bg-brand-accent" />
+          <span className="absolute left-0 top-3.5 h-3 w-1.5 rotate-55 rounded-full bg-brand-accent" />
+          <span className="absolute left-5 top-4 h-2.5 w-1.5 rotate-80 rounded-full bg-brand-accent" />
         </span>
 
         <h3 className="text-4xl font-extrabold leading-[1.05] tracking-tight text-foreground md:text-5xl">

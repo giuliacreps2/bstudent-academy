@@ -72,7 +72,7 @@ export function SettingRow({
       <div className="min-w-0">
         <p className="text-sm font-semibold text-brand-muted">{label}</p>
         {value && (
-          <div className="mt-0.5 break-words text-base font-semibold text-foreground">
+          <div className="mt-0.5 wrap-break-word text-base font-semibold text-foreground">
             {value}
           </div>
         )}

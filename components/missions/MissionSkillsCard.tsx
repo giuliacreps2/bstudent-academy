@@ -3,7 +3,7 @@ import type { SkillKey } from "@/types/skills";
 
 export function MissionSkillsCard({ skills }: { skills: SkillKey[] }) {
   return (
-    <div className="rounded-2xl border border-white/10 bg-white/[0.06] p-4">
+    <div className="rounded-2xl border border-white/10 bg-white/6 p-4">
       <p className="text-sm font-bold text-white mb-3">Skill coinvolte</p>
       <div className="flex flex-wrap gap-2">
         {skills.map((key) => {

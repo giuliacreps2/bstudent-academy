@@ -34,7 +34,7 @@ export function CourseDetailHero({
   return (
     <div className="relative overflow-hidden rounded-3xl min-h-110">
       <Image src={imageUrl} alt="" fill priority className="object-cover" />
-      <div className="absolute inset-0 bg-gradient-to-r from-[#172033]/85 via-[#172033]/45 to-transparent" />
+      <div className="absolute inset-0 bg-linear-to-r from-[#172033]/85 via-[#172033]/45 to-transparent" />
 
       <div className="relative z-10 flex h-full flex-col justify-center gap-5 max-w-lg px-6 py-10 sm:px-10">
         <span className="inline-flex items-center gap-1.5 self-start text-[10px] font-bold uppercase tracking-widest text-white bg-white/15 backdrop-blur-sm px-3 py-1 rounded-pill">

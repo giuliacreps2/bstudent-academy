@@ -7,7 +7,7 @@ export function MissionBonusesBar({
   bonuses: MissionBonusCounter[];
 }) {
   return (
-    <div className="flex items-center gap-2 overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+    <div className="flex items-center gap-2 overflow-x-auto [-ms-overflow-style:none] scrollbar-none [&::-webkit-scrollbar]:hidden">
       {bonuses.map((bonus) => (
         <MissionBonusChip key={bonus.id} bonus={bonus} />
       ))}

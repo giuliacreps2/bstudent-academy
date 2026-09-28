@@ -68,7 +68,7 @@ export function SkillPicker({ skills }: { skills: SkillOption[] }) {
           pb-2
           -mx-1 px-1
           [-ms-overflow-style:none]
-          [scrollbar-width:none]
+          scrollbar:none
           [&::-webkit-scrollbar]:hidden
 
           md:grid

@@ -15,7 +15,7 @@ export function TwoCol() {
           className="
             relative
             overflow-hidden
-            rounded-[24px]
+            rounded-3xl
             bg-surface-blue
             px-6 py-8
             md:px-12 md:py-10
@@ -64,9 +64,9 @@ export function TwoCol() {
             {/* Piccoli elementi gialli */}
             <div className="absolute left-[6%] top-[32%] h-3 w-1.5 rotate-[-25deg] rounded-full bg-brand-accent" />
 
-            <div className="absolute left-[3%] top-[39%] h-3 w-1.5 rotate-[55deg] rounded-full bg-brand-accent" />
+            <div className="absolute left-[3%] top-[39%] h-3 w-1.5 rotate-55 rounded-full bg-brand-accent" />
 
-            <div className="absolute left-[8%] top-[42%] h-2.5 w-1.5 rotate-[80deg] rounded-full bg-brand-accent" />
+            <div className="absolute left-[8%] top-[42%] h-2.5 w-1.5 rotate-80 rounded-full bg-brand-accent" />
 
             {/* Piccolo punto rosa */}
             <div
@@ -146,8 +146,8 @@ export function TwoCol() {
               z-10
               md:col-span-3
               w-full
-              h-[300px]
-              md:h-[380px]
+              h-75
+              md:h-95
             "
           >
             <Image

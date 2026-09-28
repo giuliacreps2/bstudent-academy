@@ -50,7 +50,7 @@ export function CourseMissionSection({
           fill
           className="object-cover sm:hidden"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/30" />
+        <div className="absolute inset-0 bg-linear-to-b from-black/10 via-transparent to-black/30" />
 
         <div className="relative z-10 p-5 sm:p-6 max-w-xs">
           <p className="text-xs font-extrabold uppercase tracking-widest text-white/85">

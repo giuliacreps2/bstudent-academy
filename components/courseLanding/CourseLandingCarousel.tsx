@@ -106,13 +106,13 @@ export function CourseLandingCarousel({
 
       {/* FASCIA IN LOOP — solo grafica, il click apre la registrazione.
           Pausa su hover; con "riduci movimento" diventa scorrevole a mano. */}
-      <div className="group overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)] motion-reduce:overflow-x-auto">
+      <div className="group overflow-hidden mask-[linear-gradient(to_right,transparent,black_6%,black_94%,transparent)] motion-reduce:overflow-x-auto">
         <div className="flex w-max animate-marquee group-hover:[animation-play-state:paused] motion-reduce:animate-none">
           {[false, true].map((decorative) => (
             <div
               key={String(decorative)}
               aria-hidden={decorative || undefined}
-              className="flex shrink-0 motion-reduce:[&:last-child]:hidden"
+              className="flex shrink-0 motion-reduce:last:hidden"
             >
               {items.map((course, index) => (
                 <div

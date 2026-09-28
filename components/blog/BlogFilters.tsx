@@ -26,7 +26,7 @@ export function BlogFilters({
           overflow-x-auto
           -mx-1 px-1
           [-ms-overflow-style:none]
-          [scrollbar-width:none]
+          scrollbar-none
           [&::-webkit-scrollbar]:hidden
         "
       >

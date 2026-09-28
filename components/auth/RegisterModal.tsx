@@ -328,7 +328,7 @@ export function RegisterModal({
             <button
               type="button"
               onClick={handleNext}
-              className="inline-flex h-11 items-center gap-2 rounded-xl bg-[#3155d9] px-5 text-sm font-bold text-white shadow-[0_4px_0_#243fa8] transition hover:bg-[#5472df] active:translate-y-[2px] active:shadow-[0_2px_0_#243fa8]"
+              className="inline-flex h-11 items-center gap-2 rounded-xl bg-[#3155d9] px-5 text-sm font-bold text-white shadow-[0_4px_0_#243fa8] transition hover:bg-[#5472df] active:translate-y-0.5 active:shadow-[0_2px_0_#243fa8]"
             >
               Continua
               <ArrowRightIcon className="h-4 w-4" />
@@ -337,7 +337,7 @@ export function RegisterModal({
             <button
               type="button"
               onClick={handleSubmit}
-              className="inline-flex h-11 items-center gap-2 rounded-xl bg-[#3155d9] px-5 text-sm font-bold text-white shadow-[0_4px_0_#243fa8] transition hover:bg-[#5472df] active:translate-y-[2px] active:shadow-[0_2px_0_#243fa8]"
+              className="inline-flex h-11 items-center gap-2 rounded-xl bg-[#3155d9] px-5 text-sm font-bold text-white shadow-[0_4px_0_#243fa8] transition hover:bg-[#5472df] active:translate-y-0.5 active:shadow-[0_2px_0_#243fa8]"
             >
               Inizia su BStudent
               <CheckIcon className="h-4 w-4" />

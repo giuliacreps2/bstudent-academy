@@ -18,7 +18,7 @@ export function CourseCarousel({ courses }: { courses: CourseData[] }) {
     <div>
       <div
         ref={scrollRef}
-        className="flex overflow-x-auto snap-x snap-mandatory [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        className="flex overflow-x-auto snap-x snap-mandatory [-ms-overflow-style:none] scrollbar-none [&::-webkit-scrollbar]:hidden"
       >
         {courses.map((course) => (
           <div key={course.slug} className="w-full shrink-0 snap-start">

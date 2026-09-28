@@ -83,7 +83,7 @@ export function CourseLandingReviews({
             <div
               key={String(decorative)}
               aria-hidden={decorative || undefined}
-              className="flex shrink-0 motion-reduce:[&:last-child]:hidden"
+              className="flex shrink-0 motion-reduce:last:hidden"
             >
               {items.map((review, index) => (
                 <div

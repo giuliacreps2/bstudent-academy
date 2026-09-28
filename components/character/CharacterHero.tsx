@@ -20,7 +20,7 @@ export function CharacterHero() {
     .find((s) => s.reached)?.id;
 
   return (
-    <div className="relative flex h-full min-h-125 flex-col overflow-hidden rounded-[32px] border border-white/70 bg-gradient-to-b from-surface-blue via-white to-surface-blue">
+    <div className="relative flex h-full min-h-125 flex-col overflow-hidden rounded-4xl border border-white/70 bg-linear-to-b from-surface-blue via-white to-surface-blue">
       <div className="relative flex-1">
         <Image
           key={previewedStage.id}
