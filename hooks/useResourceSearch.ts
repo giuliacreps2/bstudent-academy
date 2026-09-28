@@ -20,7 +20,7 @@ export function useResourceSearch(subject: ResourceSubjectKey) {
       const q = query.trim();
       if (!q) return;
       router.push(
-        `/risorse/cerca?${new URLSearchParams({ q, materia: subject })}`,
+        `/resources/cerca?${new URLSearchParams({ q, materia: subject })}`,
       );
     },
     [query, subject, router],

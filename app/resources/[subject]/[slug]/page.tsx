@@ -5,14 +5,14 @@ import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { MissionBreadcrumb } from "@/components/missions/MissionBreadcrumb";
-import { ResourceHeader } from "@/components/resources/detail/ResourceHeader";
-import { ResourceSectionNav } from "@/components/resources/detail/ResourceSectionNav";
-import { ResourceSummaryCard } from "@/components/resources/detail/ResourceSummaryCard";
-import { ResourceTableTool } from "@/components/resources/detail/ResourceTableTool";
-import { ResourceInsights } from "@/components/resources/detail/ResourceInsights";
-import { ResourceExamples } from "@/components/resources/detail/ResourceExamples";
-import { ResourceExerciseCta } from "@/components/resources/detail/ResourceExerciseCta";
-import { ResourceRelatedList } from "@/components/resources/detail/ResourceRelatedList";
+import { ResourceHeader } from "@/components/resources/ResourceHeader";
+import { ResourceSectionNav } from "@/components/resources/ResourceSectionNav";
+import { ResourceSummaryCard } from "@/components/resources/ResourceSummaryCard";
+import { ResourceTableTool } from "@/components/resources/ResourceTableTool";
+import { ResourceInsights } from "@/components/resources/ResourceInsights";
+import { ResourceExamples } from "@/components/resources/ResourceExamples";
+import { ResourceExerciseCta } from "@/components/resources/ResourceExerciseCta";
+import { ResourceRelatedList } from "@/components/resources/ResourceRelatedList";
 import {
   getAvailableSections,
   getResourceDetail,
@@ -25,34 +25,39 @@ import {
 } from "@/constants/resources";
 import { resourceSectionId } from "@/constants/resourceDetail";
 
+// Il nome del parametro segue la cartella: app/resources/[subject]/[slug]
 type ResourcePageProps = {
-  params: Promise<{ materia: string; slug: string }>;
+  params: Promise<{ subject: string; slug: string }>;
 };
 
 export function generateStaticParams() {
-  return resourceDetailParams;
+  // lib/resourceDetail espone { materia, slug }: qui lo adattiamo alla cartella
+  return resourceDetailParams.map(({ materia, slug }) => ({
+    subject: materia,
+    slug,
+  }));
 }
 
 export async function generateMetadata({
   params,
 }: ResourcePageProps): Promise<Metadata> {
-  const { materia, slug } = await params;
-  if (!isResourceSubject(materia)) return {};
+  const { subject, slug } = await params;
+  if (!isResourceSubject(subject)) return {};
 
-  const resource = await getResourceDetail(materia, slug);
+  const resource = await getResourceDetail(subject, slug);
   if (!resource) return {};
 
   return {
-    title: `${resource.title} | Risorse di ${resourceSubjectsMeta[materia].label} | BStudent`,
+    title: `${resource.title} | Risorse di ${resourceSubjectsMeta[subject].label} | BStudent`,
     description: resource.description,
   };
 }
 
 export default async function ResourcePage({ params }: ResourcePageProps) {
-  const { materia, slug } = await params;
-  if (!isResourceSubject(materia)) notFound();
+  const { subject, slug } = await params;
+  if (!isResourceSubject(subject)) notFound();
 
-  const resource = await getResourceDetail(materia, slug);
+  const resource = await getResourceDetail(subject, slug);
   if (!resource) notFound();
 
   // TODO: sostituire con lo stato di autenticazione reale quando l'auth sarà collegata
@@ -60,7 +65,8 @@ export default async function ResourcePage({ params }: ResourcePageProps) {
 
   const subjectLabel = resourceSubjectsMeta[resource.subject].label;
   const categoryLabel = resourceCategoriesMeta[resource.category].label;
-  const backHref = `/risorse?materia=${resource.subject}`;
+  // L'hub legge ancora ?materia= (vedi app/resources/page.tsx)
+  const backHref = `/resources?materia=${resource.subject}`;
   const sections = getAvailableSections(resource);
 
   return (
@@ -73,11 +79,12 @@ export default async function ResourcePage({ params }: ResourcePageProps) {
           {/* BREADCRUMB: Risorse → Latino → Grammatica → Terza declinazione */}
           <MissionBreadcrumb
             items={[
-              { label: "Risorse", href: "/risorse" },
+              { label: "Risorse", href: "/resources" },
               { label: subjectLabel, href: backHref },
               {
                 label: categoryLabel,
-                href: `/risorse/categoria/${resource.category}?materia=${resource.subject}`,
+                // TODO: la pagina categoria non esiste ancora in app/resources
+                href: `/resources/categoria/${resource.category}?materia=${resource.subject}`,
               },
               { label: resource.title },
             ]}

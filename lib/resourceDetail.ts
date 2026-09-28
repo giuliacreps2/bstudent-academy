@@ -140,13 +140,13 @@ const terzaDeclinazione: ResourceDetailData = {
       id: "rel-particolarita",
       kind: "resource",
       label: "Le particolarità della terza declinazione",
-      href: "/risorse/latino/terza-declinazione#risorsa-spiegazione",
+      href: "/resources/latino/terza-declinazione#risorsa-spiegazione",
     },
     {
       id: "rel-temi",
       kind: "resource",
       label: "Tema consonantico e tema in -i",
-      href: "/risorse/latino/terza-declinazione#risorsa-tabella",
+      href: "/resources/latino/terza-declinazione#risorsa-tabella",
     },
     {
       id: "rel-esercizi",

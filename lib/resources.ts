@@ -39,7 +39,7 @@ function buildCategories(subject: ResourceSubjectKey): ResourceCategoryCard[] {
   return resourceCategoryOrder.map((category) => ({
     category,
     description: categoryDescriptions[subject][category],
-    href: `/risorse/categoria/${category}?materia=${subject}`,
+    href: `/resources/categoria/${category}?materia=${subject}`,
   }));
 }
 
@@ -49,35 +49,35 @@ const latinoPopular: PopularResource[] = [
     title: "Declinazioni",
     description: "Tabelle complete",
     icon: "declinazioni",
-    href: "/risorse/latino/declinazioni",
+    href: "/resources/latino/declinazioni",
   },
   {
     id: "verbi-latino",
     title: "Verbi",
     description: "Coniugazioni e paradigmi",
     icon: "verbi",
-    href: "/risorse/latino/verbi",
+    href: "/resources/latino/verbi",
   },
   {
     id: "complementi-latino",
     title: "Complementi",
     description: "Schemi ed esempi",
     icon: "complementi",
-    href: "/risorse/latino/complementi",
+    href: "/resources/latino/complementi",
   },
   {
     id: "pronomi-latino",
     title: "Pronomi",
     description: "Forme e utilizzi",
     icon: "pronomi",
-    href: "/risorse/latino/pronomi",
+    href: "/resources/latino/pronomi",
   },
   {
     id: "vocabolario-latino",
     title: "Vocabolario",
     description: "Parole frequenti",
     icon: "vocabolario",
-    href: "/risorse/latino/vocabolario",
+    href: "/resources/latino/vocabolario",
   },
 ];
 
@@ -88,35 +88,35 @@ const grecoPopular: PopularResource[] = [
     title: "Alfabeto",
     description: "Lettere, spiriti e accenti",
     icon: "alfabeto",
-    href: "/risorse/greco/alfabeto",
+    href: "/resources/greco/alfabeto",
   },
   {
     id: "articolo-greco",
     title: "Articolo",
     description: "Tutte le forme",
     icon: "articolo",
-    href: "/risorse/greco/articolo",
+    href: "/resources/greco/articolo",
   },
   {
     id: "declinazioni-greco",
     title: "Declinazioni",
     description: "Tabelle complete",
     icon: "declinazioni",
-    href: "/risorse/greco/declinazioni",
+    href: "/resources/greco/declinazioni",
   },
   {
     id: "verbi-greco",
     title: "Verbi",
     description: "Coniugazioni e paradigmi",
     icon: "verbi",
-    href: "/risorse/greco/verbi",
+    href: "/resources/greco/verbi",
   },
   {
     id: "vocabolario-greco",
     title: "Vocabolario",
     description: "Parole frequenti",
     icon: "vocabolario",
-    href: "/risorse/greco/vocabolario",
+    href: "/resources/greco/vocabolario",
   },
 ];
 
@@ -127,7 +127,7 @@ const latinoFeatured: FeaturedResource[] = [
     title: "La terza declinazione",
     description: "Tabella completa, spiegazione ed esempi.",
     imageUrl: "/placeholder-blog.png",
-    href: "/risorse/latino/terza-declinazione",
+    href: "/resources/latino/terza-declinazione",
   },
   {
     id: "verbo-sum",
@@ -135,7 +135,7 @@ const latinoFeatured: FeaturedResource[] = [
     title: "Il verbo sum",
     description: "Tutte le forme, uso ed esempi.",
     imageUrl: "/placeholder-blog.png",
-    href: "/risorse/latino/verbo-sum",
+    href: "/resources/latino/verbo-sum",
   },
   {
     id: "complementi-principali",
@@ -143,7 +143,7 @@ const latinoFeatured: FeaturedResource[] = [
     title: "I complementi principali",
     description: "Come riconoscerli e tradurli in una frase.",
     imageUrl: "/placeholder-blog.png",
-    href: "/risorse/latino/complementi-principali",
+    href: "/resources/latino/complementi-principali",
   },
   {
     id: "100-parole-frequenti",
@@ -151,7 +151,7 @@ const latinoFeatured: FeaturedResource[] = [
     title: "Le 100 parole più frequenti",
     description: "Il lessico da conoscere a memoria.",
     imageUrl: "/placeholder-blog.png",
-    href: "/risorse/latino/100-parole-frequenti",
+    href: "/resources/latino/100-parole-frequenti",
   },
 ];
 
@@ -163,7 +163,7 @@ const grecoFeatured: FeaturedResource[] = [
     title: "L'alfabeto greco",
     description: "Lettere, pronuncia, spiriti e accenti.",
     imageUrl: "/placeholder-blog.png",
-    href: "/risorse/greco/alfabeto-e-pronuncia",
+    href: "/resources/greco/alfabeto-e-pronuncia",
   },
   {
     id: "verbo-eimi",
@@ -171,7 +171,7 @@ const grecoFeatured: FeaturedResource[] = [
     title: "Il verbo εἰμί",
     description: "Tutte le forme, uso ed esempi.",
     imageUrl: "/placeholder-blog.png",
-    href: "/risorse/greco/verbo-eimi",
+    href: "/resources/greco/verbo-eimi",
   },
   {
     id: "costruzioni-greche",
@@ -179,7 +179,7 @@ const grecoFeatured: FeaturedResource[] = [
     title: "Le costruzioni più comuni",
     description: "Come riconoscerle e tradurle.",
     imageUrl: "/placeholder-blog.png",
-    href: "/risorse/greco/costruzioni-greche",
+    href: "/resources/greco/costruzioni-greche",
   },
   {
     id: "parole-frequenti-greco",
@@ -187,7 +187,7 @@ const grecoFeatured: FeaturedResource[] = [
     title: "Le parole greche più frequenti",
     description: "Il lessico di base da tenere sempre a portata.",
     imageUrl: "/placeholder-blog.png",
-    href: "/risorse/greco/parole-frequenti",
+    href: "/resources/greco/parole-frequenti",
   },
 ];
 
@@ -201,7 +201,7 @@ const content: Record<ResourceSubjectKey, ResourceSubjectContent> = {
         "Scopri una selezione di risorse utili per iniziare a tradurre.",
       ctaLabel: "Percorso consigliato",
       // TODO: filtro/raccolta di risorse consigliate (da confermare nel Blueprint)
-      href: "/risorse/categoria/traduzione?materia=latino&percorso=consigliato",
+      href: "/resources/categoria/traduzione?materia=latino&percorso=consigliato",
     },
     featured: latinoFeatured,
   },
@@ -213,7 +213,7 @@ const content: Record<ResourceSubjectKey, ResourceSubjectContent> = {
       description:
         "Scopri una selezione di risorse utili per iniziare a tradurre.",
       ctaLabel: "Percorso consigliato",
-      href: "/risorse/categoria/traduzione?materia=greco&percorso=consigliato",
+      href: "/resources/categoria/traduzione?materia=greco&percorso=consigliato",
     },
     featured: grecoFeatured,
   },
