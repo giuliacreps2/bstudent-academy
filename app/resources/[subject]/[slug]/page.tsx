@@ -1,0 +1,141 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { ArrowLeftIcon } from "@heroicons/react/24/outline";
+import { Navbar } from "@/components/Navbar";
+import { Footer } from "@/components/Footer";
+import { MissionBreadcrumb } from "@/components/missions/MissionBreadcrumb";
+import { ResourceHeader } from "@/components/resources/detail/ResourceHeader";
+import { ResourceSectionNav } from "@/components/resources/detail/ResourceSectionNav";
+import { ResourceSummaryCard } from "@/components/resources/detail/ResourceSummaryCard";
+import { ResourceTableTool } from "@/components/resources/detail/ResourceTableTool";
+import { ResourceInsights } from "@/components/resources/detail/ResourceInsights";
+import { ResourceExamples } from "@/components/resources/detail/ResourceExamples";
+import { ResourceExerciseCta } from "@/components/resources/detail/ResourceExerciseCta";
+import { ResourceRelatedList } from "@/components/resources/detail/ResourceRelatedList";
+import {
+  getAvailableSections,
+  getResourceDetail,
+  resourceDetailParams,
+} from "@/lib/resourceDetail";
+import {
+  isResourceSubject,
+  resourceCategoriesMeta,
+  resourceSubjectsMeta,
+} from "@/constants/resources";
+import { resourceSectionId } from "@/constants/resourceDetail";
+
+type ResourcePageProps = {
+  params: Promise<{ materia: string; slug: string }>;
+};
+
+export function generateStaticParams() {
+  return resourceDetailParams;
+}
+
+export async function generateMetadata({
+  params,
+}: ResourcePageProps): Promise<Metadata> {
+  const { materia, slug } = await params;
+  if (!isResourceSubject(materia)) return {};
+
+  const resource = await getResourceDetail(materia, slug);
+  if (!resource) return {};
+
+  return {
+    title: `${resource.title} | Risorse di ${resourceSubjectsMeta[materia].label} | BStudent`,
+    description: resource.description,
+  };
+}
+
+export default async function ResourcePage({ params }: ResourcePageProps) {
+  const { materia, slug } = await params;
+  if (!isResourceSubject(materia)) notFound();
+
+  const resource = await getResourceDetail(materia, slug);
+  if (!resource) notFound();
+
+  // TODO: sostituire con lo stato di autenticazione reale quando l'auth sarà collegata
+  const isLoggedIn = false;
+
+  const subjectLabel = resourceSubjectsMeta[resource.subject].label;
+  const categoryLabel = resourceCategoriesMeta[resource.category].label;
+  const backHref = `/risorse?materia=${resource.subject}`;
+  const sections = getAvailableSections(resource);
+
+  return (
+    <div>
+      <Navbar />
+
+      <main className="bg-background">
+        {/* Niente `reading-area` qui: il layout root avvolge già tutto in <ReadingArea> */}
+        <article className="container-section max-w-4xl py-8 md:py-12">
+          {/* BREADCRUMB: Risorse → Latino → Grammatica → Terza declinazione */}
+          <MissionBreadcrumb
+            items={[
+              { label: "Risorse", href: "/risorse" },
+              { label: subjectLabel, href: backHref },
+              {
+                label: categoryLabel,
+                href: `/risorse/categoria/${resource.category}?materia=${resource.subject}`,
+              },
+              { label: resource.title },
+            ]}
+          />
+
+          <Link
+            href={backHref}
+            className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-primary hover:underline"
+          >
+            <ArrowLeftIcon className="h-4 w-4" />
+            Torna alle risorse
+          </Link>
+
+          <ResourceHeader resource={resource} isLoggedIn={isLoggedIn} />
+
+          {/* Sticky sotto la navbar su desktop, barra scrollabile su mobile */}
+          <ResourceSectionNav sections={sections} />
+
+          <div className="mt-8 space-y-12 md:space-y-14">
+            <ResourceSummaryCard
+              id={resourceSectionId("panoramica")}
+              summary={resource.summary}
+            />
+
+            {resource.tool && (
+              <ResourceTableTool
+                id={resourceSectionId("tabella")}
+                tool={resource.tool}
+              />
+            )}
+
+            {resource.insights && resource.insights.length > 0 && (
+              <ResourceInsights
+                id={resourceSectionId("spiegazione")}
+                insights={resource.insights}
+              />
+            )}
+
+            {resource.examples && resource.examples.length > 0 && (
+              <ResourceExamples
+                id={resourceSectionId("esempi")}
+                examples={resource.examples}
+              />
+            )}
+
+            {resource.exerciseLink && (
+              <ResourceExerciseCta
+                id={resourceSectionId("esercizi")}
+                link={resource.exerciseLink}
+              />
+            )}
+
+            <ResourceRelatedList links={resource.related} />
+          </div>
+        </article>
+      </main>
+
+      <Footer />
+    </div>
+  );
+}
