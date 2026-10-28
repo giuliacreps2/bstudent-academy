@@ -6,7 +6,10 @@ import { useRouter } from "next/navigation";
 import { ArrowRightOnRectangleIcon } from "@heroicons/react/24/outline";
 import { Modal } from "@/components/ui/Modal";
 import { Field, inputClass } from "@/components/auth/StepHeading";
-import { changeEmail, changePassword, logout } from "@/lib/account";
+import { changeEmail } from "@/lib/account";
+import { changePassword, logout, requestPasswordReset } from "@/lib/auth";
+import { errorMessage } from "@/lib/api";
+import { PASSWORD_MAX_LENGTH } from "@/constants/auth";
 import {
   AccountCard,
   InlineMessage,
@@ -124,6 +127,11 @@ function ChangePasswordForm({
     if (newPassword.length < 8) {
       return setError("La nuova password deve contenere almeno 8 caratteri.");
     }
+    if (newPassword.length > PASSWORD_MAX_LENGTH) {
+      return setError(
+        `La nuova password può avere al massimo ${PASSWORD_MAX_LENGTH} caratteri.`,
+      );
+    }
     if (newPassword === currentPassword) {
       return setError(
         "La nuova password deve essere diversa da quella attuale.",
@@ -138,9 +146,12 @@ function ChangePasswordForm({
     try {
       await changePassword({ currentPassword, newPassword });
       onDone();
-    } catch {
+    } catch (err) {
       setError(
-        "Non siamo riusciti a cambiare la password. Controlla quella attuale e riprova.",
+        errorMessage(
+          err,
+          "Non siamo riusciti a cambiare la password. Controlla quella attuale e riprova.",
+        ),
       );
     } finally {
       setIsSaving(false);
@@ -200,18 +211,46 @@ function ChangePasswordForm({
   );
 }
 
-export function SecuritySection({ email }: { email: string }) {
+export function SecuritySection({
+  email,
+  hasLocalPassword,
+  googleLinked,
+}: {
+  email: string;
+  /** false per gli account creati con Google */
+  hasLocalPassword: boolean;
+  googleLinked: boolean;
+}) {
   const router = useRouter();
   const [modal, setModal] = useState<SecurityModal>(null);
   const [currentEmail, setCurrentEmail] = useState(email);
   const [notice, setNotice] = useState("");
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const [isSendingSetup, setIsSendingSetup] = useState(false);
 
   async function handleLogout() {
     setIsLoggingOut(true);
-    await logout();
-    // TODO: dopo il logout reale, redirect alla pagina di accesso
-    router.push("/");
+    try {
+      await logout();
+    } finally {
+      router.replace("/");
+      router.refresh();
+    }
+  }
+
+  // Account solo Google: la prima password si imposta con il link di reset
+  async function handleSetupPassword() {
+    setIsSendingSetup(true);
+    try {
+      await requestPasswordReset(currentEmail);
+      setNotice(
+        `Ti abbiamo inviato un link a ${currentEmail} per impostare la password. Vale 1 ora.`,
+      );
+    } catch (err) {
+      setNotice(errorMessage(err, "Non siamo riusciti a inviare il link. Riprova tra poco."));
+    } finally {
+      setIsSendingSetup(false);
+    }
   }
 
   return (
@@ -230,35 +269,56 @@ export function SecuritySection({ email }: { email: string }) {
             <SettingRow
               label="Email"
               value={currentEmail}
+              // TODO (BE): manca l'endpoint di cambio email; il form (ChangeEmailForm) è già pronto
               action={
-                <button
-                  type="button"
-                  onClick={() => setModal("email")}
-                  className="btn-secondary px-4 py-2 text-sm"
-                >
-                  Cambia
-                </button>
-              }
-            />
-            <SettingRow
-              label="Password"
-              value={<span aria-label="Password nascosta">••••••••</span>}
-              action={
-                <button
-                  type="button"
-                  onClick={() => setModal("password")}
-                  className="btn-secondary px-4 py-2 text-sm"
-                >
-                  Cambia
-                </button>
-              }
-            />
-            <SettingRow
-              label="Accesso con Google o Apple"
-              value={
                 <span className="inline-flex items-center rounded-full bg-brand-accent/20 px-3 py-1 text-xs font-bold text-foreground">
-                  Presto disponibile
+                  Modifica presto disponibile
                 </span>
+              }
+            />
+            {hasLocalPassword ? (
+              <SettingRow
+                label="Password"
+                value={<span aria-label="Password nascosta">••••••••</span>}
+                action={
+                  <button
+                    type="button"
+                    onClick={() => setModal("password")}
+                    className="btn-secondary px-4 py-2 text-sm"
+                  >
+                    Cambia
+                  </button>
+                }
+              />
+            ) : (
+              <SettingRow
+                label="Password"
+                value="Non impostata: entri con Google"
+                action={
+                  <button
+                    type="button"
+                    onClick={handleSetupPassword}
+                    disabled={isSendingSetup}
+                    className="btn-secondary px-4 py-2 text-sm disabled:opacity-50"
+                  >
+                    {isSendingSetup ? "Invio..." : "Imposta"}
+                  </button>
+                }
+              />
+            )}
+            <SettingRow
+              label="Accesso con Google"
+              value={
+                googleLinked ? (
+                  <span className="inline-flex items-center rounded-full bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-700">
+                    Collegato
+                  </span>
+                ) : (
+                  <span className="text-sm text-brand-muted">
+                    Non collegato. Per collegarlo, accedi una volta con
+                    Google usando questa email.
+                  </span>
+                )
               }
             />
           </SettingList>

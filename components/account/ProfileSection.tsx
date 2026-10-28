@@ -14,8 +14,7 @@ import {
   SettingRow,
 } from "./AccountPrimitives";
 import type { AccountProfile } from "@/types/account";
-
-const USERNAME_PATTERN = /^[a-zA-Z0-9_.]{3,20}$/;
+import { USERNAME_PATTERN } from "@/constants/auth";
 
 export function ProfileSection({ profile }: { profile: AccountProfile }) {
   const [saved, setSaved] = useState({

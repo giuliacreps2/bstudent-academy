@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 
 import {
   Disclosure,
@@ -82,7 +83,14 @@ export function Navbar() {
             </div>
 
             {/* CTA */}
-            <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+            <div className="absolute inset-y-0 right-0 flex items-center gap-2 pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+              <Link
+                href="/login"
+                className="hidden px-4 py-3 font-medium text-foreground hover:text-brand-primary sm:block"
+              >
+                Accedi
+              </Link>
+
               <button
                 type="button"
                 onClick={() => setIsRegisterOpen(true)}
@@ -109,6 +117,14 @@ export function Navbar() {
                 {item.name}
               </DisclosureButton>
             ))}
+
+            <DisclosureButton
+              as={Link}
+              href="/login"
+              className="text-foreground font-medium hover:bg-white/5 hover:text-brand-primary block rounded-md px-3 py-2 text-base"
+            >
+              Accedi
+            </DisclosureButton>
           </div>
         </DisclosurePanel>
       </Disclosure>

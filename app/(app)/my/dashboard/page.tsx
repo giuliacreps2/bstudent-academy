@@ -1,4 +1,5 @@
 import { getDashboardData } from "@/lib/dashboard";
+import { requireUser } from "@/lib/api-server";
 import { Greeting } from "@/components/dashboard/welcomeSection/Greeting";
 import { WelcomeBanner } from "@/components/dashboard/welcomeSection/WelcomeBanner";
 import { RightColumn } from "@/components/dashboard/rightColumn/RightColumn";
@@ -11,8 +12,9 @@ import { NextMilestone } from "@/components/dashboard/rightColumn/NextMilestone"
 import { MidSection } from "@/components/dashboard/midSection/MidSection";
 
 export default async function DashboardPage() {
+  const currentUser = await requireUser();
   const {
-    user,
+    user: mockUser,
     hasStartedCourse,
     lastCourse,
     skin,
@@ -26,6 +28,11 @@ export default async function DashboardPage() {
     featuredCourses,
     recommendedActivity,
   } = await getDashboardData();
+  // Il nome viene dalla sessione; gender resta mock (il backend non lo gestisce)
+  const user = {
+    ...mockUser,
+    firstName: currentUser.firstName ?? currentUser.username ?? "",
+  };
   return (
     <>
       {/* MOBILE: saluto → skin/livello → attività → streak → skill → traguardo → banner */}

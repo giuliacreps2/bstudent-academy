@@ -39,15 +39,14 @@ export function CourseLandingPreview({
         {/* Testo a destra */}
         <div className="max-w-md">
           <div className="mb-4 flex items-center gap-3">
-            <span aria-hidden="true" className="h-px w-8 bg-brand-primary" />
             <span className="text-xs font-extrabold tracking-[0.18em] text-brand-primary md:text-sm">
-              L&apos;ANTEPRIMA
+              L'ANTEPRIMA
             </span>
           </div>
 
           <h2 className="text-3xl font-extrabold leading-[1.08] tracking-tight sm:text-4xl md:text-5xl">
             Guarda come sarà{" "}
-            <span className="text-brand-primary">il tuo viaggio.</span>
+            <span className="text-brand-secondary">il tuo viaggio.</span>
           </h2>
 
           <p className="mt-4 text-base leading-relaxed text-brand-muted md:text-lg">
@@ -55,7 +54,7 @@ export function CourseLandingPreview({
             aspetta prima di iniziare.
           </p>
 
-          <p className="mt-6 border-l-2 border-brand-secondary pl-4 text-sm font-semibold text-foreground">
+          <p className="mt-6 text-sm font-semibold text-foreground">
             Un primo sguardo al percorso prima di iniziare.
           </p>
         </div>

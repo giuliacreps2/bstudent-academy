@@ -5,17 +5,20 @@ import type {
   SensitiveAction,
   SensitiveActionOutcome,
 } from "@/types/account";
+import type { LoggedUser } from "@/types/auth";
 
+// Nome, username ed email arrivano dalla sessione (/auth/me), il resto è ancora mock.
 // TODO: sostituire con la fetch reale quando il BE è pronto
 // const res = await fetch(`${process.env.API_URL}/student/account`);
 // if (!res.ok) throw new Error("Impossibile caricare l'area account");
 // return res.json();
-export async function getAccountData(): Promise<AccountPageData> {
+export async function getAccountData(user: LoggedUser): Promise<AccountPageData> {
   return {
     profile: {
-      name: "Giulia",
-      username: "giulia_studia",
-      email: "giulia@email.com",
+      name: user.firstName ?? "",
+      username: user.username ?? "",
+      email: user.email,
+      // TODO (BE): personaggio, data di iscrizione e isUnder14 non sono ancora in /auth/me
       avatarUrl: "/studentessa.png",
       avatarName: "Studentessa",
       joinedAt: "12 set 2025",
@@ -62,25 +65,15 @@ export async function saveProfile(
   console.log("SAVE PROFILE", input);
 }
 
+// Cambio password e logout sono reali: vedi lib/auth.ts
+
 export async function changeEmail(input: {
   email: string;
   password: string;
 }): Promise<void> {
-  // TODO: POST /auth/change-email (richiede la password; conferma via email)
+  // TODO (BE): endpoint non ancora presente; la UI lo mostra come "Presto disponibile".
+  // Dovrà chiedere la password e confermare il nuovo indirizzo via email.
   console.log("CHANGE EMAIL", { email: input.email });
-}
-
-export async function changePassword(input: {
-  currentPassword: string;
-  newPassword: string;
-}): Promise<void> {
-  // TODO: POST /auth/change-password
-  console.log("CHANGE PASSWORD");
-}
-
-export async function logout(): Promise<void> {
-  // TODO: POST /auth/logout + pulizia della sessione
-  console.log("LOGOUT");
 }
 
 export async function saveNotificationPreferences(

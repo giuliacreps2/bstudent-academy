@@ -1,9 +1,11 @@
 import type { ReactNode } from "react";
+import { requireUser } from "@/lib/api-server";
 
 //TODO cambiare l'immagine della missione tramite fetch associata
 //TODO creare fetch associata per l'immagine missione
 
-export default function MissionLayout({ children }: { children: ReactNode }) {
+export default async function MissionLayout({ children }: { children: ReactNode }) {
+  await requireUser();
   const image = "/land.png";
   // Pagina immersiva, fuori dal gruppo (app): nessun chrome standard.
   return (

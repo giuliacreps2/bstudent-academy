@@ -24,6 +24,7 @@ export function StepBirthDate({ value, onChange }: StepBirthDateProps) {
           <input
             type="date"
             value={value.birthDate}
+            max={new Date().toISOString().slice(0, 10)}
             onChange={(e) =>
               onChange({
                 ...value,
@@ -35,8 +36,8 @@ export function StepBirthDate({ value, onChange }: StepBirthDateProps) {
         </Field>
 
         <p className="mt-4 text-xs leading-5 text-[#667085]">
-          La utilizziamo per mostrarti un'esperienza adatta alla tua fascia
-          d'età.
+          La utilizziamo per mostrarti un&apos;esperienza adatta alla tua fascia
+          d&apos;età.
         </p>
       </div>
     </div>

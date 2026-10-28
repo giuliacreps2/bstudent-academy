@@ -3,16 +3,31 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import {
   Bars3Icon,
   BellIcon,
   ChevronDownIcon,
 } from "@heroicons/react/24/outline";
 import { useSidebar } from "./SidebarContext";
+import { logout } from "@/lib/auth";
 
-export default function NavbarLogin() {
+export default function NavbarLogin({ email }: { email: string }) {
+  const router = useRouter();
   const { toggle } = useSidebar();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
+
+  async function handleLogout() {
+    setIsLoggingOut(true);
+    try {
+      await logout();
+    } finally {
+      // Anche se il backend non risponde si esce dall'area riservata
+      router.replace("/");
+      router.refresh();
+    }
+  }
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 h-14 bg-surface-light-blue border-b border-border shadow-md">
@@ -30,7 +45,7 @@ export default function NavbarLogin() {
           </button>
 
           {/* Logo */}
-          <Link href="/dashboard" className="flex items-center gap-2">
+          <Link href="/my/dashboard" className="flex items-center gap-2">
             <div className="flex shrink-0 items-center">
               <img
                 alt="BStudent"
@@ -81,14 +96,12 @@ export default function NavbarLogin() {
                     Il mio profilo
                   </p>
 
-                  <p className="text-xs text-brand-muted truncate">
-                    studente@bstudent.it
-                  </p>
+                  <p className="text-xs text-brand-muted truncate">{email}</p>
                 </div>
 
                 <div className="py-1">
                   <Link
-                    href="/profilo"
+                    href="/my/account"
                     onClick={() => setMenuOpen(false)}
                     className="block px-4 py-2 text-sm hover:bg-surface-blue transition-colors"
                   >
@@ -96,7 +109,7 @@ export default function NavbarLogin() {
                   </Link>
 
                   <Link
-                    href="/impostazioni"
+                    href="/my/account?sezione=account"
                     onClick={() => setMenuOpen(false)}
                     className="block px-4 py-2 text-sm hover:bg-surface-blue transition-colors"
                   >
@@ -105,9 +118,11 @@ export default function NavbarLogin() {
 
                   <button
                     type="button"
-                    className="w-full text-left px-4 py-2 text-sm hover:bg-surface-blue transition-colors"
+                    onClick={handleLogout}
+                    disabled={isLoggingOut}
+                    className="w-full text-left px-4 py-2 text-sm hover:bg-surface-blue transition-colors disabled:opacity-50"
                   >
-                    Esci
+                    {isLoggingOut ? "Uscita..." : "Esci"}
                   </button>
                 </div>
               </div>

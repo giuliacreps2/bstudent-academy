@@ -55,7 +55,13 @@ export function CourseLandingHero({
           <h1 className="text-4xl font-extrabold leading-[1.02] tracking-[-0.035em] sm:text-5xl lg:text-[56px] xl:text-[62px]">
             {hero.titleLead}
             <br />
-            <span className="text-brand-primary">{hero.titleHighlight}</span>
+            <span className="relative inline-block text-brand-secondary">
+              {hero.titleHighlight}
+              <span
+                aria-hidden="true"
+                className="absolute -bottom-1 left-0 h-1.5 w-38.75 -rotate-1 rounded-full bg-brand-secondary/60"
+              />
+            </span>
           </h1>
 
           <p className="mt-7 max-w-lg text-base leading-7 text-brand-muted md:text-lg">

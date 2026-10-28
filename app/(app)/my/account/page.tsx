@@ -1,4 +1,5 @@
 import { getAccountData } from "@/lib/account";
+import { requireUser } from "@/lib/api-server";
 import { defaultAccountSection, isAccountSection } from "@/constants/account";
 import { AccountNav } from "@/components/account/AccountNav";
 import { ProfileSection } from "@/components/account/ProfileSection";
@@ -14,7 +15,8 @@ interface AccountPageProps {
 export default async function AccountPage({ searchParams }: AccountPageProps) {
   const { sezione } = await searchParams;
   const active = isAccountSection(sezione) ? sezione : defaultAccountSection;
-  const { profile, notifications, consents } = await getAccountData();
+  const user = await requireUser();
+  const { profile, notifications, consents } = await getAccountData(user);
 
   return (
     <div className="mx-auto max-w-5xl pb-10">
@@ -41,7 +43,13 @@ export default async function AccountPage({ searchParams }: AccountPageProps) {
 
         <div>
           {active === "profilo" && <ProfileSection profile={profile} />}
-          {active === "account" && <SecuritySection email={profile.email} />}
+          {active === "account" && (
+            <SecuritySection
+              email={profile.email}
+              hasLocalPassword={user.hasLocalPassword}
+              googleLinked={user.googleLinked}
+            />
+          )}
           {active === "notifiche" && (
             <NotificationsSection initial={notifications} />
           )}
