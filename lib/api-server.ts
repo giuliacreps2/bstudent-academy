@@ -1,6 +1,6 @@
 import { cache } from "react";
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { api, ApiError, type ApiOptions } from "@/lib/api";
 import type { LoggedUser } from "@/types/auth";
 
@@ -50,5 +50,23 @@ export const getCurrentUser = cache(async (): Promise<LoggedUser | null> => {
 export async function requireUser(): Promise<LoggedUser> {
   const user = await getCurrentUser();
   if (!user) redirect("/login");
+  return user;
+}
+
+export const ADMIN_ROLE = "ADMIN";
+
+export function isAdmin(user: LoggedUser): boolean {
+  return user.roles.includes(ADMIN_ROLE);
+}
+
+/**
+ * Per l'area /admin: senza sessione si va al login, senza ruolo ADMIN la pagina
+ * risulta inesistente (404), così l'area non si rivela.
+ * Solo un filtro di interfaccia: le API /admin/academy/** le protegge il backend.
+ */
+export async function requireAdmin(): Promise<LoggedUser> {
+  const user = await getCurrentUser();
+  if (!user) redirect("/login?next=/admin");
+  if (!isAdmin(user)) notFound();
   return user;
 }

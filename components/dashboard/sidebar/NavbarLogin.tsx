@@ -12,7 +12,14 @@ import {
 import { useSidebar } from "./SidebarContext";
 import { logout } from "@/lib/auth";
 
-export default function NavbarLogin({ email }: { email: string }) {
+export default function NavbarLogin({
+  email,
+  showAdminLink = false,
+}: {
+  email: string;
+  /** Solo per chi ha il ruolo ADMIN */
+  showAdminLink?: boolean;
+}) {
   const router = useRouter();
   const { toggle } = useSidebar();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -115,6 +122,16 @@ export default function NavbarLogin({ email }: { email: string }) {
                   >
                     Impostazioni
                   </Link>
+
+                  {showAdminLink && (
+                    <Link
+                      href="/admin"
+                      onClick={() => setMenuOpen(false)}
+                      className="block px-4 py-2 text-sm hover:bg-surface-blue transition-colors"
+                    >
+                      Area Admin
+                    </Link>
+                  )}
 
                   <button
                     type="button"

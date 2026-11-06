@@ -1,9 +1,9 @@
 import { NextResponse, type NextRequest } from "next/server";
 
 /*
- * Controllo ottimistico: senza il cookie della sessione l'area /my non si
- * apre nemmeno e si va al login ricordando la pagina richiesta.
- * La verifica vera (token valido, utente attivo) la fa il layout con /auth/me.
+ * Controllo ottimistico: senza il cookie della sessione le aree /my e /admin
+ * non si aprono nemmeno e si va al login ricordando la pagina richiesta.
+ * La verifica vera (token valido, utente attivo, ruolo ADMIN) la fanno i layout con /auth/me.
  */
 export function proxy(request: NextRequest) {
   if (request.cookies.has("accessToken")) return NextResponse.next();
@@ -15,5 +15,5 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: "/my/:path*",
+  matcher: ["/my/:path*", "/admin/:path*"],
 };
