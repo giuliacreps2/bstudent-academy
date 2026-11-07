@@ -2,7 +2,7 @@ import LessonExercisePanel from "@/components/admin/LessonExercisePanel";
 import LessonPagesEditor from "@/components/admin/LessonPagesEditor";
 import LessonTitleForm from "@/components/admin/LessonTitleForm";
 import StatusActions from "@/components/admin/StatusActions";
-import { Card, formatDate, PageHeader, StatusBadge } from "@/components/admin/ui";
+import { Card, DatesLine, PageHeader, StatusBadge } from "@/components/admin/ui";
 import {
   getAllExercises,
   getAllSkills,
@@ -40,8 +40,9 @@ export default async function AdminLessonPage({ params }: { params: Promise<{ le
       </PageHeader>
 
       <Card title="Stato">
+        <DatesLine createdAt={lesson.createdAt} updatedAt={lesson.updatedAt} publishedAt={lesson.publishedAt} />
         <p className="mb-3 text-sm text-brand-muted">
-          Prima pubblicazione: {formatDate(lesson.publishedAt)}. Per pubblicare servono almeno una pagina e l&apos;esercizio collegato.
+          Per pubblicare servono almeno una pagina e l&apos;esercizio collegato.
         </p>
         <StatusActions target="lesson" id={lesson.lessonId} status={lesson.status}
                        everPublished={lesson.publishedAt !== null} afterDeleteHref={`/admin/missions/${mission.missionId}`} />

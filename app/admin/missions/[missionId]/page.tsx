@@ -2,7 +2,7 @@ import LessonTitleForm from "@/components/admin/LessonTitleForm";
 import MissionForm from "@/components/admin/MissionForm";
 import ReorderList from "@/components/admin/ReorderList";
 import StatusActions from "@/components/admin/StatusActions";
-import { Card, formatDate, PageHeader, StatusBadge, TierBadge } from "@/components/admin/ui";
+import { Card, DatesLine, PageHeader, StatusBadge, TierBadge } from "@/components/admin/ui";
 import { getAllExercises, getCourse, getLessons, getMission, getMissionExercises, parseId } from "@/lib/admin-server";
 
 export default async function AdminMissionPage({ params }: { params: Promise<{ missionId: string }> }) {
@@ -31,8 +31,9 @@ export default async function AdminMissionPage({ params }: { params: Promise<{ m
       </PageHeader>
 
       <Card title="Stato">
+        <DatesLine createdAt={mission.createdAt} updatedAt={mission.updatedAt} publishedAt={mission.publishedAt} />
         <p className="mb-3 text-sm text-brand-muted">
-          Prima pubblicazione: {formatDate(mission.publishedAt)}. Per pubblicare servono lezioni pubblicate, ciascuna con
+          Per pubblicare servono lezioni pubblicate, ciascuna con
           un esercizio pubblicato e la ripartizione tra le skill (oppure la skill principale della materia).
         </p>
         <StatusActions target="mission" id={mission.missionId} status={mission.status}

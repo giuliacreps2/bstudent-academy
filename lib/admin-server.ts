@@ -9,6 +9,7 @@ import type {
   MissionExercise,
   Paged,
   QuestionBankEntry,
+  QuestionBankEntryListItem,
   QuestionVersion,
   QuestionVersionSummary,
   Skill,
@@ -94,7 +95,7 @@ export const getSkillWeights = (missionExerciseId: number) =>
 
 // Esercizi e versioni
 export const getExercises = (page = 0, size = 20) =>
-  get<Paged<QuestionBankEntry>>(`/exercises?page=${page}&size=${size}&sortBy=internalQuestionTitle`);
+  get<Paged<QuestionBankEntryListItem>>(`/exercises?page=${page}&size=${size}&sortBy=internalQuestionTitle`);
 // TODO: con molti esercizi serve un filtro per titolo/stato nel backend (GET /exercises?q=&status=)
 export const getAllExercises = () => getExercises(0, SELECT_PAGE_SIZE);
 export const getExercise = (id: number) => get<QuestionBankEntry>(`/exercises/${id}`);

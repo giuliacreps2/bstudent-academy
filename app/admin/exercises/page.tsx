@@ -1,6 +1,15 @@
 import Link from "next/link";
 import ExerciseTitleForm from "@/components/admin/ExerciseTitleForm";
-import { Card, EmptyNote, PageHeader, Pagination, StatusBadge } from "@/components/admin/ui";
+import {
+  Card,
+  EmptyNote,
+  formatDate,
+  formatDateTime,
+  PageHeader,
+  Pagination,
+  sinceDays,
+  StatusBadge,
+} from "@/components/admin/ui";
 import { getExercises, parsePage } from "@/lib/admin-server";
 
 export default async function AdminExercisesPage({
@@ -27,9 +36,18 @@ export default async function AdminExercisesPage({
           <ul className="divide-y divide-border">
             {exercises.content.map((e) => (
               <li key={e.questionBankEntryId} className="flex items-center gap-3 py-2">
-                <Link href={`/admin/exercises/${e.questionBankEntryId}`} className="flex-1 font-medium hover:underline">
-                  {e.internalTitle}
-                </Link>
+                <div className="flex-1">
+                  <Link href={`/admin/exercises/${e.questionBankEntryId}`} className="font-medium hover:underline">
+                    {e.internalTitle}
+                  </Link>
+                  <p className="text-xs text-brand-muted">
+                    Prima versione: {e.firstVersionAt ? formatDate(e.firstVersionAt) : "nessuna"} ·
+                    Ultima modifica {formatDateTime(e.updatedAt)} ·
+                    {e.publishedVersionNumber !== null && e.publishedVersionSince
+                      ? ` In uso: v${e.publishedVersionNumber} ${sinceDays(e.publishedVersionSince)} (dal ${formatDate(e.publishedVersionSince)})`
+                      : " Nessuna versione in uso"}
+                  </p>
+                </div>
                 <StatusBadge status={e.status} />
               </li>
             ))}

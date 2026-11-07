@@ -45,6 +45,9 @@ export interface Course {
   status: ContentStatus;
   publishedAt: string | null;
   withdrawnAt: string | null;
+  createdAt: string;
+  /** Per esercizi e lezioni comprende anche versioni e pagine */
+  updatedAt: string;
 }
 
 export interface Mission {
@@ -58,6 +61,9 @@ export interface Mission {
   status: ContentStatus;
   publishedAt: string | null;
   withdrawnAt: string | null;
+  createdAt: string;
+  /** Per esercizi e lezioni comprende anche versioni e pagine */
+  updatedAt: string;
 }
 
 export interface Lesson {
@@ -68,6 +74,9 @@ export interface Lesson {
   status: ContentStatus;
   publishedAt: string | null;
   withdrawnAt: string | null;
+  createdAt: string;
+  /** Per esercizi e lezioni comprende anche versioni e pagine */
+  updatedAt: string;
 }
 
 export interface LessonPage {
@@ -87,6 +96,18 @@ export interface QuestionBankEntry {
   status: ContentStatus;
   publishedAt: string | null;
   withdrawnAt: string | null;
+  createdAt: string;
+  /** Per esercizi e lezioni comprende anche versioni e pagine */
+  updatedAt: string;
+}
+
+/** Riga dell'elenco esercizi: riepilogo delle versioni */
+export interface QuestionBankEntryListItem extends QuestionBankEntry {
+  /** null se l'esercizio non ha ancora versioni */
+  firstVersionAt: string | null;
+  /** null se nessuna versione è pubblicata */
+  publishedVersionNumber: number | null;
+  publishedVersionSince: string | null;
 }
 
 export interface QuestionVersionSummary {
@@ -95,6 +116,10 @@ export interface QuestionVersionSummary {
   versionNumber: number;
   published: boolean;
   publishedAt: string | null;
+  /** Fine dell'uso come versione pubblicata: null se in uso o mai pubblicata */
+  replacedAt: string | null;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface QuestionAnswer {

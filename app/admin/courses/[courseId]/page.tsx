@@ -2,7 +2,7 @@ import CourseForm from "@/components/admin/CourseForm";
 import MissionForm from "@/components/admin/MissionForm";
 import ReorderList from "@/components/admin/ReorderList";
 import StatusActions from "@/components/admin/StatusActions";
-import { Card, formatDate, PageHeader, StatusBadge } from "@/components/admin/ui";
+import { Card, DatesLine, PageHeader, StatusBadge } from "@/components/admin/ui";
 import { getAllSubjects, getCourse, getMissions, parseId } from "@/lib/admin-server";
 
 export default async function AdminCoursePage({ params }: { params: Promise<{ courseId: string }> }) {
@@ -21,8 +21,9 @@ export default async function AdminCoursePage({ params }: { params: Promise<{ co
       </PageHeader>
 
       <Card title="Stato">
+        <DatesLine createdAt={course.createdAt} updatedAt={course.updatedAt} publishedAt={course.publishedAt} />
         <p className="mb-3 text-sm text-brand-muted">
-          Prima pubblicazione: {formatDate(course.publishedAt)}. Per pubblicare serve almeno una missione pubblicata.
+          Per pubblicare serve almeno una missione pubblicata.
         </p>
         <StatusActions target="course" id={course.courseId} status={course.status}
                        everPublished={course.publishedAt !== null} afterDeleteHref="/admin/courses" />

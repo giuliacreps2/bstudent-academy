@@ -2,7 +2,7 @@ import Link from "next/link";
 import ExerciseTitleForm from "@/components/admin/ExerciseTitleForm";
 import StatusActions from "@/components/admin/StatusActions";
 import VersionActions from "@/components/admin/VersionActions";
-import { buttonClass, Card, EmptyNote, formatDate, PageHeader, StatusBadge } from "@/components/admin/ui";
+import { buttonClass, Card, DatesLine, EmptyNote, PageHeader, StatusBadge, versionPeriod } from "@/components/admin/ui";
 import { getExercise, getVersions, parseId } from "@/lib/admin-server";
 
 export default async function AdminExercisePage({ params }: { params: Promise<{ exerciseId: string }> }) {
@@ -16,8 +16,9 @@ export default async function AdminExercisePage({ params }: { params: Promise<{ 
       </PageHeader>
 
       <Card title="Stato">
+        <DatesLine createdAt={exercise.createdAt} updatedAt={exercise.updatedAt} publishedAt={exercise.publishedAt} />
         <p className="mb-3 text-sm text-brand-muted">
-          Prima pubblicazione: {formatDate(exercise.publishedAt)}. Per pubblicare serve una versione pubblicata.
+          Per pubblicare serve una versione pubblicata.
         </p>
         <StatusActions target="exercise" id={exercise.questionBankEntryId} status={exercise.status}
                        everPublished={exercise.publishedAt !== null} afterDeleteHref="/admin/exercises" />
@@ -35,9 +36,7 @@ export default async function AdminExercisePage({ params }: { params: Promise<{ 
             {versions.map((v) => (
               <li key={v.questionVersionId} className="flex flex-wrap items-center gap-3 py-2">
                 <span className="font-medium">v{v.versionNumber}</span>
-                <span className="text-sm text-brand-muted">
-                  {v.published ? "Pubblicata" : v.publishedAt ? "Sostituita" : "Bozza"}
-                </span>
+                <span className="text-sm text-brand-muted">{versionPeriod(v)}</span>
                 <span className="flex-1" />
                 <VersionActions version={v} />
               </li>

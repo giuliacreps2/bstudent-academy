@@ -134,3 +134,48 @@ export function Pagination({
 export function formatDate(value: string | null): string {
   return value ? new Date(value).toLocaleDateString("it-IT") : "—";
 }
+
+/** Data e ora, per le modifiche che avvengono più volte nello stesso giorno */
+export function formatDateTime(value: string | null): string {
+  return value
+    ? new Date(value).toLocaleString("it-IT", { dateStyle: "short", timeStyle: "short" })
+    : "—";
+}
+
+/** "da oggi", "da 1 giorno", "da 12 giorni" */
+export function sinceDays(value: string): string {
+  const days = Math.floor((Date.now() - new Date(value).getTime()) / 86_400_000);
+  if (days <= 0) return "da oggi";
+  return days === 1 ? "da 1 giorno" : `da ${days} giorni`;
+}
+
+/** Periodo d'uso di una versione: in uso / usata dal ... al ... / bozza */
+export function versionPeriod(v: {
+  published: boolean;
+  publishedAt: string | null;
+  replacedAt: string | null;
+  createdAt: string;
+  updatedAt: string;
+}): string {
+  if (v.published && v.publishedAt) {
+    return `In uso ${sinceDays(v.publishedAt)} (dal ${formatDate(v.publishedAt)})`;
+  }
+  if (v.publishedAt) {
+    return `Usata dal ${formatDate(v.publishedAt)} al ${v.replacedAt ? formatDate(v.replacedAt) : "—"}`;
+  }
+  return `Bozza creata il ${formatDate(v.createdAt)}, ultima modifica ${formatDateTime(v.updatedAt)}`;
+}
+
+/** Creazione e ultima modifica, nella card "Stato" delle pagine di dettaglio */
+export function DatesLine({ createdAt, updatedAt, publishedAt }: {
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string | null;
+}) {
+  return (
+    <p className="mb-3 text-sm text-brand-muted">
+      Creato il {formatDate(createdAt)} · Ultima modifica {formatDateTime(updatedAt)} ·
+      Prima pubblicazione: {publishedAt ? formatDate(publishedAt) : "mai"}
+    </p>
+  );
+}

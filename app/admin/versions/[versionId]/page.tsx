@@ -1,7 +1,7 @@
 import Link from "next/link";
 import VersionEditor from "@/components/admin/VersionEditor";
 import VersionActions from "@/components/admin/VersionActions";
-import { buttonClass, Card, PageHeader } from "@/components/admin/ui";
+import { buttonClass, Card, PageHeader, versionPeriod } from "@/components/admin/ui";
 import { getExercise, getVersion, parseId } from "@/lib/admin-server";
 
 export default async function AdminVersionPage({ params }: { params: Promise<{ versionId: string }> }) {
@@ -18,6 +18,7 @@ export default async function AdminVersionPage({ params }: { params: Promise<{ v
         <VersionActions version={version} afterDeleteHref={`/admin/exercises/${exercise.questionBankEntryId}`} />
       </PageHeader>
       <Card>
+        <p className="mb-2 text-sm text-brand-muted">{versionPeriod(version)}</p>
         {!isDraft && (
           <p className="mb-4 text-sm text-brand-muted">
             Versione {version.published ? "pubblicata" : "sostituita"}: non si modifica.{" "}
