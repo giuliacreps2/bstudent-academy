@@ -3,10 +3,13 @@ import { ApiError } from "@/lib/api";
 import { serverApi } from "@/lib/api-server";
 import type {
   Course,
+  ExerciseUsages,
   Lesson,
   LessonPage,
   Mission,
   MissionExercise,
+  MissionReadiness,
+  MissionStep,
   Paged,
   QuestionBankEntry,
   QuestionBankEntryListItem,
@@ -72,24 +75,20 @@ export const getCourse = (id: number) => get<Course>(`/courses/${id}`);
 // Missioni
 export const getMissions = (courseId: number) => get<Mission[]>(`/courses/${courseId}/missions`);
 export const getMission = (id: number) => get<Mission>(`/missions/${id}`);
+/** Lezioni ed esercizi in un unico ordine */
+export const getMissionSteps = (missionId: number) => get<MissionStep[]>(`/missions/${missionId}/steps`);
+export const getMissionReadiness = (missionId: number) =>
+  get<MissionReadiness>(`/missions/${missionId}/readiness`);
 
 // Lezioni e pagine
 export const getLessons = (missionId: number) => get<Lesson[]>(`/missions/${missionId}/lessons`);
 export const getLesson = (id: number) => get<Lesson>(`/lessons/${id}`);
 export const getLessonPages = (lessonId: number) => get<LessonPage[]>(`/lessons/${lessonId}/pages`);
 
-/** null se la lezione non ha ancora un esercizio collegato */
-export async function getLessonExercise(lessonId: number): Promise<MissionExercise | null> {
-  try {
-    return await serverApi<MissionExercise>(`${BASE}/lessons/${lessonId}/exercise`);
-  } catch (error) {
-    if (error instanceof ApiError && error.status === 404) return null;
-    throw error;
-  }
-}
-/** Esercizi collegati alle lezioni della missione, nell'ordine delle lezioni */
+/** Esercizi della missione, nell'ordine della sequenza */
 export const getMissionExercises = (missionId: number) =>
   get<MissionExercise[]>(`/missions/${missionId}/exercises`);
+export const getMissionExercise = (id: number) => get<MissionExercise>(`/mission-exercises/${id}`);
 export const getSkillWeights = (missionExerciseId: number) =>
   get<SkillWeight[]>(`/mission-exercises/${missionExerciseId}/skills`);
 
@@ -99,6 +98,8 @@ export const getExercises = (page = 0, size = 20) =>
 // TODO: con molti esercizi serve un filtro per titolo/stato nel backend (GET /exercises?q=&status=)
 export const getAllExercises = () => getExercises(0, SELECT_PAGE_SIZE);
 export const getExercise = (id: number) => get<QuestionBankEntry>(`/exercises/${id}`);
+/** Missioni e Palestra in cui è usato: da mostrare prima del ritiro */
+export const getExerciseUsages = (id: number) => get<ExerciseUsages>(`/exercises/${id}/usages`);
 export const getVersions = (exerciseId: number) =>
   get<QuestionVersionSummary[]>(`/exercises/${exerciseId}/versions`);
 export const getVersion = (versionId: number) => get<QuestionVersion>(`/versions/${versionId}`);

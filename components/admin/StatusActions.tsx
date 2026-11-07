@@ -41,6 +41,7 @@ export default function StatusActions({
   status,
   everPublished,
   afterDeleteHref,
+  withdrawConfirm,
 }: {
   target: Target;
   id: number;
@@ -49,6 +50,8 @@ export default function StatusActions({
   everPublished: boolean;
   /** Dove andare dopo l'eliminazione (la pagina corrente non esiste più) */
   afterDeleteHref: string;
+  /** Conferma del ritiro al posto di quella standard (es. dove è usato l'esercizio) */
+  withdrawConfirm?: string;
 }) {
   const { run, pending, error } = useAdminMutation();
   const { label, publish, withdraw, remove } = ACTIONS[target];
@@ -71,7 +74,9 @@ export default function StatusActions({
             type="button"
             className={buttonClass.secondary}
             disabled={pending}
-            onClick={() => run(() => withdraw(id), { confirm: `Ritirare ${label}? Gli studenti non lo vedranno più.` })}
+            onClick={() => run(() => withdraw(id), {
+              confirm: withdrawConfirm ?? `Ritirare ${label}? Gli studenti non lo vedranno più.`,
+            })}
           >
             Ritira
           </button>

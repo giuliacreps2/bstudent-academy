@@ -66,11 +66,11 @@ export interface Mission {
   updatedAt: string;
 }
 
+/** La posizione nella missione è quella del suo passo (MissionStep) */
 export interface Lesson {
   lessonId: number;
   missionId: number;
   title: string;
-  sortOrder: number;
   status: ContentStatus;
   publishedAt: string | null;
   withdrawnAt: string | null;
@@ -159,13 +159,50 @@ export interface QuestionVersionInput {
   rubricCriteria: { category: RubricCategory; description: string }[];
 }
 
+/** Esercizio della missione: draft = nascosto allo studente finché non si pubblica (o esce con la missione) */
 export interface MissionExercise {
   missionExerciseId: number;
   missionId: number;
-  lessonId: number;
   questionBankEntryId: number;
+  status: Exclude<ContentStatus, "withdrawn">;
   allowedDurationMs: number;
   maxPoints: number;
+}
+
+/** Passo della sequenza della missione: una lezione oppure un esercizio */
+export interface MissionStep {
+  stepId: number;
+  sortOrder: number;
+  kind: "lesson" | "exercise";
+  title: string;
+  /** Della lezione, oppure dell'esercizio nella missione */
+  status: ContentStatus;
+  /** Solo per gli esercizi: stato nel banco esercizi (withdrawn = nascosto ovunque) */
+  bankStatus: ContentStatus | null;
+  lessonId: number | null;
+  missionExerciseId: number | null;
+  questionBankEntryId: number | null;
+}
+
+/** Controllo "missione pronta": i problemi bloccano la pubblicazione, gli avvisi no */
+export interface MissionReadiness {
+  ready: boolean;
+  problems: string[];
+  warnings: string[];
+}
+
+/** Dove è usato un esercizio del banco: mostrato prima del ritiro */
+export interface ExerciseUsages {
+  missions: {
+    missionId: number;
+    missionTitle: string;
+    missionStatus: ContentStatus;
+    courseId: number;
+    courseTitle: string;
+    /** Senza questo esercizio la missione resterebbe senza esercizi */
+    leftWithoutExercises: boolean;
+  }[];
+  publishedInPractice: boolean;
 }
 
 export interface SkillWeight {

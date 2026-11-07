@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { reorderLessons, reorderMissions } from "@/lib/admin";
+import { reorderMissionSteps, reorderMissions } from "@/lib/admin";
 import type { AccessTier, ContentStatus } from "@/types/admin";
 import { buttonClass, EmptyNote, Notice, StatusBadge, TierBadge } from "./ui";
 import { useAdminMutation } from "./useAdminMutation";
@@ -13,7 +13,8 @@ type Container = "course" | "mission";
 
 const REORDER: Record<Container, (containerId: number, ids: number[]) => Promise<unknown>> = {
   course: reorderMissions,
-  mission: reorderLessons,
+  // Passi della missione: lezioni ed esercizi in un unico ordine
+  mission: reorderMissionSteps,
 };
 
 export type ReorderItem = {
@@ -23,7 +24,9 @@ export type ReorderItem = {
   status: ContentStatus;
   /** Solo per le missioni */
   tier?: AccessTier | null;
-  /** Riga secondaria sotto il titolo (es. l'esercizio collegato alla lezione) */
+  /** Etichetta prima del titolo (es. "Lezione" o "Esercizio" nella sequenza della missione) */
+  kindLabel?: string;
+  /** Riga secondaria sotto il titolo */
   detail?: string;
 };
 
@@ -56,6 +59,7 @@ export default function ReorderList({
           <li key={item.id} className="flex items-center gap-3 py-2">
             <span className="w-6 text-right text-sm text-brand-muted">{index + 1}.</span>
             <div className="flex-1">
+              {item.kindLabel && <span className="mr-2 text-xs uppercase text-brand-muted">{item.kindLabel}</span>}
               <Link href={item.href} className="font-medium hover:underline">{item.title}</Link>
               {item.detail && <p className="text-sm text-brand-muted">{item.detail}</p>}
             </div>

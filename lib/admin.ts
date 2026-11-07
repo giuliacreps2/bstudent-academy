@@ -6,6 +6,7 @@ import type {
   LessonPage,
   Mission,
   MissionExercise,
+  MissionStep,
   QuestionBankEntry,
   QuestionVersion,
   QuestionVersionInput,
@@ -83,13 +84,14 @@ export const reorderMissions = (courseId: number, ids: number[]) =>
 export const publishMission = (id: number) => patch<Mission>(`/missions/${id}/publish`);
 export const withdrawMission = (id: number) => patch<Mission>(`/missions/${id}/withdraw`);
 export const deleteMission = (id: number) => del(`/missions/${id}`);
+/** Tutti e soli gli ID dei passi (lezioni ed esercizi) nel nuovo ordine */
+export const reorderMissionSteps = (missionId: number, ids: number[]) =>
+  put<MissionStep[]>(`/missions/${missionId}/steps/order`, { ids });
 
 // Lezioni
 export const createLesson = (missionId: number, title: string) =>
   post<Lesson>(`/missions/${missionId}/lessons`, { title });
 export const updateLesson = (id: number, title: string) => put<Lesson>(`/lessons/${id}`, { title });
-export const reorderLessons = (missionId: number, ids: number[]) =>
-  put<Lesson[]>(`/missions/${missionId}/lessons/order`, { ids });
 export const publishLesson = (id: number) => patch<Lesson>(`/lessons/${id}/publish`);
 export const withdrawLesson = (id: number) => patch<Lesson>(`/lessons/${id}/withdraw`);
 export const deleteLesson = (id: number) => del(`/lessons/${id}`);
@@ -109,19 +111,25 @@ export const reorderLessonPages = (lessonId: number, ids: number[]) =>
   put<LessonPage[]>(`/lessons/${lessonId}/pages/order`, { ids });
 export const deleteLessonPage = (pageId: number) => del(`/pages/${pageId}`);
 
-// Esercizio collegato alla lezione
+// Esercizio della missione: un passo della sequenza, nasce in bozza
+export type SkillWeightInput = { skillId: number; weight: number };
 export type MissionExerciseInput = {
   questionBankEntryId: number | null;
   allowedDurationMs: number | null;
   maxPoints: number | null;
+  /** Solo alla creazione; null = nessuna indicata */
+  skills?: SkillWeightInput[] | null;
 };
-export const assignLessonExercise = (lessonId: number, body: MissionExerciseInput) =>
-  post<MissionExercise>(`/lessons/${lessonId}/exercise`, body);
+export const addMissionExercise = (missionId: number, body: MissionExerciseInput) =>
+  post<MissionExercise>(`/missions/${missionId}/exercises`, body);
 export const updateMissionExercise = (id: number, body: MissionExerciseInput) =>
   put<MissionExercise>(`/mission-exercises/${id}`, body);
+/** Lo rende visibile in una missione già pubblicata */
+export const publishMissionExercise = (id: number) =>
+  patch<MissionExercise>(`/mission-exercises/${id}/publish`);
 export const removeMissionExercise = (id: number) => del(`/mission-exercises/${id}`);
 /** Lista vuota = 100% sulla skill predefinita della materia */
-export const replaceSkillWeights = (id: number, weights: { skillId: number; weight: number }[]) =>
+export const replaceSkillWeights = (id: number, weights: SkillWeightInput[]) =>
   put<SkillWeight[]>(`/mission-exercises/${id}/skills`, { weights });
 
 // Esercizi e versioni
