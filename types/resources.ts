@@ -1,5 +1,20 @@
 import type { ComponentType, SVGProps } from "react";
 
+/*
+ * TODO (blueprint §7.4, deciso il 14/11/2026). Le Risorse sono attrezzi della Palestra:
+ * - Spostare le pagine da /resources (pubblico) all'area riservata; togliere SEO, generateStaticParams e la
+ *   variante "non autenticato" di ResourcesNotebookData. La versione SEO resta in app/SEO_criteria/resources.
+ * - Ogni risorsa è free o premium: aggiungere il lucchetto premium a card e pagina.
+ * - ResourceSubjectKey fisso → slug delle materie dal backend.
+ * - Categorie: elenco fisso separato dalle skill (va bene ResourceCategoryKey).
+ * - PopularResource ("Le risorse più usate"): scelte dall'autrice finché non c'è l'uso reale; icona da elenco fisso.
+ * - RecommendedPathData ("Percorso consigliato"): porta al test di orientamento (§8.1).
+ * - Ricerca: solo Risorse della materia scelta, titolo e descrizione.
+ * - Dettaglio (types/resourceDetail.ts): exerciseLink dall'argomento della Palestra, nascosto se non ci sono voci;
+ *   related ("Approfondisci") NON visibile nell'MVP.
+ * - "Salva" resta (solo iscritti), ma Risorse = libro e Quaderno = appunti: la Risorsa salvata compare nel Quaderno
+ *   come segnalibro (collegamento), separata dagli appunti. Rivedere il testo di ResourcesNotebookData di conseguenza.
+ */
 export type ResourceSubjectKey = "latino" | "greco";
 
 export type ResourceCategoryKey =

@@ -12,6 +12,20 @@ import type { CourseListItem } from "@/types/myCourses";
    CONTENUTI CONDIVISI TRA LE MATERIE (v01)
    ===================================================================== */
 
+/*
+ * TODO (blueprint §5.8, deciso il 9/11/2026) — cosa arriva dal backend e cosa resta qui:
+ * - Dal backend: nome della materia, corsi pubblicati (carosello) e le prime 5 missioni pubblicate
+ *   del corso di riferimento (in evidenza → popolare → primo pubblicato). Se le missioni sono meno
+ *   di 5 se ne mostrano meno e "5 missioni per" usa il numero vero.
+ * - Badge "N missioni" e "N esercizi": calcolati dal corso di riferimento, non scritti a mano.
+ * - Statici qui, materia per materia: testi dell'hero, video, personaggi, "Come si studia",
+ *   FAQ e invito finale. Le posizioni dei nodi restano qui (dipendono dall'illustrazione).
+ * - Recensioni: servono quelle vere. Le recensioni di esempio NON vanno pubblicate (recensioni
+ *   false vietate dal Codice del consumo): finché non ce ne sono di vere, nascondere la sezione.
+ * - FAQ: statiche per ora; in futuro costruirle dalle domande ricevute via email e dagli altri canali.
+ *   Rivedere quella sulle materie (cita l'Italiano, che oggi non c'è).
+ * - Personaggi: da allineare a skin e XP veri nel blocco gamification.
+ */
 const badges: LandingBadge[] = [
   { id: "missions", icon: "missions", label: "5 missioni" },
   { id: "exercises", icon: "exercises", label: "20 esercizi" },

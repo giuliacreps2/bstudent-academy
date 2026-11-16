@@ -143,6 +143,9 @@ export async function saveLevelTestResult(
   /**
    * TODO: collegare all'endpoint reale non appena il backend esporrà
    * lo storico studente (es. POST /student/level-test).
+   * Deciso il 9/11/2026 (blueprint §8.2-8.3): si inviano solo subjectSlug e answers;
+   * recommendedLevel lo calcola e lo salva il backend e torna nella risposta.
+   * Se la materia non ha corsi del livello consigliato, mostrare tutti i corsi.
    *
    * await fetch(`${process.env.API_URL}/student/level-test`, {
    *   method: "POST",

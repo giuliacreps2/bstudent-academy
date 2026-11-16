@@ -1,3 +1,16 @@
+/*
+ * TODO (blueprint §14, deciso il 14/11/2026). Nome in interfaccia: "Quaderno". Quaderno = appunti, non libro.
+ * - Linguette: materie seguite dallo studente (dal backend) + "Articoli"; niente chiavi fisse latino/greco.
+ * - NotebookEntryKind → tipo (Lezione | Video | Articolo) + argomento della lezione.
+ * - excerpt: primo paragrafo della lezione (descrizione per il Blog); unlockedAt: data ISO, formattata qui.
+ * - href: /my/lessons/[id] (lezione in sola lettura + nota personale con salvataggio automatico); icona se c'è una nota.
+ * - isNew: entrata e mai riaperta.
+ * - Risorse salvate: striscia "Segnalibri" separata (collegamenti alla Palestra), non voci del Quaderno.
+ * - Lezione ritirata: resta solo la nota con "lezione non più disponibile". Articolo non disponibile: sparisce.
+ * - Premium scaduto: titolo, anteprima e note visibili, lezione con lucchetto.
+ * - Copertina: colore scelto dallo studente da una piccola tavolozza (oggi fisso --texture-notebook-gold).
+ * - avatarUrl: immagine del personaggio scelto, allo stadio attuale.
+ */
 export type NotebookTabKey = "latino" | "greco" | "articoli";
 
 export interface NotebookTabMeta {

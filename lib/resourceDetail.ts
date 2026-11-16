@@ -159,7 +159,10 @@ const terzaDeclinazione: ResourceDetailData = {
 
 const resourcePool: ResourceDetailData[] = [terzaDeclinazione];
 
-/** Per generateStaticParams: una entry per ogni risorsa pubblicata (SEO). */
+/**
+ * Per generateStaticParams: una entry per ogni risorsa pubblicata (SEO).
+ * Usato anche dalla copia di studio app/SEO_criteria: non toglierlo senza spostarlo lì.
+ */
 export const resourceDetailParams = resourcePool.map((resource) => ({
   materia: resource.subject,
   slug: resource.slug,

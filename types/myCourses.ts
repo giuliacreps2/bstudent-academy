@@ -27,7 +27,17 @@ export interface CourseListItem {
    * 0-100. undefined = corso non ancora iniziato.
    */
   progress?: number;
+  /**
+   * TODO (blueprint §5.8, 9/11/2026): due etichette distinte.
+   * - isPopular: calcolato dal backend sull'uso reale; false finché non ci sono i dati del Blocco 5.
+   * - isFeatured (da aggiungere): "In evidenza", lo sceglie l'Admin fino a una data (es. corso appena uscito).
+   * La card (CourseListCard) dovrà mostrare il bollino giusto per ciascuno.
+   */
   isPopular?: boolean;
+  /**
+   * TODO: lo slug arriva dal backend, href lo costruisce il frontend
+   * (cambia tra la landing pubblica e /my).
+   */
   href: string;
 }
 

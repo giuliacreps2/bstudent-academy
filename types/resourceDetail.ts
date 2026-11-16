@@ -111,6 +111,7 @@ export interface ResourceDetailData {
   title: string;
   description: string;
   /** Solo se autenticato: già salvata nel Quaderno */
+  // TODO (blueprint §7.4, 14/11/2026): resta; nel Quaderno la Risorsa salvata è un segnalibro, non un appunto
   isSaved: boolean;
 
   summary: ResourceSummary;

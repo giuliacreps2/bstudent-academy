@@ -16,6 +16,11 @@ import type {
   SubjectData,
 } from "@/types/myCourses";
 
+// TODO (blueprint §8.2, deciso il 9/11/2026): il livello lo calcola il backend con la regola
+// prudente (il più basso scelto almeno due volte), non la media. Quando l'endpoint è pronto,
+// togliere levelWeight e resolveLevel: si inviano solo le risposte e si mostra il livello restituito.
+// Anche le domande arriveranno dal backend (oggi in constants/levelTest), con almeno 3 domande
+// e tutte le risposte obbligatorie (niente ripiego sulla prima opzione).
 const levelWeight: Record<CourseLevel, number> = {
   Principiante: 1,
   Intermedio: 2,

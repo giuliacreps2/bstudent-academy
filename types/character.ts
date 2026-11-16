@@ -1,5 +1,16 @@
 import type { SkinBonus } from "@/types/dashboard";
 
+/*
+ * TODO (blueprint §11.4, deciso il 14/11/2026):
+ * - Nell'interfaccia solo "Personaggio", "Evoluzioni", "Accessori": nessuna "skin" visibile.
+ * - appearance (skin/capelli/abiti/colori) FUORI dall'MVP: togliere la sezione "aspetto".
+ * - Accessori dello studente, non del personaggio: restano uguali cambiando personaggio.
+ *   Aggiungere lo stato "riscattabile" (bottone "Riscatta"); unlockHint = soglia della skill in una materia qualsiasi.
+ * - XP dello studente: tutti i personaggi mostrano lo stesso stadio. Evoluzioni proprie per personaggio: dopo la beta.
+ * - Roster: personaggi iniziali scelti alla registrazione e cambiabili liberamente; gli altri "Prossimamente".
+ * - quote facoltativo; bonuses non previsti (TODO gamification): nascondere se vuoto.
+ */
+
 /* ============================ ROSTER ============================ */
 
 export type CharacterOwnershipStatus = "selected" | "unlocked" | "locked";

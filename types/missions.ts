@@ -69,6 +69,21 @@ export interface MissionSkillReward {
   icon: "grammatica" | "lessico" | "traduzione" | "analisi";
 }
 
+/*
+ * TODO (blueprint §5.9, deciso il 14/11/2026) — adeguare questi tipi ai dati del backend:
+ * - MissionMapNode: aggiungere slug (href = /my/missions/[courseSlug]/[missionSlug], costruito qui) e il
+ *   lucchetto premium, distinto da status "locked"; togliere position (posti predefiniti per tema,
+ *   occupati in ordine), maxErrors (si mostra la soglia 60%), prepReadingHref/prepVideoHref (sostituiti
+ *   dal briefing della guida della materia: 1-5 battute + video facoltativo, saltabile).
+ *   type "final" = casella "Prova finale" della missione. durationMinutes = somma dei tempi degli esercizi.
+ *   skillRewards: in testa "+N XP" (XP = punti skin), sotto i punti skill per skill. rewardLabel: gamification.
+ * - CourseWorld.theme e MissionMapCourse.quote/quoteAuthor arrivano dal corso; backHref e dashboardHref
+ *   li costruisce il frontend (oggi /corsi/ è sbagliato).
+ * - Pagina della missione: MissionStepData = sequenza vera (lezione/esercizio con titolo pubblico) + traguardo
+ *   "Ricompensa"; compatto oltre 7-8 passi. MissionBonusCounter: energy = Vite (+ porta all'attività per
+ *   ottenere vite), scrolls = Aiuti del cappello (niente +, tempo alla ricarica); mai acquistabili.
+ *   MissionLeaderboardData: fuori MVP, sezione nascosta. Tutorial della prima volta: una sola volta per studente.
+ */
 export interface MissionMapNode {
   id: string;
   order: number;

@@ -55,6 +55,11 @@ const exercisePool: ExerciseSuggestion[] = [
   },
 ];
 
+// TODO (blueprint §8.1, deciso il 9/11/2026): il test di orientamento della Palestra ha più domande
+// a scelta singola; il backend sceglie al massimo 5 esercizi (prima quelli consigliati da più
+// risposte, poi priorità, poi ID) e salva risposte e risultato. Oggi qui c'è solo la scelta della
+// skill dell'obiettivo con 3 esercizi: decidere nella mappa del tipo exercises se l'obiettivo
+// resta accanto al test o lo sostituisce. Caso aperto: nessun esercizio consigliato.
 export async function getRecommendedExercises(
   goal: GoalSelection,
 ): Promise<ExerciseSuggestion[]> {
