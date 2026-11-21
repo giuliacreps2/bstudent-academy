@@ -13,6 +13,12 @@ export type QuestionKind =
   | "passage_translation";
 export type AssessmentMode = "automatic" | "teacher";
 export type RubricCategory = "structural" | "lexical";
+/** Materia: bozza = nascosta agli studenti (v0.9) */
+export type SubjectStatus = "draft" | "published";
+/** Livello del corso e del test di livello: Principiante, Intermedio, Avanzato */
+export type CourseLevel = "beginner" | "intermediate" | "advanced";
+/** Piattaforme video ammesse: YouTube (non in elenco) per i contenuti free, Vimeo per i premium */
+export type VideoProvider = "youtube" | "vimeo";
 
 /** PagedModel di Spring Data: { content, page } */
 export interface Paged<T> {
@@ -25,12 +31,44 @@ export interface Skill {
   code: string;
   name: string;
   description: string | null;
+  /** Chiavi dell'elenco fisso SKILL_ICONS / SKILL_COLORS; null = aspetto neutro */
+  icon: string | null;
+  color: string | null;
   status: string;
+}
+
+/** Skill scelta dalla materia, nell'ordine dell'autrice */
+export interface SubjectSkill {
+  subjectId: number;
+  skillId: number;
+  code: string;
+  name: string;
+  icon: string | null;
+  color: string | null;
+  status: string;
+  sortOrder: number;
+}
+
+/** Argomento della materia (es. "L'ablativo assoluto") */
+export interface Topic {
+  topicId: number;
+  subjectId: number;
+  name: string;
+  imageReference: string | null;
 }
 
 export interface Subject {
   subjectId: number;
   name: string;
+  /** Indirizzo della pagina */
+  slug: string;
+  tagline: string | null;
+  imageReference: string | null;
+  status: SubjectStatus;
+  publishedAt: string | null;
+  /** Guida che presenta le missioni nel briefing */
+  guideName: string | null;
+  guideImageReference: string | null;
   defaultSkillId: number | null;
 }
 
@@ -42,6 +80,15 @@ export interface Course {
   extendedDescription: string;
   coverReference: string | null;
   accessTier: AccessTier;
+  slug: string;
+  tagline: string | null;
+  /** Obbligatorio per pubblicare */
+  level: CourseLevel | null;
+  /** In evidenza fino a questa data; null = no */
+  featuredUntil: string | null;
+  worldTheme: string | null;
+  quote: string | null;
+  quoteAuthor: string | null;
   status: ContentStatus;
   publishedAt: string | null;
   withdrawnAt: string | null;
@@ -58,6 +105,17 @@ export interface Mission {
   sortOrder: number;
   /** null = eredita dal corso */
   accessTier: AccessTier | null;
+  slug: string;
+  tagline: string | null;
+  coverReference: string | null;
+  /** Prova finale: al massimo una per corso */
+  isFinal: boolean;
+  briefingVideoProvider: VideoProvider | null;
+  briefingVideoIdentifier: string | null;
+  /** Battute della guida, da 1 a 5 */
+  briefingLines: string[];
+  /** "Cosa imparerai", al massimo 5 */
+  learningGoals: string[];
   status: ContentStatus;
   publishedAt: string | null;
   withdrawnAt: string | null;
@@ -71,6 +129,8 @@ export interface Lesson {
   lessonId: number;
   missionId: number;
   title: string;
+  /** Argomento della stessa materia, facoltativo */
+  topicId: number | null;
   status: ContentStatus;
   publishedAt: string | null;
   withdrawnAt: string | null;
@@ -93,6 +153,10 @@ export interface LessonPage {
 export interface QuestionBankEntry {
   questionBankEntryId: number;
   internalTitle: string;
+  /** Titolo per lo studente: obbligatorio per pubblicare */
+  title: string | null;
+  /** Argomento facoltativo (collegamento alla teoria) */
+  topicId?: number | null;
   status: ContentStatus;
   publishedAt: string | null;
   withdrawnAt: string | null;

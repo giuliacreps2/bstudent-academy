@@ -10,7 +10,7 @@ import {
   sinceDays,
   StatusBadge,
 } from "@/components/admin/ui";
-import { getExercises, parsePage } from "@/lib/admin-server";
+import { getAllTopicsBySubject, getExercises, parsePage } from "@/lib/admin-server";
 
 export default async function AdminExercisesPage({
   searchParams,
@@ -18,7 +18,7 @@ export default async function AdminExercisesPage({
   searchParams: Promise<{ page?: string }>;
 }) {
   const page = parsePage((await searchParams).page);
-  const exercises = await getExercises(page);
+  const [exercises, topicGroups] = await Promise.all([getExercises(page), getAllTopicsBySubject()]);
 
   return (
     <div>
@@ -27,7 +27,7 @@ export default async function AdminExercisesPage({
         <p className="mb-3 text-sm text-brand-muted">
           L&apos;esercizio nasce senza contenuto: domanda e risposte si scrivono nelle versioni.
         </p>
-        <ExerciseTitleForm />
+        <ExerciseTitleForm topicGroups={topicGroups} />
       </Card>
       <Card title="Esercizi">
         {exercises.content.length === 0 ? (
@@ -40,6 +40,9 @@ export default async function AdminExercisesPage({
                   <Link href={`/admin/exercises/${e.questionBankEntryId}`} className="font-medium hover:underline">
                     {e.internalTitle}
                   </Link>
+                  <span className="ml-2 text-sm text-brand-muted">
+                    {e.title ? `Per lo studente: ${e.title}` : "Manca il titolo per lo studente"}
+                  </span>
                   <p className="text-xs text-brand-muted">
                     Prima versione: {e.firstVersionAt ? formatDate(e.firstVersionAt) : "nessuna"} ·
                     Ultima modifica {formatDateTime(e.updatedAt)} ·

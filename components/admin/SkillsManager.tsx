@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { createSkill, deleteSkill, updateSkill } from "@/lib/admin";
+import { createSkill, deleteSkill, SKILL_COLORS, SKILL_ICONS, updateSkill } from "@/lib/admin";
 import type { Skill } from "@/types/admin";
 import { buttonClass, Card, EmptyNote, Field, inputClass, Notice } from "./ui";
 import { useAdminMutation } from "./useAdminMutation";
@@ -10,6 +10,30 @@ import { useAdminMutation } from "./useAdminMutation";
    si può correggere alla creazione e poi non si cambia */
 
 const CODE_PATTERN = /^[a-z][a-z0-9_]*$/;
+
+/** Icona e colore dall'elenco fisso del frontend; vuoto = aspetto neutro */
+function LookSelects({ icon, color, onIcon, onColor }: {
+  icon: string;
+  color: string;
+  onIcon: (value: string) => void;
+  onColor: (value: string) => void;
+}) {
+  return (
+    <>
+      <select className={`${inputClass} max-w-[10rem]`} value={icon} onChange={(e) => onIcon(e.target.value)} aria-label="Icona">
+        <option value="">Icona: neutra</option>
+        {SKILL_ICONS.map((i) => <option key={i.key} value={i.key}>{i.label}</option>)}
+      </select>
+      <select className={`${inputClass} max-w-[10rem]`} value={color} onChange={(e) => onColor(e.target.value)} aria-label="Colore">
+        <option value="">Colore: neutro</option>
+        {SKILL_COLORS.map((c) => <option key={c.key} value={c.key}>{c.label}</option>)}
+      </select>
+    </>
+  );
+}
+
+const labelOf = (list: readonly { key: string; label: string }[], key: string | null) =>
+  list.find((item) => item.key === key)?.label ?? "neutro";
 
 /** "Grammatica latina" -> "grammatica_latina": minuscolo, senza accenti, spazi e simboli */
 function toIdentifier(name: string): string {
@@ -48,6 +72,9 @@ function CreateSkillForm() {
   const [codeEdited, setCodeEdited] = useState(false);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
+  const [icon, setIcon] = useState("");
+  const [color, setColor] = useState("");
+  const [created, setCreated] = useState(false);
 
   function handleNameChange(value: string) {
     setName(value);
@@ -60,12 +87,16 @@ function CreateSkillForm() {
       setError("L'identificativo usa solo lettere minuscole senza accenti, numeri e _, e inizia con una lettera");
       return;
     }
-    const ok = await run(() => createSkill({ code, name, description: description || null }));
+    setCreated(false);
+    const ok = await run(() => createSkill({ code, name, description: description || null, icon: icon || null, color: color || null }));
     if (ok) {
       setCode("");
       setCodeEdited(false);
       setName("");
       setDescription("");
+      setIcon("");
+      setColor("");
+      setCreated(true);
     }
   }
 
@@ -89,8 +120,12 @@ function CreateSkillForm() {
       <Field label="Descrizione">
         <input className={inputClass} value={description} onChange={(e) => setDescription(e.target.value)} />
       </Field>
+      <div className="flex flex-wrap gap-2 sm:col-span-3">
+        <LookSelects icon={icon} color={color} onIcon={setIcon} onColor={setColor} />
+      </div>
       <div className="sm:col-span-3">
         <button type="submit" className={buttonClass.primary} disabled={pending}>Crea skill</button>
+        {created && <Notice tone="success">Skill creata: aggiungila alle materie che la usano.</Notice>}
         {error && <Notice tone="error">{error}</Notice>}
       </div>
     </form>
@@ -102,11 +137,17 @@ function SkillRow({ skill }: { skill: Skill }) {
   const [editing, setEditing] = useState(false);
   const [name, setName] = useState(skill.name);
   const [description, setDescription] = useState(skill.description ?? "");
+  const [icon, setIcon] = useState(skill.icon ?? "");
+  const [color, setColor] = useState(skill.color ?? "");
+  const [saved, setSaved] = useState(false);
 
   async function handleSave(event: React.FormEvent) {
     event.preventDefault();
-    const ok = await run(() => updateSkill(skill.skillId, { code: skill.code, name, description: description || null }));
+    const ok = await run(() => updateSkill(skill.skillId, {
+      code: skill.code, name, description: description || null, icon: icon || null, color: color || null,
+    }));
     if (ok) setEditing(false);
+    setSaved(ok);
   }
 
   return (
@@ -116,6 +157,7 @@ function SkillRow({ skill }: { skill: Skill }) {
           <span className="text-xs text-brand-muted">identificativo: {skill.code}</span>
           <input className={`${inputClass} max-w-xs`} value={name} onChange={(e) => setName(e.target.value)} required aria-label="Nome" />
           <input className={`${inputClass} max-w-sm`} value={description} onChange={(e) => setDescription(e.target.value)} aria-label="Descrizione" placeholder="Descrizione" />
+          <LookSelects icon={icon} color={color} onIcon={setIcon} onColor={setColor} />
           <button type="submit" className={buttonClass.primary} disabled={pending}>Salva</button>
           <button type="button" className={buttonClass.secondary} onClick={() => setEditing(false)}>Annulla</button>
         </form>
@@ -124,6 +166,9 @@ function SkillRow({ skill }: { skill: Skill }) {
           <span className="font-medium">{skill.name}</span>
           <span className="text-xs text-brand-muted">identificativo: {skill.code}</span>
           {skill.description && <span className="text-sm text-brand-muted">{skill.description}</span>}
+          <span className="text-xs text-brand-muted">
+            icona {labelOf(SKILL_ICONS, skill.icon)} · colore {labelOf(SKILL_COLORS, skill.color)}
+          </span>
           <span className="flex-1" />
           <button type="button" className={buttonClass.secondary} onClick={() => setEditing(true)}>Modifica</button>
           <button
@@ -136,6 +181,7 @@ function SkillRow({ skill }: { skill: Skill }) {
           </button>
         </div>
       )}
+      {saved && !editing && <Notice tone="success">Salvato.</Notice>}
       {error && <Notice tone="error">{error}</Notice>}
     </li>
   );

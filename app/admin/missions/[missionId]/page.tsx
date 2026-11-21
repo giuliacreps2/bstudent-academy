@@ -14,6 +14,7 @@ import {
   getMissionReadiness,
   getMissionSteps,
   getSubject,
+  getTopics,
   parseId,
 } from "@/lib/admin-server";
 import type { MissionExercise, MissionStep } from "@/types/admin";
@@ -29,7 +30,7 @@ export default async function AdminMissionPage({ params }: { params: Promise<{ m
     getAllSkills(),
   ]);
   const course = await getCourse(mission.courseId);
-  const subject = await getSubject(course.subjectId);
+  const [subject, topics] = await Promise.all([getSubject(course.subjectId), getTopics(course.subjectId)]);
   const defaultSkillName = skills.content.find((s) => s.skillId === subject.defaultSkillId)?.name ?? null;
   const linkById = new Map(links.map((link) => [link.missionExerciseId, link]));
   const missionPublished = mission.status === "published";
@@ -64,7 +65,7 @@ export default async function AdminMissionPage({ params }: { params: Promise<{ m
       </Card>
 
       <Card title="Aggiungi una lezione">
-        <LessonTitleForm missionId={mission.missionId} />
+        <LessonTitleForm missionId={mission.missionId} topics={topics} />
       </Card>
 
       <Card title="Aggiungi un esercizio">

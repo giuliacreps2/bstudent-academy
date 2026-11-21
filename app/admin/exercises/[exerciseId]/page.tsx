@@ -3,15 +3,16 @@ import ExerciseTitleForm from "@/components/admin/ExerciseTitleForm";
 import StatusActions from "@/components/admin/StatusActions";
 import VersionActions from "@/components/admin/VersionActions";
 import { buttonClass, Card, DatesLine, EmptyNote, PageHeader, StatusBadge, versionPeriod } from "@/components/admin/ui";
-import { getExercise, getExerciseUsages, getVersions, parseId } from "@/lib/admin-server";
+import { getAllTopicsBySubject, getExercise, getExerciseUsages, getVersions, parseId } from "@/lib/admin-server";
 import type { ExerciseUsages } from "@/types/admin";
 
 export default async function AdminExercisePage({ params }: { params: Promise<{ exerciseId: string }> }) {
   const exerciseId = parseId((await params).exerciseId);
-  const [exercise, versions, usages] = await Promise.all([
+  const [exercise, versions, usages, topicGroups] = await Promise.all([
     getExercise(exerciseId),
     getVersions(exerciseId),
     getExerciseUsages(exerciseId),
+    getAllTopicsBySubject(),
   ]);
 
   return (
@@ -23,7 +24,7 @@ export default async function AdminExercisePage({ params }: { params: Promise<{ 
       <Card title="Stato">
         <DatesLine createdAt={exercise.createdAt} updatedAt={exercise.updatedAt} publishedAt={exercise.publishedAt} />
         <p className="mb-3 text-sm text-brand-muted">
-          Per pubblicare serve una versione pubblicata.
+          Per pubblicare servono una versione pubblicata e il titolo per lo studente.
         </p>
         <StatusActions target="exercise" id={exercise.questionBankEntryId} status={exercise.status}
                        everPublished={exercise.publishedAt !== null} afterDeleteHref="/admin/exercises"
@@ -60,8 +61,8 @@ export default async function AdminExercisePage({ params }: { params: Promise<{ 
         </div>
       </Card>
 
-      <Card title="Titolo interno">
-        <ExerciseTitleForm exerciseId={exercise.questionBankEntryId} initialTitle={exercise.internalTitle} />
+      <Card title="Titoli e argomento">
+        <ExerciseTitleForm exercise={exercise} topicGroups={topicGroups} />
       </Card>
     </div>
   );

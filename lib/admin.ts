@@ -2,6 +2,7 @@ import { api, ApiError } from "@/lib/api";
 import type {
   AccessTier,
   Course,
+  CourseLevel,
   Lesson,
   LessonPage,
   Mission,
@@ -14,6 +15,7 @@ import type {
   Skill,
   SkillWeight,
   Subject,
+  VideoProvider,
 } from "@/types/admin";
 
 /* =====================================================================
@@ -47,16 +49,67 @@ export function adminErrorMessage(error: unknown): string {
 export const msToMinutes = (ms: number) => Math.round((ms / 60000) * 100) / 100;
 export const minutesToMs = (minutes: number) => Math.round(minutes * 60000);
 
+/** Stringa vuota -> null: i campi facoltativi del backend */
+export const orNull = (value: string) => (value.trim() === "" ? null : value.trim());
+
+/* Elenchi fissi scelti nell'Admin. Le chiavi devono avere un'icona, un colore o un'illustrazione nel frontend
+   dello studente: aggiungerne una qui senza il disegno corrispondente mostra l'aspetto neutro */
+export const SKILL_ICONS = [
+  { key: "grammatica", label: "Grammatica" },
+  { key: "lessico", label: "Lessico" },
+  { key: "analisi", label: "Analisi" },
+  { key: "traduzione", label: "Traduzione" },
+] as const;
+export const SKILL_COLORS = [
+  { key: "pink", label: "Rosa" },
+  { key: "green", label: "Verde" },
+  { key: "purple", label: "Viola" },
+  { key: "orange", label: "Arancione" },
+] as const;
+export const WORLD_THEMES = [
+  { key: "roman-city", label: "Città romana" },
+  { key: "greek-temple", label: "Tempio greco" },
+  { key: "library", label: "Biblioteca" },
+] as const;
+export const COURSE_LEVELS: { key: CourseLevel; label: string }[] = [
+  { key: "beginner", label: "Principiante" },
+  { key: "intermediate", label: "Intermedio" },
+  { key: "advanced", label: "Avanzato" },
+];
+export const VIDEO_PROVIDERS: { key: VideoProvider; label: string }[] = [
+  { key: "youtube", label: "YouTube (non in elenco) — contenuti free" },
+  { key: "vimeo", label: "Vimeo — contenuti premium" },
+];
+
 // Skill
-export type SkillInput = { code: string; name: string; description: string | null };
+export type SkillInput = {
+  code: string;
+  name: string;
+  description: string | null;
+  icon: string | null;
+  color: string | null;
+};
 export const createSkill = (body: SkillInput) => post<Skill>("/skills", body);
 export const updateSkill = (id: number, body: SkillInput) => put<Skill>(`/skills/${id}`, body);
 export const deleteSkill = (id: number) => del(`/skills/${id}`);
 
 // Materie
-export type SubjectInput = { name: string; defaultSkillId: number | null };
+export type SubjectInput = {
+  name: string;
+  /** null = ricavato dal nome */
+  slug: string | null;
+  tagline: string | null;
+  imageReference: string | null;
+  guideName: string | null;
+  guideImageReference: string | null;
+  defaultSkillId: number | null;
+};
 export const createSubject = (body: SubjectInput) => post<Subject>("/subjects", body);
 export const updateSubject = (id: number, body: SubjectInput) => put<Subject>(`/subjects/${id}`, body);
+/** Mostra la materia agli studenti; senza corsi pubblicati appare come "Presto disponibile" */
+export const publishSubject = (id: number) => patch<Subject>(`/subjects/${id}/publish`);
+/** La nasconde agli studenti (torna in bozza) */
+export const unpublishSubject = (id: number) => patch<Subject>(`/subjects/${id}/unpublish`);
 export const deleteSubject = (id: number) => del(`/subjects/${id}`);
 
 // Corsi
@@ -66,6 +119,15 @@ export type CourseInput = {
   extendedDescription: string;
   coverReference: string | null;
   accessTier: AccessTier;
+  /** null = ricavato dal titolo */
+  slug: string | null;
+  tagline: string | null;
+  level: CourseLevel | null;
+  /** ISO; null = non in evidenza */
+  featuredUntil: string | null;
+  worldTheme: string | null;
+  quote: string | null;
+  quoteAuthor: string | null;
 };
 export const createCourse = (subjectId: number, body: CourseInput) =>
   post<Course>(`/subjects/${subjectId}/courses`, body);
@@ -75,7 +137,20 @@ export const withdrawCourse = (id: number) => patch<Course>(`/courses/${id}/with
 export const deleteCourse = (id: number) => del(`/courses/${id}`);
 
 // Missioni
-export type MissionInput = { title: string; shortDescription: string; accessTier: AccessTier | null };
+export type MissionInput = {
+  title: string;
+  shortDescription: string;
+  accessTier: AccessTier | null;
+  /** null = ricavato dal titolo */
+  slug: string | null;
+  tagline: string | null;
+  coverReference: string | null;
+  isFinal: boolean;
+  briefingVideoProvider: VideoProvider | null;
+  briefingVideoIdentifier: string | null;
+  briefingLines: string[];
+  learningGoals: string[];
+};
 export const createMission = (courseId: number, body: MissionInput) =>
   post<Mission>(`/courses/${courseId}/missions`, body);
 export const updateMission = (id: number, body: MissionInput) => put<Mission>(`/missions/${id}`, body);
@@ -89,9 +164,10 @@ export const reorderMissionSteps = (missionId: number, ids: number[]) =>
   put<MissionStep[]>(`/missions/${missionId}/steps/order`, { ids });
 
 // Lezioni
-export const createLesson = (missionId: number, title: string) =>
-  post<Lesson>(`/missions/${missionId}/lessons`, { title });
-export const updateLesson = (id: number, title: string) => put<Lesson>(`/lessons/${id}`, { title });
+export type LessonInput = { title: string; topicId: number | null };
+export const createLesson = (missionId: number, body: LessonInput) =>
+  post<Lesson>(`/missions/${missionId}/lessons`, body);
+export const updateLesson = (id: number, body: LessonInput) => put<Lesson>(`/lessons/${id}`, body);
 export const publishLesson = (id: number) => patch<Lesson>(`/lessons/${id}/publish`);
 export const withdrawLesson = (id: number) => patch<Lesson>(`/lessons/${id}/withdraw`);
 export const deleteLesson = (id: number) => del(`/lessons/${id}`);
@@ -133,10 +209,11 @@ export const replaceSkillWeights = (id: number, weights: SkillWeightInput[]) =>
   put<SkillWeight[]>(`/mission-exercises/${id}/skills`, { weights });
 
 // Esercizi e versioni
-export const createExercise = (internalTitle: string) =>
-  post<QuestionBankEntry>("/exercises", { internalTitle });
-export const updateExercise = (id: number, internalTitle: string) =>
-  put<QuestionBankEntry>(`/exercises/${id}`, { internalTitle });
+/** title = titolo per lo studente, facoltativo in bozza e obbligatorio per pubblicare */
+export type ExerciseInput = { internalTitle: string; title: string | null; topicId: number | null };
+export const createExercise = (body: ExerciseInput) => post<QuestionBankEntry>("/exercises", body);
+export const updateExercise = (id: number, body: ExerciseInput) =>
+  put<QuestionBankEntry>(`/exercises/${id}`, body);
 export const publishExercise = (id: number) => patch<QuestionBankEntry>(`/exercises/${id}/publish`);
 export const withdrawExercise = (id: number) => patch<QuestionBankEntry>(`/exercises/${id}/withdraw`);
 export const deleteExercise = (id: number) => del(`/exercises/${id}`);

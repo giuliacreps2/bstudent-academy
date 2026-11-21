@@ -6,6 +6,7 @@ import {
   deleteLessonPage,
   reorderLessonPages,
   updateLessonPage,
+  VIDEO_PROVIDERS,
   type LessonPageInput,
 } from "@/lib/admin";
 import type { LessonPage, PageKind } from "@/types/admin";
@@ -13,7 +14,8 @@ import { buttonClass, EmptyNote, Field, inputClass, Notice } from "./ui";
 import { useAdminMutation } from "./useAdminMutation";
 
 /* Pagine della lezione: ognuna ha un solo contenuto (testo, immagine o video).
-   TODO (contenuti): formato del testo (es. Markdown) e anteprima, provider video ammessi */
+   TODO (4.4): testo a blocchi con anteprima (formato unico, blueprint §7.4) e caricamento delle immagini su Cloudinary.
+   Video: YouTube (non in elenco) per i contenuti free, Vimeo per i premium (blueprint §5.1) */
 
 const KIND_LABELS: Record<PageKind, string> = { text: "Testo", image: "Immagine", video: "Video" };
 
@@ -101,8 +103,10 @@ function PageForm({ lessonId, page }: { lessonId: number; page?: LessonPage }) {
         </Field>
         {kind === "video" && (
           <>
-            <Field label="Provider">
-              <input className={inputClass} value={provider} onChange={(e) => setProvider(e.target.value)} required maxLength={40} />
+            <Field label="Piattaforma">
+              <select className={inputClass} value={provider} onChange={(e) => setProvider(e.target.value)} required>
+                {VIDEO_PROVIDERS.map((p) => <option key={p.key} value={p.key}>{p.label}</option>)}
+              </select>
             </Field>
             <Field label="Identificativo del video">
               <input className={inputClass} value={identifier} onChange={(e) => setIdentifier(e.target.value)} required maxLength={200} />

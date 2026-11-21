@@ -2,12 +2,15 @@ import LessonPagesEditor from "@/components/admin/LessonPagesEditor";
 import LessonTitleForm from "@/components/admin/LessonTitleForm";
 import StatusActions from "@/components/admin/StatusActions";
 import { Card, DatesLine, PageHeader, StatusBadge } from "@/components/admin/ui";
-import { getLesson, getLessonPages, getMission, parseId } from "@/lib/admin-server";
+import { getCourse, getLesson, getLessonPages, getMission, getTopics, parseId } from "@/lib/admin-server";
 
 export default async function AdminLessonPage({ params }: { params: Promise<{ lessonId: string }> }) {
   const lessonId = parseId((await params).lessonId);
   const [lesson, pages] = await Promise.all([getLesson(lessonId), getLessonPages(lessonId)]);
   const mission = await getMission(lesson.missionId);
+  // Argomenti della materia del corso: la lezione può avere solo uno di questi
+  const course = await getCourse(mission.courseId);
+  const topics = await getTopics(course.subjectId);
 
   return (
     <div>
@@ -25,8 +28,9 @@ export default async function AdminLessonPage({ params }: { params: Promise<{ le
                        everPublished={lesson.publishedAt !== null} afterDeleteHref={`/admin/missions/${mission.missionId}`} />
       </Card>
 
-      <Card title="Titolo">
-        <LessonTitleForm lessonId={lesson.lessonId} initialTitle={lesson.title} />
+      <Card title="Titolo e argomento">
+        <LessonTitleForm lessonId={lesson.lessonId} initialTitle={lesson.title}
+                         initialTopicId={lesson.topicId} topics={topics} />
       </Card>
 
       <Card title="Pagine">

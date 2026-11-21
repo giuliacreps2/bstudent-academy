@@ -18,6 +18,7 @@ import type {
   Skill,
   SkillWeight,
   Subject,
+  Topic,
 } from "@/types/admin";
 
 /* =====================================================================
@@ -62,6 +63,13 @@ export const getSubjects = (page = 0, size = 20) =>
   get<Paged<Subject>>(`/subjects?page=${page}&size=${size}&sortBy=subjectName`);
 export const getAllSubjects = () => getSubjects(0, SELECT_PAGE_SIZE);
 export const getSubject = (id: number) => get<Subject>(`/subjects/${id}`);
+/** Argomenti della materia, per nome */
+export const getTopics = (subjectId: number) => get<Topic[]>(`/subjects/${subjectId}/topics`);
+/** Argomenti di tutte le materie, per i select degli esercizi del banco (che non hanno una materia) */
+export async function getAllTopicsBySubject(): Promise<{ subject: Subject; topics: Topic[] }[]> {
+  const subjects = (await getAllSubjects()).content;
+  return Promise.all(subjects.map(async (subject) => ({ subject, topics: await getTopics(subject.subjectId) })));
+}
 
 // Corsi
 export const getCourses = (page = 0, subjectId?: number) =>
