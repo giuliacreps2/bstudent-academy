@@ -31,7 +31,7 @@ const mainNav: NavItem[] = [
   // TODO: valutare se riportarla verso la mappa del corso con una missione in corso
   { label: "Esercizi", href: "/my/exercises", icon: PuzzlePieceIcon },
   { label: "Quaderno", href: "/my/notebook", icon: PencilSquareIcon },
-  { label: "Progressi", href: "/progressi", icon: ChartBarIcon },
+  { label: "Progressi", href: "/my/progress", icon: ChartBarIcon },
   {
     label: "Classifica",
     href: "/classifica",

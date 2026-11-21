@@ -247,7 +247,8 @@ function Body({ play, step, error, busy, exitHref, ...on }: BodyProps) {
         <div className="space-y-4">
           <MissionPassedPanel
             passed={step?.missionPassed ?? null}
-            lastOutcome={step?.outcome ?? null}
+            // Riaprendo la missione dopo la correzione: esito e commento della docente (Svolgimento §4.3)
+            lastOutcome={step?.outcome ?? play.teacherReview}
             exitHref={exitHref}
           />
           <HintReview missionAttemptId={play.missionAttemptId} />
@@ -259,7 +260,7 @@ function Body({ play, step, error, busy, exitHref, ...on }: BodyProps) {
         <div className="space-y-4">
         <AttemptFailedPanel
           reason={play.failureReason}
-          outcome={step?.outcome ?? null}
+          outcome={step?.outcome ?? play.teacherReview}
           lifeLost={step?.lifeLost ?? false}
           lives={play.lives}
           retryError={error}

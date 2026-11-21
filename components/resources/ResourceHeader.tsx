@@ -1,6 +1,8 @@
 "use client";
 
+import { useState } from "react";
 import { ShareIcon, CheckIcon } from "@heroicons/react/24/outline";
+import { addBookmark, removeBookmark } from "@/lib/notebook-api";
 import { SaveToNotebookButton } from "@/components/article/SaveToNotebookButton";
 import { useShareResource } from "@/hooks/useShareResource";
 import {
@@ -12,19 +14,31 @@ import type { ResourceDetailData } from "@/types/resourceDetail";
 interface ResourceHeaderProps {
   resource: ResourceDetailData;
   isLoggedIn: boolean;
-  /**
-   * false = "Salva nel Quaderno" nascosto.
-   * TODO (Quaderno): togliere quando il backend salva i segnalibri (INotebookService).
-   */
+  /** false = "Salva nel Quaderno" nascosto (es. copia pubblica con i dati d'esempio) */
   canSave?: boolean;
+  /** true = il salvataggio va al backend come segnalibro del Quaderno (blueprint §7.4) */
+  persistBookmark?: boolean;
 }
 
 export function ResourceHeader({
   resource,
   isLoggedIn,
   canSave = true,
+  persistBookmark = false,
 }: ResourceHeaderProps) {
   const { share, status } = useShareResource(resource.title);
+  const [bookmarkError, setBookmarkError] = useState(false);
+
+  async function handleToggle(saved: boolean) {
+    if (!persistBookmark) return;
+    setBookmarkError(false);
+    try {
+      const id = Number(resource.id);
+      await (saved ? addBookmark(id) : removeBookmark(id));
+    } catch {
+      setBookmarkError(true);
+    }
+  }
 
   const meta = resourceCategoriesMeta[resource.category];
   const styles = resourceColorStyles[meta.color];
@@ -53,7 +67,14 @@ export function ResourceHeader({
           <SaveToNotebookButton
             isLoggedIn={isLoggedIn}
             initialSaved={resource.isSaved}
+            onToggle={handleToggle}
           />
+        )}
+
+        {bookmarkError && (
+          <span role="alert" className="text-sm font-medium text-red-600">
+            Non siamo riusciti a salvare nel Quaderno. Ricarica la pagina e riprova.
+          </span>
         )}
 
         <button

@@ -113,6 +113,8 @@ export interface MissionPlay {
   exercise: MissionExercisePlay | null;
   lives: Lives;
   hint: HintCharges;
+  /** Esito dell'ultimo esercizio corretto dalla docente in questo tentativo (Svolgimento §4.3) */
+  teacherReview: ExerciseOutcome | null;
 }
 
 export interface ExerciseOutcome {

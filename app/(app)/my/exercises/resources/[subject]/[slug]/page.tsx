@@ -11,6 +11,7 @@ import { ResourceInsights } from "@/components/resources/ResourceInsights";
 import { ResourceExamples } from "@/components/resources/ResourceExamples";
 import { ResourceExerciseCta } from "@/components/resources/ResourceExerciseCta";
 import { ResourcePremiumNotice } from "@/components/resources/PremiumLock";
+import { ReadingSignal } from "@/components/ReadingSignal";
 import { getAvailableSections } from "@/lib/resourceDetail";
 import { getResourceDetail } from "@/lib/resources-server";
 import {
@@ -70,8 +71,9 @@ export default async function ResourcePage({ params }: ResourcePageProps) {
           Torna alle risorse
         </Link>
 
-        {/* TODO (Quaderno): canSave quando il backend salva i segnalibri */}
-        <ResourceHeader resource={resource} isLoggedIn canSave={false} />
+        {/* "Salva nel Quaderno" = segnalibro (blueprint §7.4); il tempo di lettura va al registro di studio */}
+        <ResourceHeader resource={resource} isLoggedIn persistBookmark />
+        <ReadingSignal kind="resource_read" resourceId={Number(resource.id)} />
 
         {/* Sticky in alto su desktop, barra scrollabile su mobile */}
         <ResourceSectionNav sections={sections} />

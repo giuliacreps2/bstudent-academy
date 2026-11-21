@@ -1,12 +1,18 @@
-import { getNotebookOverviewData } from "@/lib/notebook";
-import { NotebookOverview } from "@/components/notebook/NotebookOverview";
+import type { Metadata } from "next";
+import { requireUser } from "@/lib/api-server";
+import { getNotebook } from "@/lib/notebook-server";
+import { NotebookView } from "@/components/notebook/NotebookView";
 
+export const metadata: Metadata = { title: "Quaderno | BStudent" };
+
+/** Quaderno dello studente (blueprint §14) con i dati del backend */
 export default async function NotebookPage() {
-  const data = await getNotebookOverviewData();
+  const [user, data] = await Promise.all([requireUser(), getNotebook()]);
+  const studentName = user.firstName ?? user.username ?? "te";
 
   return (
     <div className="reading-area">
-      <NotebookOverview data={data} />;
+      <NotebookView data={data} studentName={studentName} />
     </div>
   );
 }

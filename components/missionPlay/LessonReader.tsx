@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { ArrowLeftIcon, ArrowRightIcon, CheckIcon } from "@heroicons/react/24/outline";
+import { useReadingSignal } from "@/hooks/useReadingSignal";
 import type { LessonPage, LessonPlay } from "@/types/missionPlay";
 
 interface LessonReaderProps {
@@ -19,6 +20,9 @@ export function LessonReader({ lesson, onDone, busy }: LessonReaderProps) {
   const total = lesson.pages.length;
   const page = lesson.pages[index];
   const isLast = index >= total - 1;
+
+  // Registro di studio (blueprint §10.5): tempo attivo sulla pagina che lo studente sta leggendo
+  useReadingSignal({ kind: "lesson_read", lessonId: lesson.lessonId, lessonPageId: page?.lessonPageId });
 
   return (
     <article className="rounded-lg border border-border bg-surface p-5 shadow-sm sm:p-8">
@@ -75,7 +79,7 @@ export function LessonReader({ lesson, onDone, busy }: LessonReaderProps) {
   );
 }
 
-function LessonPageView({ page }: { page: LessonPage }) {
+export function LessonPageView({ page }: { page: LessonPage }) {
   if (page.kind === "text" && page.formattedText) {
     // Testo semplice dall'Admin: i paragrafi sono separati da una riga vuota.
     // TODO (editor a blocchi, Piano MVP 4.4): mostrare grassetti, elenchi e tabelle quando l'Admin li salva
