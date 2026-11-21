@@ -113,6 +113,8 @@ export interface ResourceDetailData {
   /** Solo se autenticato: già salvata nel Quaderno */
   // TODO (blueprint §7.4, 14/11/2026): resta; nel Quaderno la Risorsa salvata è un segnalibro, non un appunto
   isSaved: boolean;
+  /** Risorsa premium e studente senza abbonamento: arrivano solo titolo, descrizione e "In breve" */
+  locked?: boolean;
 
   summary: ResourceSummary;
 
@@ -122,5 +124,6 @@ export interface ResourceDetailData {
   examples?: ResourceExample[];
   exerciseLink?: ResourceExerciseLink;
 
+  /** "Approfondisci": non visibile nell'MVP (blueprint §7.4), vuoto con i dati veri */
   related: ResourceRelatedLink[];
 }

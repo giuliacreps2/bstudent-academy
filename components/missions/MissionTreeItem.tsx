@@ -4,7 +4,7 @@ import type { MissionTreeItemData } from "@/types/missions";
 
 export function MissionTreeItem({ mission }: { mission: MissionTreeItemData }) {
   const isLocked = mission.status === "locked";
-  const isActive = mission.status === "active";
+  const isActive = mission.status === "current";
 
   const content = (
     <div

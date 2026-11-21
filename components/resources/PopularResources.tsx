@@ -1,21 +1,25 @@
 import Link from "next/link";
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
-import { resourceIcons } from "@/constants/resources";
+import { resourceIcons, toResourceIconKey } from "@/constants/resources";
+import { PremiumLockBadge } from "./PremiumLock";
 import type { PopularResource, ResourceSubjectKey } from "@/types/resources";
 
 const inkStyle = { color: "var(--texture-papyrus-ink)" };
 const inkMutedStyle = { color: "var(--texture-papyrus-ink-muted)" };
 
 function PopularCard({ resource }: { resource: PopularResource }) {
-  const Icon = resourceIcons[resource.icon];
+  const Icon = resourceIcons[toResourceIconKey(resource.icon)];
 
   return (
     <Link
       href={resource.href}
       className="card-papyrus group flex h-full flex-col p-5 shadow-sm transition duration-200 hover:-translate-y-1 hover:shadow-lg"
     >
-      <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/70">
-        <Icon className="h-6 w-6" style={inkStyle} />
+      <span className="flex items-start justify-between gap-2">
+        <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/70">
+          <Icon className="h-6 w-6" style={inkStyle} />
+        </span>
+        {resource.locked && <PremiumLockBadge />}
       </span>
 
       <h3 className="mt-4 text-lg font-extrabold" style={inkStyle}>

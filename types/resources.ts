@@ -1,21 +1,18 @@
 import type { ComponentType, SVGProps } from "react";
 
 /*
- * TODO (blueprint §7.4, deciso il 14/11/2026). Le Risorse sono attrezzi della Palestra:
- * - Spostare le pagine da /resources (pubblico) all'area riservata; togliere SEO, generateStaticParams e la
- *   variante "non autenticato" di ResourcesNotebookData. La versione SEO resta in app/SEO_criteria/resources.
- * - Ogni risorsa è free o premium: aggiungere il lucchetto premium a card e pagina.
- * - ResourceSubjectKey fisso → slug delle materie dal backend.
- * - Categorie: elenco fisso separato dalle skill (va bene ResourceCategoryKey).
- * - PopularResource ("Le risorse più usate"): scelte dall'autrice finché non c'è l'uso reale; icona da elenco fisso.
- * - RecommendedPathData ("Percorso consigliato"): porta al test di orientamento (§8.1).
- * - Ricerca: solo Risorse della materia scelta, titolo e descrizione.
- * - Dettaglio (types/resourceDetail.ts): exerciseLink dall'argomento della Palestra, nascosto se non ci sono voci;
- *   related ("Approfondisci") NON visibile nell'MVP.
- * - "Salva" resta (solo iscritti), ma Risorse = libro e Quaderno = appunti: la Risorsa salvata compare nel Quaderno
- *   come segnalibro (collegamento), separata dagli appunti. Rivedere il testo di ResourcesNotebookData di conseguenza.
+ * Risorse = attrezzi della Palestra (blueprint §7.4, deciso il 14/11/2026).
+ * Fatto il 21/11/2026: pagine nell'area riservata (/my/exercises/resources) con i dati del backend
+ * (lib/resources-server.ts), lucchetto premium, materie dal backend, ricerca nella materia scelta,
+ * "Approfondisci" nascosto. La copia con gli elementi SEO resta in app/SEO_criteria/resources con i dati di esempio.
+ * TODO:
+ * - "Percorso consigliato" (RecommendedPathData) porta al test di orientamento (§8.1): nascosto finché la pagina
+ *   del test non esiste.
+ * - "Salva nel Quaderno": nascosto finché il backend non salva i segnalibri (INotebookService). Nel Quaderno la
+ *   Risorsa salvata è un segnalibro, separato dagli appunti.
  */
-export type ResourceSubjectKey = "latino" | "greco";
+/** Slug della materia (dal backend; "latino" | "greco" nei dati di esempio) */
+export type ResourceSubjectKey = string;
 
 export type ResourceCategoryKey =
   | "grammatica"
@@ -67,8 +64,11 @@ export interface PopularResource {
   id: string;
   title: string;
   description: string;
-  icon: ResourceIconKey;
-  href: string; // /risorse/[id]
+  /** Chiave scelta dall'autrice (ResourceIconKey); una chiave sconosciuta usa l'icona generica */
+  icon: string;
+  href: string;
+  /** Risorsa premium e studente senza abbonamento */
+  locked?: boolean;
 }
 
 /** Card bianca: macro-categoria (label/icona/colore vengono da resourceCategoriesMeta) */
@@ -92,13 +92,15 @@ export interface FeaturedResource {
   title: string;
   description: string;
   imageUrl: string;
-  href: string; // /risorse/[id]
+  href: string;
+  locked?: boolean;
 }
 
 export interface ResourceSubjectContent {
   popular: PopularResource[];
   categories: ResourceCategoryCard[];
-  recommendedPath: RecommendedPathData;
+  /** Assente = card nascosta */
+  recommendedPath?: RecommendedPathData;
   featured: FeaturedResource[];
 }
 
@@ -131,10 +133,24 @@ export interface ResourcesNotebookData {
   };
 }
 
+/** Dati di esempio di tutte le materie insieme (solo copia SEO_criteria) */
 export interface ResourcesHubData {
   hero: ResourcesHeroData;
   content: Record<ResourceSubjectKey, ResourceSubjectContent>;
   notebook: ResourcesNotebookData;
+}
+
+/** Pagina principale delle Risorse di una materia */
+export interface ResourcesPageData {
+  hero: ResourcesHeroData;
+  notebook: ResourcesNotebookData;
+  /** Materie tra cui scegliere; con una sola materia il selettore non compare */
+  subjects: ResourceSubjectMeta[];
+  subject: ResourceSubjectKey;
+  /** null = nessuna Risorsa pubblicata nella materia */
+  content: ResourceSubjectContent | null;
+  /** Presente quando si cerca o si apre una categoria: prende il posto delle sezioni */
+  results?: ResourceResults;
 }
 
 /* ================================ RICERCA =============================== */
@@ -146,4 +162,16 @@ export interface ResourceSearchResult {
   subject: ResourceSubjectKey;
   category?: ResourceCategoryKey;
   href: string;
+  locked?: boolean;
+}
+
+/** Elenco dei risultati di una ricerca o di una categoria */
+export interface ResourceResults {
+  title: string;
+  items: ResourceSearchResult[];
+  emptyText: string;
+  /** Torna alla pagina principale della materia */
+  backHref: string;
+  /** Testo già cercato, per riempire la barra di ricerca */
+  query?: string;
 }

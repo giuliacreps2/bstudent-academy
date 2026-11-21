@@ -12,6 +12,7 @@ import {
   UserGroupIcon,
   UserIcon,
   Cog6ToothIcon,
+  PencilSquareIcon,
 } from "@heroicons/react/24/outline";
 import { useSidebar } from "./SidebarContext";
 import { ArchiveBoxArrowDownIcon } from "@heroicons/react/24/solid";
@@ -26,12 +27,10 @@ type NavItem = {
 const mainNav: NavItem[] = [
   { label: "Dashboard", href: "/my/dashboard", icon: HomeIcon },
   { label: "Corsi", href: "/my/courses", icon: BookOpenIcon },
-  {
-    label: "Missioni",
-    href: "/my/missions/draft",
-    icon: TrophyIcon,
-  },
+  // "Missioni" tolta il 21/11/2026: la mappa dipende dal corso, ci si arriva da "Corsi".
+  // TODO: valutare se riportarla verso la mappa del corso con una missione in corso
   { label: "Esercizi", href: "/my/exercises", icon: PuzzlePieceIcon },
+  { label: "Quaderno", href: "/my/notebook", icon: PencilSquareIcon },
   { label: "Progressi", href: "/progressi", icon: ChartBarIcon },
   {
     label: "Classifica",

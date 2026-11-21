@@ -4,6 +4,7 @@ import {
   resourceCategoriesMeta,
   resourceColorStyles,
 } from "@/constants/resources";
+import { PremiumLockBadge } from "./PremiumLock";
 import type { FeaturedResource, ResourceSubjectKey } from "@/types/resources";
 
 function FeaturedCard({ resource }: { resource: FeaturedResource }) {
@@ -20,6 +21,10 @@ function FeaturedCard({ resource }: { resource: FeaturedResource }) {
         <Icon className="h-3.5 w-3.5" />
         {meta.label}
       </span>
+
+      {resource.locked && (
+        <PremiumLockBadge className="absolute right-3 top-3 z-10" />
+      )}
 
       <Link
         href={resource.href}

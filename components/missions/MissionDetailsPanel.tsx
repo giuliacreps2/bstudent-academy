@@ -5,16 +5,18 @@ import {
   ClockIcon,
 } from "@heroicons/react/24/outline";
 import { StarIcon, ShieldCheckIcon } from "@heroicons/react/24/solid";
-import { skillsMeta, skillColorStyles } from "@/constants/skills";
+import { isSkillKey, skillIcons, skillsMeta, skillStyles, toSkillIconKey } from "@/constants/skills";
 import type { MissionMapNode } from "@/types/missions";
 
 export function MissionSkillRewards({ mission }: { mission: MissionMapNode }) {
   return (
     <div className="grid grid-cols-2 gap-3">
+      {mission.totalXp !== undefined && (
+        <p className="col-span-2 text-sm font-extrabold text-brand-success">+{mission.totalXp} XP</p>
+      )}
       {mission.skillRewards.map((reward) => {
-        const meta = skillsMeta[reward.icon as keyof typeof skillsMeta];
-        const styles = skillColorStyles[meta.color];
-        const Icon = meta.icon;
+        const styles = skillStyles(reward.color ?? (isSkillKey(reward.icon) ? skillsMeta[reward.icon].color : null));
+        const Icon = skillIcons[toSkillIconKey(reward.icon)];
 
         return (
           <div key={reward.label} className="flex items-center gap-2">
@@ -28,7 +30,8 @@ export function MissionSkillRewards({ mission }: { mission: MissionMapNode }) {
                 {reward.label}
               </p>
               <p className="text-[11px] font-bold text-brand-success">
-                +{reward.xp} XP
+                {/* Con i dati veri sono punti skill; nei dati d'esempio (mission.totalXp assente) XP */}
+                +{reward.xp} {mission.totalXp !== undefined ? "punti skill" : "XP"}
               </p>
             </div>
           </div>
@@ -53,7 +56,10 @@ export function MissionRules({ mission }: { mission: MissionMapNode }) {
       <div className="rounded-lg bg-surface-blue px-3 py-3 text-center">
         <ClockIcon className="mx-auto h-4 w-4 text-brand-primary" />
         <p className="mt-1 text-[11px] font-bold text-foreground">
-          {mission.durationMinutes} min · max {mission.maxErrors} errori
+          {mission.durationMinutes} min ·{" "}
+          {mission.passingThreshold !== undefined
+            ? `almeno ${mission.passingThreshold}%`
+            : `max ${mission.maxErrors} errori`}
         </p>
         <p className="text-[10px] text-brand-muted">Regole</p>
       </div>

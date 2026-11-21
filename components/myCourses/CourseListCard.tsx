@@ -10,7 +10,9 @@ import {
 } from "@heroicons/react/24/outline";
 import {
   HeartIcon as HeartSolidIcon,
+  LockClosedIcon,
   SparklesIcon,
+  StarIcon,
 } from "@heroicons/react/24/solid";
 import type { CourseListItem } from "@/types/myCourses";
 
@@ -28,12 +30,26 @@ export function CourseListCard({ course }: { course: CourseListItem }) {
           className="object-cover"
         />
 
-        {course.isPopular && (
-          <span className="absolute top-3 left-3 inline-flex items-center gap-1 bg-white/90 backdrop-blur-sm text-brand-secondary text-[10px] font-semibold px-2.5 py-1 rounded-pill">
-            <SparklesIcon className="w-3 h-3" />
-            Più amato
-          </span>
-        )}
+        <div className="absolute top-3 left-3 flex flex-wrap gap-1.5">
+          {course.isFeatured && (
+            <span className="inline-flex items-center gap-1 bg-white/90 backdrop-blur-sm text-brand-primary text-[10px] font-semibold px-2.5 py-1 rounded-pill">
+              <StarIcon className="w-3 h-3" />
+              In evidenza
+            </span>
+          )}
+          {course.isPopular && (
+            <span className="inline-flex items-center gap-1 bg-white/90 backdrop-blur-sm text-brand-secondary text-[10px] font-semibold px-2.5 py-1 rounded-pill">
+              <SparklesIcon className="w-3 h-3" />
+              Più amato
+            </span>
+          )}
+          {course.premiumLocked && (
+            <span className="inline-flex items-center gap-1 bg-white/90 backdrop-blur-sm text-brand-muted text-[10px] font-semibold px-2.5 py-1 rounded-pill">
+              <LockClosedIcon className="w-3 h-3" />
+              Con abbonamento
+            </span>
+          )}
+        </div>
 
         <button
           type="button"

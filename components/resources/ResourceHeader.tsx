@@ -12,9 +12,18 @@ import type { ResourceDetailData } from "@/types/resourceDetail";
 interface ResourceHeaderProps {
   resource: ResourceDetailData;
   isLoggedIn: boolean;
+  /**
+   * false = "Salva nel Quaderno" nascosto.
+   * TODO (Quaderno): togliere quando il backend salva i segnalibri (INotebookService).
+   */
+  canSave?: boolean;
 }
 
-export function ResourceHeader({ resource, isLoggedIn }: ResourceHeaderProps) {
+export function ResourceHeader({
+  resource,
+  isLoggedIn,
+  canSave = true,
+}: ResourceHeaderProps) {
   const { share, status } = useShareResource(resource.title);
 
   const meta = resourceCategoriesMeta[resource.category];
@@ -40,10 +49,12 @@ export function ResourceHeader({ resource, isLoggedIn }: ResourceHeaderProps) {
 
       {/* AZIONI */}
       <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-2">
-        <SaveToNotebookButton
-          isLoggedIn={isLoggedIn}
-          initialSaved={resource.isSaved}
-        />
+        {canSave && (
+          <SaveToNotebookButton
+            isLoggedIn={isLoggedIn}
+            initialSaved={resource.isSaved}
+          />
+        )}
 
         <button
           type="button"

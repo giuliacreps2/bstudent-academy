@@ -73,7 +73,8 @@ export function ResourceCategories({
 }: {
   subject: ResourceSubjectKey;
   categories: ResourceCategoryCard[];
-  recommendedPath: RecommendedPathData;
+  /** Assente = la colonna "Percorso consigliato" non compare */
+  recommendedPath?: RecommendedPathData;
 }) {
   return (
     <section
@@ -100,7 +101,7 @@ export function ResourceCategories({
 
         <div
           key={subject}
-          className="grid gap-4 lg:grid-cols-[1fr_300px] lg:gap-6"
+          className={`grid gap-4 lg:gap-6 ${recommendedPath ? "lg:grid-cols-[1fr_300px]" : ""}`}
         >
           <div className="grid gap-4 sm:grid-cols-2">
             {categories.map((card) => (
@@ -108,7 +109,7 @@ export function ResourceCategories({
             ))}
           </div>
 
-          <RecommendedPathCard path={recommendedPath} />
+          {recommendedPath && <RecommendedPathCard path={recommendedPath} />}
         </div>
       </div>
     </section>

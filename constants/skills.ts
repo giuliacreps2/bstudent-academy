@@ -4,6 +4,7 @@ import {
   SparklesIcon,
   MagnifyingGlassIcon,
   ArrowsRightLeftIcon,
+  ChartBarIcon,
 } from "@heroicons/react/24/outline";
 import type {
   SkillKey,
@@ -74,3 +75,36 @@ export const skillColorStyles: Record<SkillColor, SkillColorStyle> = {
     badgeText: "text-amber-700",
   },
 };
+
+/** Aspetto neutro per le skill con icona o colore che il frontend non conosce (blueprint §7.3) */
+const neutralStyle: SkillColorStyle = {
+  iconBg: "bg-surface-blue",
+  iconText: "text-brand-primary",
+  bar: "bg-brand-primary",
+  btn: "bg-surface-blue text-brand-primary hover:bg-surface-light-blue",
+  badgeBg: "bg-surface-blue",
+  badgeText: "text-brand-primary",
+};
+
+export const isSkillKey = (value: unknown): value is SkillKey =>
+  typeof value === "string" && value in skillsMeta;
+
+const isSkillColor = (value: unknown): value is SkillColor =>
+  typeof value === "string" && value in skillColorStyles;
+
+/** Colori di una skill del backend, scelti dall'autrice fra quelli noti (lib/admin SKILL_COLORS) */
+export function skillStyles(color: string | null | undefined): SkillColorStyle {
+  return isSkillColor(color) ? skillColorStyles[color] : neutralStyle;
+}
+
+/** Icone per chiave (lib/admin SKILL_ICONS); "neutra" per le chiavi che il frontend non conosce */
+export const skillIcons: Record<SkillKey | "neutra", SkillMeta["icon"]> = {
+  grammatica: skillsMeta.grammatica.icon,
+  lessico: skillsMeta.lessico.icon,
+  analisi: skillsMeta.analisi.icon,
+  traduzione: skillsMeta.traduzione.icon,
+  neutra: ChartBarIcon,
+};
+
+export const toSkillIconKey = (icon: string | null | undefined): SkillKey | "neutra" =>
+  isSkillKey(icon) ? icon : "neutra";

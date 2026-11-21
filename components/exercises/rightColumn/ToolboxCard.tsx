@@ -9,6 +9,7 @@ import {
   LockClosedIcon,
   ChevronRightIcon,
 } from "@heroicons/react/24/outline";
+import { RESOURCES_PATH, resourcesHref } from "@/constants/resources";
 
 export interface ToolboxItem {
   id: string;
@@ -19,42 +20,43 @@ export interface ToolboxItem {
   locked?: boolean;
 }
 
-// TODO Placeholder — verranno sostituiti dai dati del backend
+// Le righe aprono le Risorse (blueprint §7.4) filtrate per categoria; senza ?materia= vale la prima materia.
+// TODO (Palestra): materia attiva della pagina Esercizi nei collegamenti (?materia=)
 const items: ToolboxItem[] = [
   {
     id: "grammar-schemes",
     icon: BookOpenIcon,
     title: "Schemi di grammatica",
     description: "Regole essenziali, spiegate in modo semplice",
-    href: "/resources/grammatica",
+    href: resourcesHref({ category: "grammatica" }),
   },
   {
     id: "declension-tables",
     icon: TableCellsIcon,
     title: "Tabelle di declinazioni",
     description: "Nomi, aggettivi e pronomi",
-    href: "/resources/declinazioni",
+    href: resourcesHref({ category: "grammatica" }),
   },
   {
     id: "conjugation-tables",
     icon: ListBulletIcon,
     title: "Tabelle di coniugazioni",
     description: "Tutti i tempi dei verbi principali",
-    href: "/resources/coniugazioni",
+    href: resourcesHref({ category: "verbi" }),
   },
   {
     id: "worked-examples",
     icon: AcademicCapIcon,
     title: "Esempi svolti",
     description: "Analisi guidate passo dopo passo",
-    href: "/resources/esempi",
+    href: resourcesHref({ category: "traduzione" }),
   },
   {
     id: "glossary",
     icon: BookOpenIcon,
     title: "Glossario",
     description: "Il vocabolario del corso",
-    href: "/resources/glossario",
+    href: resourcesHref({ category: "vocabolario" }),
   },
   {
     id: "videos",
@@ -137,6 +139,15 @@ export function ToolboxCard() {
           <ToolboxRow key={item.id} item={item} />
         ))}
       </div>
+
+      <Link
+        href={RESOURCES_PATH}
+        className="mt-3 inline-flex items-center gap-1 text-sm font-semibold hover:underline"
+        style={{ color: "var(--texture-papyrus-ink)" }}
+      >
+        Apri tutte le risorse
+        <ChevronRightIcon className="w-4 h-4" />
+      </Link>
     </div>
   );
 }

@@ -184,7 +184,7 @@ export function getAvailableSections(
   resource: ResourceDetailData,
 ): ResourceSectionKey[] {
   const present: Record<ResourceSectionKey, boolean> = {
-    panoramica: true,
+    panoramica: Boolean(resource.summary.text),
     tabella: Boolean(resource.tool),
     spiegazione: Boolean(resource.insights?.length),
     esempi: Boolean(resource.examples?.length),

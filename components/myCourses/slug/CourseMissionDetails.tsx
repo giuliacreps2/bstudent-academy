@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { ClockIcon, BookOpenIcon } from "@heroicons/react/24/outline";
 import { CheckIcon } from "@heroicons/react/24/solid";
-import { skillsMeta } from "@/constants/skills";
 import type { MissionMapNode } from "@/types/missions";
 
 export function CourseMissionDetails({
@@ -12,9 +11,7 @@ export function CourseMissionDetails({
   mission: MissionMapNode;
   notebookHref: string;
 }) {
-  const skillLabels = mission.skillRewards.map(
-    (reward) => skillsMeta[reward.icon].label,
-  );
+  const skillLabels = mission.skillRewards.map((reward) => reward.label);
 
   return (
     <div className="flex h-full flex-col">
@@ -80,9 +77,19 @@ export function CourseMissionDetails({
           Apri il taccuino
         </Link>
 
-        <Link href={mission.href} className="btn-primary w-full justify-center">
-          Inizia la missione →
-        </Link>
+        {mission.premiumLocked ? (
+          <p className="rounded-pill bg-surface-blue px-4 py-2.5 text-center text-sm font-semibold text-brand-muted">
+            Missione con abbonamento
+          </p>
+        ) : mission.status === "locked" ? (
+          <p className="rounded-pill bg-surface-blue px-4 py-2.5 text-center text-sm font-semibold text-brand-muted">
+            Supera le missioni precedenti per sbloccarla
+          </p>
+        ) : (
+          <Link href={mission.href} className="btn-primary w-full justify-center">
+            {mission.status === "completed" ? "Rivedi la missione" : "Vai alla missione"} →
+          </Link>
+        )}
       </div>
     </div>
   );

@@ -14,12 +14,32 @@ import type { SkinBonus } from "./dashboard";
  * - Obiettivo di oggi + link "Non sai cosa allenare? Fai il test" (orientamento, §8.1).
  * - DailyChallenge: "supera 3 esercizi oggi" (≥60%), nessun premio per ora: rewardLabel da rivedere.
  * - bonuses (skin) vuoti, character/streak dalla gamification e dalla dashboard.
+ *
+ * Aggiornamento 21/11/2026: skill, attività da riprendere, sfida del giorno, Serie e obiettivo di oggi
+ * arrivano dal backend (types/practice.ts, SkillCardData qui sotto). Da lib/exercises.ts la pagina usa
+ * ancora solo hero, character e bonuses: TODO (domanda per Giulia, Gamification §6.3–6.4) il backend non
+ * ha bonus del personaggio e lo misura in stadi, non in livello e XP verso "Personalizza".
  */
 export interface SkillOption {
   id: SkillKey;
   description: string;
   current: number;
   max: number;
+  href: string;
+}
+
+/** Card di una skill con i dati del backend: livello dello studente e avanzamento verso il prossimo */
+export interface SkillCardData {
+  code: string;
+  name: string;
+  description: string | null;
+  icon: string | null;
+  color: string | null;
+  level: number;
+  maxLevel: boolean;
+  /** Avanzamento verso il prossimo livello, 0-100 */
+  progressPercent: number;
+  itemsCount: number;
   href: string;
 }
 

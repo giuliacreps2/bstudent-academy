@@ -14,7 +14,10 @@ import { getResourcesHubData } from "@/lib/resources";
 import {
   defaultResourceSubject,
   isResourceSubject,
+  resourceSubjectOrder,
+  resourceSubjectsMeta,
 } from "@/constants/resources";
+import type { ResourcesPageData } from "@/types/resources";
 
 export const metadata: Metadata = {
   title: "SEO_criteria | Risorse | BStudent",
@@ -33,9 +36,18 @@ export default async function ResourcesPage({
     ? materia
     : defaultResourceSubject;
 
-  const data = await getResourcesHubData();
+  const hub = await getResourcesHubData();
 
-  // TODO: sostituire con lo stato di autenticazione reale quando l'auth sarà collegata
+  // Adattato il 21/11/2026 alla pagina dell'area riservata: una materia per volta, scelta con ?materia=
+  const data: ResourcesPageData = {
+    hero: hub.hero,
+    notebook: hub.notebook,
+    subjects: resourceSubjectOrder.map((key) => resourceSubjectsMeta[key]),
+    subject: initialSubject,
+    content: hub.content[initialSubject],
+  };
+
+  // Copia pubblica: variante per chi non ha l'account
   const isLoggedIn = false;
 
   return (
@@ -43,11 +55,7 @@ export default async function ResourcesPage({
       <Navbar />
 
       <main className="bg-background">
-        <ResourcesHub
-          data={data}
-          initialSubject={initialSubject}
-          isLoggedIn={isLoggedIn}
-        />
+        <ResourcesHub data={data} isLoggedIn={isLoggedIn} />
       </main>
 
       <Footer />

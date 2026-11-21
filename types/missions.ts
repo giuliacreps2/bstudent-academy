@@ -63,10 +63,15 @@ export interface MissionMapPosition {
   y: number;
 }
 
+/**
+ * Punti skill che la missione può dare in una skill (blueprint §5.9: sotto "+N XP", i punti skill per skill).
+ * Nome storico del campo: xp = punti skill massimi. icon/color: chiavi scelte nell'Admin, aspetto neutro se ignote
+ */
 export interface MissionSkillReward {
   label: string; // es. "Grammatica"
   xp: number;
-  icon: "grammatica" | "lessico" | "traduzione" | "analisi";
+  icon: string | null;
+  color?: string | null;
 }
 
 /*
@@ -103,6 +108,24 @@ export interface MissionMapNode {
   objectives?: string[];
   coverImageUrl: string;
   href: string;
+  /* Con i dati del backend (lib/courses-server.ts) */
+  slug?: string;
+  /** "+N XP" della missione */
+  totalXp?: number;
+  /** Lucchetto dell'abbonamento, distinto da status "locked" */
+  premiumLocked?: boolean;
+  /** Soglia di superamento in %, mostrata al posto di maxErrors */
+  passingThreshold?: number;
+}
+
+/* ------------------------------ Pagina della missione ------------------------------ */
+
+export type MissionStepId = "briefing" | "sfide" | "prova-finale" | "ricompensa";
+
+export interface MissionStepData {
+  id: MissionStepId;
+  label: string;
+  status: "done" | "current" | "todo";
 }
 
 export interface CourseWorld {

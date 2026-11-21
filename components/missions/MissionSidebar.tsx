@@ -19,7 +19,7 @@ export function MissionSidebar({
       <div className="rounded-2xl bg-white/95 p-5 shadow-lg backdrop-blur-sm">
         <MissionBreadcrumb
           items={[
-            { label: "Corsi", href: "/corsi" },
+            { label: "Corsi", href: "/my/courses" },
             { label: course.title, href: course.backHref },
             { label: "Missioni" },
           ]}

@@ -21,7 +21,8 @@ export interface CourseListItem {
   description: string;
   imageUrl: string;
   stepsCount: number;
-  level: CourseLevel;
+  /** "Per tutti" quando il corso non ha un livello */
+  level: CourseLevel | "Per tutti";
   skillsCount: number;
   /**
    * 0-100. undefined = corso non ancora iniziato.
@@ -34,6 +35,10 @@ export interface CourseListItem {
    * La card (CourseListCard) dovrà mostrare il bollino giusto per ciascuno.
    */
   isPopular?: boolean;
+  /** "In evidenza": lo sceglie l'Admin fino a una data */
+  isFeatured?: boolean;
+  /** Corso dell'abbonamento e studente senza accesso: lucchetto distinto dallo stato */
+  premiumLocked?: boolean;
   /**
    * TODO: lo slug arriva dal backend, href lo costruisce il frontend
    * (cambia tra la landing pubblica e /my).

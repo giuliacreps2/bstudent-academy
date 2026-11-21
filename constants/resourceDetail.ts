@@ -47,5 +47,8 @@ export const resourceRelatedKindMeta: Record<
   exercises: { label: "Esercizi", icon: PuzzlePieceIcon },
 };
 
-/** Altezza (in px) da lasciare sotto la barra sticky quando si scorre a una sezione. */
-export const RESOURCE_NAV_OFFSET = 96;
+/**
+ * Altezza (in px) da lasciare sopra una sezione quando ci si scorre:
+ * barra fissa dell'area riservata (56) + barra delle sezioni (~50) + margine.
+ */
+export const RESOURCE_NAV_OFFSET = 120;

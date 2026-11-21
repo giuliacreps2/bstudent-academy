@@ -17,10 +17,11 @@ export function ResourceSectionNav({
   // Con una sola sezione la navigazione non serve
   if (sections.length < 2) return null;
 
+  // top-14: la barra resta sotto quella fissa dell'area riservata (alta h-14)
   return (
     <nav
       aria-label="Sezioni della risorsa"
-      className="sticky top-0 z-30 -mx-6 mt-8 border-b border-border bg-background/95 px-6 backdrop-blur-sm md:-mx-8 md:px-8"
+      className="sticky top-14 z-30 -mx-6 mt-8 border-b border-border bg-background/95 px-6 backdrop-blur-sm md:-mx-8 md:px-8"
     >
       <ul className="flex gap-1 overflow-x-auto [-ms-overflow-style:none] scrollbar-none [&::-webkit-scrollbar]:hidden">
         {sections.map((key) => {

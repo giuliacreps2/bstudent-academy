@@ -121,3 +121,43 @@ export const resourceIcons: ResourceIconMap = {
   alfabeto: LanguageIcon,
   articolo: LanguageIcon,
 };
+
+/** Icona scelta dall'autrice; una chiave nuova o sconosciuta usa quella del libro */
+export function toResourceIconKey(key: string): keyof ResourceIconMap {
+  return key in resourceIcons ? (key as keyof ResourceIconMap) : "vocabolario";
+}
+
+/* ===== Area riservata ===== */
+
+/** Le Risorse sono gli attrezzi della Palestra (blueprint §7.4): stanno dentro Esercizi */
+export const RESOURCES_PATH = "/my/exercises/resources";
+
+/** Pagina principale delle Risorse, con materia, categoria o ricerca facoltative */
+export function resourcesHref(params: {
+  subject?: string;
+  category?: ResourceCategoryKey;
+  query?: string;
+} = {}) {
+  const search = new URLSearchParams();
+  if (params.subject) search.set("materia", params.subject);
+  if (params.category) search.set("categoria", params.category);
+  if (params.query) search.set("q", params.query);
+  const qs = search.toString();
+  return qs ? `${RESOURCES_PATH}?${qs}` : RESOURCES_PATH;
+}
+
+export function resourceHref(subject: string, slug: string) {
+  return `${RESOURCES_PATH}/${encodeURIComponent(subject)}/${encodeURIComponent(slug)}`;
+}
+
+export function isResourceCategory(value?: string): value is ResourceCategoryKey {
+  return resourceCategoryOrder.some((key) => key === value);
+}
+
+/** Descrizioni delle card delle categorie, uguali per tutte le materie */
+export const resourceCategoryDescriptions: Record<ResourceCategoryKey, string> = {
+  grammatica: "Declinazioni, pronomi, aggettivi, concordanze, sintassi...",
+  verbi: "Coniugazioni, paradigmi, modi e tempi...",
+  traduzione: "Metodo, costruzioni, riconoscimento della frase...",
+  vocabolario: "Parole frequenti, espressioni, campi semantici...",
+};
